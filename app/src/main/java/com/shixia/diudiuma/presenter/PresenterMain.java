@@ -49,7 +49,7 @@ public class PresenterMain extends BasePresenter implements AMapLocationListener
         iView.onStartLocation();
 
         PermissionUtils.initCurrentActivity((MainActivity)context,this);
-        PermissionUtils.doBizAfterrequestPermission(Manifest.permission.ACCESS_FINE_LOCATION,PermissionUtils.WRITE_COARSE_LOCATION_REQUEST_CODE);
+        PermissionUtils.doBizAfterRequestPermission(Manifest.permission.ACCESS_FINE_LOCATION,PermissionUtils.WRITE_COARSE_LOCATION_REQUEST_CODE);
     }
 
     public void toSellCarActivity() {

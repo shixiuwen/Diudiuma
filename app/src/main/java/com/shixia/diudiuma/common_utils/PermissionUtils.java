@@ -75,7 +75,7 @@ public class PermissionUtils {
         return new PermissionUtils();
     }
 
-    public static void doBizAfterrequestPermission(String permission,int requestCode){
+    public static void doBizAfterRequestPermission(String permission,int requestCode){
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
                 && ContextCompat.checkSelfPermission(baseActivity, permission) != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(baseActivity, new String[]{ permission },

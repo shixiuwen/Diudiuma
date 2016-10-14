@@ -28,7 +28,7 @@ public class PresenterSellCar extends BasePresenter {
 
     public void showPhonePicker(){
         PermissionUtils.initCurrentActivity((SellCarActivity)context,this);
-        PermissionUtils.doBizAfterrequestPermission(Manifest.permission.READ_EXTERNAL_STORAGE,PermissionUtils.WRITE_COARSE_LOCATION_REQUEST_CODE);
+        PermissionUtils.doBizAfterRequestPermission(Manifest.permission.READ_EXTERNAL_STORAGE,PermissionUtils.WRITE_COARSE_LOCATION_REQUEST_CODE);
         //申请权限通过则执行doBizWithPermissionRequest()中的内容
     }
 
@@ -40,6 +40,7 @@ public class PresenterSellCar extends BasePresenter {
                 && permissions != null
                 && permissions.length > 0
                 && permissions[0].equals(Manifest.permission.READ_EXTERNAL_STORAGE))){  //该情况表示本次需要请求授权然后执行接下来的操作
+
             PhotoPicker.builder()
                     .setPhotoCount(9)
                     .setShowCamera(true)
