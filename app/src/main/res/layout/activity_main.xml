@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_splash"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="jiurongdai.jlcf.com.jiurongdai.activity.SplashActivity"
+    android:background="#fff">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_location"
+        android:text="未获取到位置信息"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10px"
+        android:textColor="#000"/>
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_to_sell_car"
+        android:text="我要卖车"
+        android:layout_alignParentBottom="true"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_feedback"
+        android:text="意见反馈"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@id/btn_to_sell_car"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_test_gson"
+        android:text="Gson Test"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@id/btn_feedback"/>
+
+</RelativeLayout>
