@@ -28,7 +28,7 @@
 
         <!--高德定位-->
         <meta-data android:name="com.amap.api.v2.apikey"
-            android:value="8457d7b6b4dba4755e11c6df93fa6d99"/>
+            android:value="高德开放平台上申请的key"/>
 
         <activity android:name=".activity.SplashActivity" >
             <intent-filter>
