@@ -1,5 +1,6 @@
 package com.shixia.diudiuma.presenter;
 
+import android.Manifest;
 import android.content.Context;
 import android.widget.Toast;
 
@@ -12,6 +13,7 @@ import com.shixia.diudiuma.R;
 import com.shixia.diudiuma.activity.MainActivity;
 import com.shixia.diudiuma.activity.SellCarActivity;
 import com.shixia.diudiuma.bean.User;
+import com.shixia.diudiuma.common_utils.PermissionUtils;
 import com.shixia.diudiuma.http.base.HttpApiBase;
 import com.shixia.diudiuma.http.feedback.FeedbackApi;
 import com.shixia.diudiuma.http.feedback.FeedbackHttpRequest;
@@ -46,34 +48,8 @@ public class PresenterMain extends BasePresenter implements AMapLocationListener
     public void locate() {
         iView.onStartLocation();
 
-        //初始化定位
-        mLocationClient = new AMapLocationClient(context);
-        //设置定位回调监听
-        mLocationClient.setLocationListener(this);
-
-        //初始化AMapLocationClientOption对象
-        AMapLocationClientOption mLocationOption = new AMapLocationClientOption();
-
-        //设置返回地址信息，默认为true
-        mLocationOption.setNeedAddress(true);
-
-        //设置定位模式为高精度模式，Battery_Saving为低功耗模式，Device_Sensors是仅设备模式
-        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy.Hight_Accuracy);
-        //设置定位间隔,单位毫秒,默认为2000ms
-//      mLocationOption.setInterval(2000);
-
-        //获取一次定位结果：
-        //该方法默认为false。
-        mLocationOption.setOnceLocation(true);
-
-        //获取最近3s内精度最高的一次定位结果：
-        //设置setOnceLocationLatest(boolean b)接口为true，启动定位时SDK会返回最近3s内精度最高的一次定位结果。如果设置其为true，setOnceLocation(boolean b)接口也会被设置为true，反之不会，默认为false。
-        mLocationOption.setOnceLocationLatest(true);
-
-        //给定位客户端对象设置定位参数
-        mLocationClient.setLocationOption(mLocationOption);
-        //启动定位
-        mLocationClient.startLocation();
+        PermissionUtils.initCurrentActivity((MainActivity)context,this);
+        PermissionUtils.doBizAfterrequestPermission(Manifest.permission.ACCESS_FINE_LOCATION,PermissionUtils.WRITE_COARSE_LOCATION_REQUEST_CODE);
     }
 
     public void toSellCarActivity() {
@@ -143,4 +119,43 @@ public class PresenterMain extends BasePresenter implements AMapLocationListener
 //        mLocationClient.onDestroy();//销毁定位客户端之后，若要重新开启定位请重新New一个AMapLocationClient对象。
     }
 
+    @Override
+    public void doBizWithPermissionRequest(int resultCode, String[] permissions) {
+        super.doBizWithPermissionRequest(resultCode, permissions);
+        if((resultCode == -1 && permissions == null)    //该情况表示上一次已经取得了授权
+
+                || (resultCode == PermissionUtils.WRITE_COARSE_LOCATION_REQUEST_CODE
+                && permissions != null
+                && permissions.length > 0
+                && permissions[0].equals(Manifest.permission.ACCESS_FINE_LOCATION))) {  //该情况表示本次需要请求授权然后执行接下来的操作
+            //初始化定位
+            mLocationClient = new AMapLocationClient(context);
+            //设置定位回调监听
+            mLocationClient.setLocationListener(this);
+
+            //初始化AMapLocationClientOption对象
+            AMapLocationClientOption mLocationOption = new AMapLocationClientOption();
+
+            //设置返回地址信息，默认为true
+            mLocationOption.setNeedAddress(true);
+
+            //设置定位模式为高精度模式，Battery_Saving为低功耗模式，Device_Sensors是仅设备模式
+            mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy.Hight_Accuracy);
+            //设置定位间隔,单位毫秒,默认为2000ms
+//      mLocationOption.setInterval(2000);
+
+            //获取一次定位结果：
+            //该方法默认为false。
+            mLocationOption.setOnceLocation(true);
+
+            //获取最近3s内精度最高的一次定位结果：
+            //设置setOnceLocationLatest(boolean b)接口为true，启动定位时SDK会返回最近3s内精度最高的一次定位结果。如果设置其为true，setOnceLocation(boolean b)接口也会被设置为true，反之不会，默认为false。
+            mLocationOption.setOnceLocationLatest(true);
+
+            //给定位客户端对象设置定位参数
+            mLocationClient.setLocationOption(mLocationOption);
+            //启动定位
+            mLocationClient.startLocation();
+        }
+    }
 }

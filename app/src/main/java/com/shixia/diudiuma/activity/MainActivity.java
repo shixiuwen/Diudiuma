@@ -13,6 +13,7 @@ import com.shixia.diudiuma.R;
 import com.shixia.diudiuma.activity.base.BaseActivity;
 import com.shixia.diudiuma.iview.MainActivityIView;
 import com.shixia.diudiuma.presenter.PresenterMain;
+import com.shixia.diudiuma.presenter.base.BasePresenter;
 
 
 /**
@@ -48,8 +49,9 @@ public class MainActivity extends BaseActivity implements MainActivityIView {
     }
 
     @Override
-    protected void initPresenter() {
+    protected BasePresenter initPresenter() {
         sellCarPresenter = new PresenterMain(this,this);
+        return sellCarPresenter;
     }
 
     @Override

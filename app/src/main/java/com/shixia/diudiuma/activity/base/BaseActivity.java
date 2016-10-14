@@ -2,8 +2,12 @@ package com.shixia.diudiuma.activity.base;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+
+import com.shixia.diudiuma.presenter.base.BasePresenter;
 
 /**
  * Created by AmosShi on 2016/10/11.
@@ -37,7 +41,7 @@ public abstract class BaseActivity extends AppCompatActivity{
     /**
      * 初始化Presenter
      */
-    protected abstract void initPresenter();
+    protected abstract BasePresenter initPresenter();
 
     /**
      * 可选操作，数据初始化之后的操作在该方法中执行
@@ -55,4 +59,17 @@ public abstract class BaseActivity extends AppCompatActivity{
         }
     }
 
+    /**
+     * 权限申请的回调
+     * @param requestCode 请求码
+     * @param permissions 请求的权限
+     * @param grantResults 请求结果
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
+            initPresenter().getBasePresenter().doBizWithPermissionRequest(requestCode,permissions);
+        }
+    }
 }

@@ -14,4 +14,15 @@ public class BasePresenter {
     public BasePresenter(Context context, BaseIView iView){
 
     }
+
+    public BasePresenter getBasePresenter(){
+        return this;
+    }
+
+    /**
+     * 申请完权限后需要进行的操作
+     */
+    public void doBizWithPermissionRequest(int requestCode, String[] permissions){
+
+    }
 }

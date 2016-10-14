@@ -9,6 +9,7 @@ import com.shixia.diudiuma.fragment.WelcomePageOneFragment;
 import com.shixia.diudiuma.fragment.WelcomePageThreeFragment;
 import com.shixia.diudiuma.fragment.WelcomePageTwoFragment;
 import com.shixia.diudiuma.fragment.base.BaseFragment;
+import com.shixia.diudiuma.presenter.base.BasePresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,8 +42,8 @@ public class WelcomeActivity extends BaseActivity {
     }
 
     @Override
-    protected void initPresenter() {
-
+    protected BasePresenter initPresenter() {
+        return null;
     }
 
     @Override

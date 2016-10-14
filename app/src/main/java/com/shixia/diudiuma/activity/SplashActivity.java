@@ -3,6 +3,7 @@ package com.shixia.diudiuma.activity;
 import com.shixia.diudiuma.R;
 import com.shixia.diudiuma.activity.base.BaseActivity;
 import com.shixia.diudiuma.common_utils.SpUtil;
+import com.shixia.diudiuma.presenter.base.BasePresenter;
 
 import java.util.concurrent.TimeUnit;
 
@@ -22,8 +23,8 @@ public class SplashActivity extends BaseActivity {
     }
 
     @Override
-    protected void initPresenter() {
-
+    protected BasePresenter initPresenter() {
+        return null;
     }
 
     @Override
