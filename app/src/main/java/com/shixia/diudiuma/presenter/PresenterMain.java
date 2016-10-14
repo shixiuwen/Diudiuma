@@ -48,6 +48,14 @@ public class PresenterMain extends BasePresenter implements AMapLocationListener
     public void locate() {
         iView.onStartLocation();
 
+        //SDK在Android 6.0下需要进行运行检测的权限如下：
+//        Manifest.permission.ACCESS_COARSE_LOCATION,
+//        Manifest.permission.ACCESS_FINE_LOCATION,
+//        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+//        Manifest.permission.READ_EXTERNAL_STORAGE,
+//        Manifest.permission.READ_PHONE_STATE
+
+        //这里以ACCESS_COARSE_LOCATION为例
         PermissionUtils.initCurrentActivity((MainActivity)context,this);
         PermissionUtils.doBizAfterRequestPermission(Manifest.permission.ACCESS_FINE_LOCATION,PermissionUtils.WRITE_COARSE_LOCATION_REQUEST_CODE);
     }

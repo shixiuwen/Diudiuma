@@ -1,11 +1,5 @@
 package com.shixia.diudiuma.activity;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
-import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -57,7 +51,7 @@ public class MainActivity extends BaseActivity implements MainActivityIView {
     @Override
     protected void afterActivityOnCreate() {
         super.afterActivityOnCreate();
-        startLocate();  //界面启动后开始定位
+        sellCarPresenter.locate();  //界面启动后开始定位
     }
 
     @Override
@@ -70,33 +64,4 @@ public class MainActivity extends BaseActivity implements MainActivityIView {
         tvLocation.setText(location);
     }
 
-    /**
-     * 检测应用权限后定位
-     */
-    private void startLocate(){
-        //SDK在Android 6.0下需要进行运行检测的权限如下：
-//        Manifest.permission.ACCESS_COARSE_LOCATION,
-//        Manifest.permission.ACCESS_FINE_LOCATION,
-//        Manifest.permission.WRITE_EXTERNAL_STORAGE,
-//        Manifest.permission.READ_EXTERNAL_STORAGE,
-//        Manifest.permission.READ_PHONE_STATE
-
-        //这里以ACCESS_COARSE_LOCATION为例
-        if (Build.VERSION.SDK_INT >= 23 && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-            //申请WRITE_EXTERNAL_STORAGE权限
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
-                    WRITE_COARSE_LOCATION_REQUEST_CODE);//自定义的code
-        }else {
-            sellCarPresenter.locate();
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if(requestCode == WRITE_COARSE_LOCATION_REQUEST_CODE && grantResults.length>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-            sellCarPresenter.locate();
-        }
-    }
 }
