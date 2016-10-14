@@ -6,6 +6,7 @@ import com.shixia.diudiuma.activity.SellCarActivity;
 import com.shixia.diudiuma.iview.SellCarIView;
 import com.shixia.diudiuma.iview.base.BaseIView;
 import com.shixia.diudiuma.presenter.base.BasePresenter;
+
 import me.iwf.photopicker.PhotoPicker;
 
 /**
@@ -14,7 +15,6 @@ import me.iwf.photopicker.PhotoPicker;
  */
 
 public class PresenterSellCar extends BasePresenter {
-
     private Context context;
     private SellCarIView iView;
 

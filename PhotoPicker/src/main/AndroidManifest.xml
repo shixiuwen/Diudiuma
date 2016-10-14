@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest package="me.iwf.photopicker"
     xmlns:android="http://schemas.android.com/apk/res/android">
+
     <application>
         <provider
             android:name="android.support.v4.content.FileProvider"
