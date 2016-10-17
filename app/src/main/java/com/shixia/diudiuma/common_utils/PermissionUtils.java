@@ -14,51 +14,50 @@ import com.shixia.diudiuma.presenter.base.BasePresenter;
  */
 
 /**
-Dangerous Permissions:
-
-        group:android.permission-group.CONTACTS
-        permission:android.permission.WRITE_CONTACTS
-        permission:android.permission.GET_ACCOUNTS
-        permission:android.permission.READ_CONTACTS
-
-        group:android.permission-group.PHONE
-        permission:android.permission.READ_CALL_LOG
-        permission:android.permission.READ_PHONE_STATE
-        permission:android.permission.CALL_PHONE
-        permission:android.permission.WRITE_CALL_LOG
-        permission:android.permission.USE_SIP
-        permission:android.permission.PROCESS_OUTGOING_CALLS
-        permission:com.android.voicemail.permission.ADD_VOICEMAIL
-
-        group:android.permission-group.CALENDAR
-        permission:android.permission.READ_CALENDAR
-        permission:android.permission.WRITE_CALENDAR
-
-        group:android.permission-group.CAMERA
-        permission:android.permission.CAMERA
-
-        group:android.permission-group.SENSORS
-        permission:android.permission.BODY_SENSORS
-
-        group:android.permission-group.LOCATION
-        permission:android.permission.ACCESS_FINE_LOCATION
-        permission:android.permission.ACCESS_COARSE_LOCATION
-
-        group:android.permission-group.STORAGE
-        permission:android.permission.READ_EXTERNAL_STORAGE
-        permission:android.permission.WRITE_EXTERNAL_STORAGE
-
-        group:android.permission-group.MICROPHONE
-        permission:android.permission.RECORD_AUDIO
-
-        group:android.permission-group.SMS
-        permission:android.permission.READ_SMS
-        permission:android.permission.RECEIVE_WAP_PUSH
-        permission:android.permission.RECEIVE_MMS
-        permission:android.permission.RECEIVE_SMS
-        permission:android.permission.SEND_SMS
-        permission:android.permission.READ_CELL_BROADCASTS
-
+ * Dangerous Permissions:
+ * <p>
+ * group:android.permission-group.CONTACTS
+ * permission:android.permission.WRITE_CONTACTS
+ * permission:android.permission.GET_ACCOUNTS
+ * permission:android.permission.READ_CONTACTS
+ * <p>
+ * group:android.permission-group.PHONE
+ * permission:android.permission.READ_CALL_LOG
+ * permission:android.permission.READ_PHONE_STATE
+ * permission:android.permission.CALL_PHONE
+ * permission:android.permission.WRITE_CALL_LOG
+ * permission:android.permission.USE_SIP
+ * permission:android.permission.PROCESS_OUTGOING_CALLS
+ * permission:com.android.voicemail.permission.ADD_VOICEMAIL
+ * <p>
+ * group:android.permission-group.CALENDAR
+ * permission:android.permission.READ_CALENDAR
+ * permission:android.permission.WRITE_CALENDAR
+ * <p>
+ * group:android.permission-group.CAMERA
+ * permission:android.permission.CAMERA
+ * <p>
+ * group:android.permission-group.SENSORS
+ * permission:android.permission.BODY_SENSORS
+ * <p>
+ * group:android.permission-group.LOCATION
+ * permission:android.permission.ACCESS_FINE_LOCATION
+ * permission:android.permission.ACCESS_COARSE_LOCATION
+ * <p>
+ * group:android.permission-group.STORAGE
+ * permission:android.permission.READ_EXTERNAL_STORAGE
+ * permission:android.permission.WRITE_EXTERNAL_STORAGE
+ * <p>
+ * group:android.permission-group.MICROPHONE
+ * permission:android.permission.RECORD_AUDIO
+ * <p>
+ * group:android.permission-group.SMS
+ * permission:android.permission.READ_SMS
+ * permission:android.permission.RECEIVE_WAP_PUSH
+ * permission:android.permission.RECEIVE_MMS
+ * permission:android.permission.RECEIVE_SMS
+ * permission:android.permission.SEND_SMS
+ * permission:android.permission.READ_CELL_BROADCASTS
  */
 
 public class PermissionUtils {
@@ -66,22 +65,26 @@ public class PermissionUtils {
     private static BaseActivity baseActivity;
     private static BasePresenter basePresenter;
 
+    public static final int PERMISSION_ALREADY_GRANTED = 0x001;
+    public static final int PERMISSION_DENIED = 0x002;
+
     public static final int WRITE_COARSE_LOCATION_REQUEST_CODE = 0x100;
     public static final int READ_EXTERNAL_STORAGE = 0x200;
 
-    public static PermissionUtils initCurrentActivity(BaseActivity baseActivity, BasePresenter basePresenter){
+    public static PermissionUtils initCurrentActivity(BaseActivity baseActivity, BasePresenter basePresenter) {
         PermissionUtils.baseActivity = baseActivity;
         PermissionUtils.basePresenter = basePresenter;
         return new PermissionUtils();
     }
 
-    public static void doBizAfterRequestPermission(String permission,int requestCode){
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
-                && ContextCompat.checkSelfPermission(baseActivity, permission) != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(baseActivity, new String[]{ permission },
+    public static void doBizAfterRequestPermission(String permission, int requestCode) {
+        L.i("doBizAfterRequestPermission", "requestCode:" + requestCode);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+                && ContextCompat.checkSelfPermission(baseActivity, permission) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(baseActivity, new String[]{permission},
                     requestCode);//自定义的code
-        }else {
-            basePresenter.doBizWithPermissionRequest(-1,null);
+        } else {
+            basePresenter.doBizWithPermissionRequest(PERMISSION_ALREADY_GRANTED, null);
         }
     }
 

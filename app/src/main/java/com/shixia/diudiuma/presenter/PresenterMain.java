@@ -130,7 +130,7 @@ public class PresenterMain extends BasePresenter implements AMapLocationListener
     @Override
     public void doBizWithPermissionRequest(int resultCode, String[] permissions) {
         super.doBizWithPermissionRequest(resultCode, permissions);
-        if((resultCode == -1 && permissions == null)    //该情况表示上一次已经取得了授权
+        if((resultCode == PermissionUtils.PERMISSION_ALREADY_GRANTED && permissions == null)    //该情况表示上一次已经取得了授权
 
                 || (resultCode == PermissionUtils.WRITE_COARSE_LOCATION_REQUEST_CODE
                 && permissions != null
@@ -164,6 +164,8 @@ public class PresenterMain extends BasePresenter implements AMapLocationListener
             mLocationClient.setLocationOption(mLocationOption);
             //启动定位
             mLocationClient.startLocation();
+        }else if(resultCode == PermissionUtils.PERMISSION_DENIED){
+            iView.onEndLocation("定位权限被拒绝，无法获取当前位置信息");
         }
     }
 }

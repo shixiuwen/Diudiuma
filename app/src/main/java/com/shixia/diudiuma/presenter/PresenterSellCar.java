@@ -35,7 +35,7 @@ public class PresenterSellCar extends BasePresenter {
     @Override
     public void doBizWithPermissionRequest(int resultCode, String[] permissions) {
         super.doBizWithPermissionRequest(resultCode, permissions);
-        if((resultCode == -1 && permissions == null)    //该情况表示上一次已经取得了授权
+        if((resultCode == PermissionUtils.PERMISSION_ALREADY_GRANTED && permissions == null)    //该情况表示上一次已经取得了授权
                 || (resultCode == PermissionUtils.READ_EXTERNAL_STORAGE
                 && permissions != null
                 && permissions.length > 0
@@ -47,6 +47,8 @@ public class PresenterSellCar extends BasePresenter {
                     .setShowGif(true)
                     .setPreviewEnabled(false)
                     .start((SellCarActivity)context, PhotoPicker.REQUEST_CODE);
+        }else if(resultCode == PermissionUtils.PERMISSION_DENIED){
+
         }
     }
 }

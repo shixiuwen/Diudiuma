@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 
+import com.shixia.diudiuma.common_utils.PermissionUtils;
 import com.shixia.diudiuma.presenter.base.BasePresenter;
 
 /**
@@ -70,6 +71,8 @@ public abstract class BaseActivity extends AppCompatActivity{
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
             initPresenter().getBasePresenter().doBizWithPermissionRequest(requestCode,permissions);
+        }else if(grantResults[0] == PackageManager.PERMISSION_DENIED){
+            initPresenter().getBasePresenter().doBizWithPermissionRequest(PermissionUtils.PERMISSION_DENIED,permissions);
         }
     }
 }

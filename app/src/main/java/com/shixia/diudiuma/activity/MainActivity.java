@@ -23,8 +23,6 @@ public class MainActivity extends BaseActivity implements MainActivityIView {
     private Button btnGsonTest;
     private PresenterMain sellCarPresenter;
 
-    private static final int WRITE_COARSE_LOCATION_REQUEST_CODE = 0x100;
-
     @Override
     protected void initContentView() {
         setContentView(R.layout.activity_main);
