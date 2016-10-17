@@ -1,8 +1,6 @@
 package com.shixia.diudiuma.handler;
 
-import android.content.ComponentName;
 import android.content.Context;
-import android.content.Intent;
 
 import com.shixia.diudiuma.common_utils.FileUtils;
 
@@ -14,6 +12,7 @@ import java.io.File;
  */
 
 public class CrashHandler implements Thread.UncaughtExceptionHandler {
+
     public static final String TAG = CrashHandler.class.getSimpleName();
 
     private static CrashHandler INSTANCE = new CrashHandler();
@@ -40,6 +39,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
 
     @Override
     public void uncaughtException(Thread t, Throwable ex) {
+
         try {
             File file = new File(FileUtils.getDiskCacheDir(mContext, "crash"), "crash.log");
 
@@ -53,10 +53,10 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
         }
 
         //crash后重启
-        ComponentName componentName = new ComponentName("package name", "default activity");
-        Intent schemIntent = new Intent();
-        schemIntent.setComponent(componentName);
-        schemIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        mContext.startActivity(schemIntent);
+//        ComponentName componentName = new ComponentName("package name", "default activity");
+//        Intent schemIntent = new Intent();
+//        schemIntent.setComponent(componentName);
+//        schemIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        mContext.startActivity(schemIntent);
     }
 }

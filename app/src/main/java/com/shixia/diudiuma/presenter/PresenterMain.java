@@ -21,6 +21,7 @@ import com.shixia.diudiuma.http.feedback.FeedbackHttpResponse;
 import com.shixia.diudiuma.iview.MainActivityIView;
 import com.shixia.diudiuma.iview.base.BaseIView;
 import com.shixia.diudiuma.presenter.base.BasePresenter;
+import com.shixia.diudiuma.view.LoadingDialog;
 
 import java.io.IOException;
 
@@ -94,6 +95,9 @@ public class PresenterMain extends BasePresenter implements AMapLocationListener
         Gson userGson = new Gson();
         User user = userGson.fromJson(strUser2, User.class);
         Toast.makeText(context, user.getName() + " " + user.getAge() + " " + user.getSex(), Toast.LENGTH_SHORT).show();
+
+        LoadingDialog.getInstance(context,"nihao").show();
+
     }
 
     /**

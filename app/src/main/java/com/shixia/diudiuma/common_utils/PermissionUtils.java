@@ -88,8 +88,7 @@ public class PermissionUtils {
         }
     }
 
-
-    /**###################### 以下时不需要权限检查的Normal Permission #############################*/
+    /**###################### 以下时不需要权限检查的 Normal Permission #############################*/
 
     /**
      ACCESS_LOCATION_EXTRA_COMMANDS

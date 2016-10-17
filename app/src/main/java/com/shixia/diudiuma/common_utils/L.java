@@ -9,7 +9,7 @@ import android.util.Log;
 
 public class L {
 
-    private L log;
+    private static L log;
     private static boolean isDebug = true;
 
     private static final int LOG_INFO = 100;
@@ -23,7 +23,7 @@ public class L {
 
     }
 
-    public L getInstance() {
+    public static L getInstance() {
         if (log == null) {
             log = new L();
         }

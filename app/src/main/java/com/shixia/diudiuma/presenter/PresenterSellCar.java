@@ -28,7 +28,7 @@ public class PresenterSellCar extends BasePresenter {
 
     public void showPhonePicker(){
         PermissionUtils.initCurrentActivity((SellCarActivity)context,this);
-        PermissionUtils.doBizAfterRequestPermission(Manifest.permission.READ_EXTERNAL_STORAGE,PermissionUtils.WRITE_COARSE_LOCATION_REQUEST_CODE);
+        PermissionUtils.doBizAfterRequestPermission(Manifest.permission.READ_EXTERNAL_STORAGE,PermissionUtils.READ_EXTERNAL_STORAGE);
         //申请权限通过则执行doBizWithPermissionRequest()中的内容
     }
 
