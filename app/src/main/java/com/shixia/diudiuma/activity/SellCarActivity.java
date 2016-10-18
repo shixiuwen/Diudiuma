@@ -5,6 +5,7 @@ import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.shixia.diudiuma.R;
 import com.shixia.diudiuma.activity.base.BaseActivity;
@@ -13,6 +14,7 @@ import com.shixia.diudiuma.iview.SellCarIView;
 import com.shixia.diudiuma.listener.RecyclerItemClickListener;
 import com.shixia.diudiuma.presenter.PresenterSellCar;
 import com.shixia.diudiuma.presenter.base.BasePresenter;
+import com.shixia.diudiuma.view.LoadingDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,16 +32,18 @@ public class SellCarActivity extends BaseActivity implements SellCarIView {
     private PresenterSellCar presenterSellCar;
 
     private Button btnMyBills;
+    private Button btnUploadPic;
 
     private RecyclerView recyclerView;
     private PhotoAdapter photoAdapter;
 
-    private ArrayList<String> selectedPhotos = new ArrayList<>();
+    public ArrayList<String> selectedPhotos = new ArrayList<>();
 
     @Override
     protected void initContentView() {
         setContentView(R.layout.activity_sell_car);
         btnMyBills = (Button) findViewById(R.id.btn_my_bills);
+        btnUploadPic = (Button) findViewById(R.id.btn_upload_pic);
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
@@ -60,6 +64,13 @@ public class SellCarActivity extends BaseActivity implements SellCarIView {
                     .setCurrentItem(position)
                     .start(SellCarActivity.this);
         }));
+
+        //点击开始上传图片
+        btnUploadPic.setOnClickListener(v ->
+        {
+            LoadingDialog.getInstance(this,"上传文件中……").show();
+            presenterSellCar.uploadPic();
+        });
     }
 
     @Override
@@ -94,4 +105,13 @@ public class SellCarActivity extends BaseActivity implements SellCarIView {
         }
     }
 
+    /**
+     * 界面展示相关提醒操作，如上传文件成功或者失败等
+     * @param msg
+     */
+    @Override
+    public void onShowRemind(String msg) {
+        LoadingDialog.getInstance(this,"").dismiss();
+        Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();
+    }
 }

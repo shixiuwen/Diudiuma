@@ -7,7 +7,7 @@ import android.support.v4.util.ArrayMap;
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
 import com.shixia.diudiuma.common_utils.L;
-import com.shixia.diudiuma.http.HttpConstants;
+import com.shixia.diudiuma.http.ServletHttpConstants;
 
 import java.io.File;
 import java.io.IOException;
@@ -63,57 +63,42 @@ public abstract class HttpApiBase<R, T> {
      * 发送携带简单参数的Http POST请求
      */
     public void post() {
-        FormBody requestBody = getRequestBody(baseRequest);
+        FormBody requestBody = getSimpleRequestBody(baseRequest);
         Request request = new Request.Builder()
-                .url(HttpConstants.baseUrl + getApiName())
+                .url(ServletHttpConstants.baseUrl + getApiName())
                 .post(requestBody)
                 .build();
+
+        L.i("url",ServletHttpConstants.baseUrl + getApiName());
+
         client.newCall(request).enqueue(new JsonCallback());
     }
 
     /**
      * 实现文件上传
      */
-    public void multFilePost(List<String> mImgUrls) {
-        OkHttpClient client = new OkHttpClient();
-        // mImgUrls为存放图片的url集合
-        MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        for (int i = 0; i <mImgUrls.size() ; i++) {
-            File f = new File(mImgUrls.get(i));
-            if (f.exists()) {
-                //        可添加其它信息
-                //        builder.addFormDataPart("time",takePicTime);
-                builder.addFormDataPart("img", f.getName(), RequestBody.create(MEDIA_TYPE_PNG, f));
-            }
-        }
+    public void multFilePost() {
 
-        MultipartBody requestBody = builder.build();
+        MultipartBody uploadRequestBody = getUploadRequestBody(baseRequest);
+
         //构建请求
         Request request = new Request.Builder()
-                .url("")//地址
-                .post(requestBody)//添加请求体
+                .url(ServletHttpConstants.baseUrl + getApiName())//地址
+                .post(uploadRequestBody)//添加请求体
                 .build();
 
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                System.out.println("上传失败:e.getLocalizedMessage() = " + e.getLocalizedMessage());
-            }
+        L.i("url",ServletHttpConstants.baseUrl + getApiName());
 
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                System.out.println("上传照片成功：response = " + response.body().string());
-            }
-        });
+        client.newCall(request).enqueue(new UploadFileCallback());
     }
 
     /**
-     * 得到参数表单
+     * 得到简单http请求参数表单（POST）
      *
      * @param baseRequest 请求列表
      * @return 参数表单
      */
-    private FormBody getRequestBody(HttpBaseRequest baseRequest) {
+    private FormBody getSimpleRequestBody(HttpBaseRequest baseRequest) {
         //传输表单
         FormBody.Builder builder = new FormBody.Builder();
 
@@ -141,10 +126,30 @@ public abstract class HttpApiBase<R, T> {
         return builder.build();
     }
 
+    private MultipartBody getUploadRequestBody(HttpBaseRequest baseRequest){
+        List<String> mImgUrls = baseRequest.getParamsList();
+        // mImgUrls为存放图片的url集合
+        MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        for (int i = 0; i < mImgUrls.size(); i++) {
+            File f = new File(mImgUrls.get(i));
+            if (f.exists()) {
+                //        可添加其它信息
+                //        builder.addFormDataPart("time",takePicTime);
+                builder.addFormDataPart("img", f.getName(), RequestBody.create(MEDIA_TYPE_PNG, f));
+            }
+        }
+
+        return builder.build();
+    }
+
     /**
-     * http请求回调
+     * #################################  自定义请求Callback  ###############################
      */
-    private class JsonCallback implements Callback{
+
+    /**
+     * 简单http请求回调,将请求结果转化为对象
+     */
+    private class JsonCallback implements Callback {
 
         @Override
         public void onFailure(Call call, final IOException e) {
@@ -160,23 +165,53 @@ public abstract class HttpApiBase<R, T> {
             final Gson json = new Gson();
             final String result = response.body().string();
             L.i(" http -> onResponse result:", result);
-            try {
-                //主线程执行回调操作
-                handler.post(() -> {
-                    if (jsonResponseListener != null) {
+            //主线程执行回调操作
+            handler.post(() -> {
+                if (jsonResponseListener != null) {
+                    try {
                         t = json.fromJson(result, getClazz());
-                        jsonResponseListener.onSuccessful(t,result);
+                        jsonResponseListener.onSuccessful(t, result);
+                    } catch (JsonParseException e) {
+                        e.printStackTrace();
+                        jsonResponseListener.onFailure(e, null);
+                        L.i("http -> ", "请求成功，但是结果解析异常");
                     }
-                });
-            } catch (JsonParseException e) {
-                e.printStackTrace();
-                L.i("http -> ", "请求成功，但是结果解析异常");
-            }
+                }
+            });
+
+        }
+    }
+
+    /**
+     * 上传文件请求回调，返回请求成功或者失败的信息
+     */
+    private class UploadFileCallback implements Callback {
+
+        @Override
+        public void onFailure(Call call, IOException e) {
+            handler.post(()->{
+                L.i("upload","上传失败:e.getLocalizedMessage() = " + e.getLocalizedMessage());
+                jsonResponseListener.onFailure(e,"上传图片失败");
+            });
+        }
+
+        @Override
+        public void onResponse(Call call, final Response response) throws IOException {
+            handler.post(()->{
+                try {
+                    L.i("upload","上传照片成功：response = " + response.body().string());
+                    jsonResponseListener.onSuccessful(t,"上传图片成功");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
         }
     }
 
     /**
      * #################################  网络请求自定义回调接口  ###############################
+     *
+     * 回调的实现在网络请求处
      */
 
     private JsonHttpResponseListener<T> jsonResponseListener;
@@ -186,7 +221,7 @@ public abstract class HttpApiBase<R, T> {
     }
 
     public interface JsonHttpResponseListener<T> {
-        void onFailure(IOException e, String rawJsonString);
+        void onFailure(Exception e, String rawJsonString);
 
         void onSuccessful(T t, String rawJsonString);
     }

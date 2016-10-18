@@ -2,6 +2,8 @@ package com.shixia.diudiuma.http.base;
 
 import android.support.v4.util.ArrayMap;
 
+import java.util.List;
+
 /**
  * Created by AmosShi on 2016/10/10.
  * Description:
@@ -10,6 +12,7 @@ import android.support.v4.util.ArrayMap;
 public abstract class HttpBaseRequest {
 
     private ArrayMap<String, String> paramsMap;
+    private List<String> paramList;
 
     public HttpBaseRequest() {
     }
@@ -30,4 +33,15 @@ public abstract class HttpBaseRequest {
         return paramsMap;
     }
 
+    /**
+     * 设置上传文件的参数集
+     * @param paramList 文件地址
+     */
+    protected void setParamList(List<String> paramList){
+        this.paramList = paramList;
+    }
+
+    List<String> getParamsList(){
+        return paramList;
+    }
 }

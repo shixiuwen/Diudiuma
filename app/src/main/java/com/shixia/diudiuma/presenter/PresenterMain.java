@@ -23,8 +23,6 @@ import com.shixia.diudiuma.iview.base.BaseIView;
 import com.shixia.diudiuma.presenter.base.BasePresenter;
 import com.shixia.diudiuma.view.LoadingDialog;
 
-import java.io.IOException;
-
 
 /**
  * Created by AmosShi on 2016/10/12.
@@ -69,18 +67,20 @@ public class PresenterMain extends BasePresenter implements AMapLocationListener
      * 意见反馈
      */
     public void feedback() {
+        LoadingDialog.getInstance(context,"nihao").show();
         FeedbackApi feedbackApi = new FeedbackApi();
-        FeedbackHttpRequest feedback = new FeedbackHttpRequest("这是意见反馈的内容", "12345678912", "1");
+        FeedbackHttpRequest feedback = new FeedbackHttpRequest("这是意见反馈的内容", "12345678912", "shixiuwen");
         feedbackApi.setRequest(feedback);
         feedbackApi.post();
         feedbackApi.setOnJsonHttpResponseListener(new HttpApiBase.JsonHttpResponseListener<FeedbackHttpResponse>() {
             @Override
-            public void onFailure(IOException e, String rawJsonString) {
-
+            public void onFailure(Exception e, String rawJsonString) {
+                LoadingDialog.getInstance(context,"nihao").dismiss();
             }
 
             @Override
             public void onSuccessful(FeedbackHttpResponse o, String rawJsonString) {
+                LoadingDialog.getInstance(context,"nihao").dismiss();
                 Toast.makeText(context, o.getStatus() + " " + o.getInfo(), Toast.LENGTH_SHORT).show();
             }
         });
@@ -95,8 +95,6 @@ public class PresenterMain extends BasePresenter implements AMapLocationListener
         Gson userGson = new Gson();
         User user = userGson.fromJson(strUser2, User.class);
         Toast.makeText(context, user.getName() + " " + user.getAge() + " " + user.getSex(), Toast.LENGTH_SHORT).show();
-
-        LoadingDialog.getInstance(context,"nihao").show();
 
     }
 

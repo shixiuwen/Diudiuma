@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.shixia.diudiuma.R;
 
@@ -19,7 +20,8 @@ import com.shixia.diudiuma.R;
 public class LoadingDialog extends Dialog {
 
     private static LoadingDialog loadingDialog;
-    private static Context context;
+    private Context context;
+    private static TextView tvLoadingMsg;
 
     private LoadingDialog(Context context) {
         super(context);
@@ -30,21 +32,30 @@ public class LoadingDialog extends Dialog {
     }
 
     public static LoadingDialog getInstance(Context context,String message){
-        LoadingDialog.context = context;
         if(loadingDialog == null){
             loadingDialog = new LoadingDialog(context,R.style.loading_dialog);
             loadingDialog.setCanceledOnTouchOutside(false);
             loadingDialog.setCancelable(true);
-            View view = LayoutInflater.from(context).inflate(R.layout.layout_progress_dialog_view, null);
-            ImageView imgProgress = (ImageView) view.findViewById(R.id.img_progress_image);
-            ObjectAnimator animator = ObjectAnimator.ofFloat(imgProgress, "rotation", 0f, 360f);
-            animator.setRepeatMode(ValueAnimator.RESTART);
-            animator.setRepeatCount(ValueAnimator.INFINITE);
-            animator.setDuration(1000);
-            animator.setInterpolator(new LinearInterpolator());
-            animator.start();
-            loadingDialog.setContentView(view);
+            setDialogStyle(context);
         }
+        tvLoadingMsg.setText(message);
         return loadingDialog;
+    }
+
+    /**
+     * 设置Dialog的动画及外观信息
+     * @param context context
+     */
+    private static void setDialogStyle(Context context){
+        View view = LayoutInflater.from(context).inflate(R.layout.layout_progress_dialog_view, null);
+        ImageView imgProgress = (ImageView) view.findViewById(R.id.img_progress_image);
+        tvLoadingMsg = (TextView) view.findViewById(R.id.tv_loading_msg);
+        ObjectAnimator animator = ObjectAnimator.ofFloat(imgProgress, "rotation", 0f, 360f);
+        animator.setRepeatMode(ValueAnimator.RESTART);
+        animator.setRepeatCount(ValueAnimator.INFINITE);
+        animator.setDuration(1000);
+        animator.setInterpolator(new LinearInterpolator());
+        animator.start();
+        loadingDialog.setContentView(view);
     }
 }

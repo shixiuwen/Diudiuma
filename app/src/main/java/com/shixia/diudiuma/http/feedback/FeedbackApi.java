@@ -1,6 +1,6 @@
 package com.shixia.diudiuma.http.feedback;
 
-import com.shixia.diudiuma.http.HttpConstants;
+import com.shixia.diudiuma.http.ServletHttpConstants;
 import com.shixia.diudiuma.http.base.HttpApiBase;
 
 /**
@@ -12,7 +12,7 @@ public class FeedbackApi extends HttpApiBase<FeedbackHttpRequest,FeedbackHttpRes
 
     @Override
     public String getApiName() {
-        return HttpConstants.commitFeedback;
+        return ServletHttpConstants.commitFeedback;
     }
 
     @Override
