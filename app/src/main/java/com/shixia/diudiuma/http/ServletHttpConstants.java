@@ -8,10 +8,10 @@ package com.shixia.diudiuma.http;
 public class ServletHttpConstants {
 
     //内网测试环境
-    public static final String baseUrl = "http://172.30.228.1:8080/FirstDemo";
+    public static final String baseUrl = "http://172.30.228.1:8080/DiuDiumaServer";
 
     //意见反馈
-    public static final String commitFeedback = "/servlet/MyFirstServlet";
+    public static final String commitFeedback = "/servlet/TestServlet";
 
     //上传图片
     public static final String uploadPic = "/servlet/UploadServlet";
