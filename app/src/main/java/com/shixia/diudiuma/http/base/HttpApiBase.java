@@ -74,16 +74,22 @@ public abstract class HttpApiBase<R, T> {
     }
 
     /**
-     * 实现文件上传
+     * 实现文件批量上传
      */
     public void multFilePost() {
 
         MultipartBody uploadRequestBody = getUploadRequestBody(baseRequest);
+//        ProgressMultipartBody uploadRequestBody = getUploadRequestBody(baseRequest);
 
         //构建请求
         Request request = new Request.Builder()
                 .url(ServletHttpConstants.baseUrl + getApiName())//地址
-                .post(uploadRequestBody)//添加请求体
+                .post(new ProgressMultipartBody(uploadRequestBody) {//添加请求体
+                    @Override
+                    public void loading(long current, long total, boolean done) {
+                        // TODO: 2016/10/19 上传进度处理
+                    }
+                })
                 .build();
 
         L.i("url",ServletHttpConstants.baseUrl + getApiName());
@@ -125,7 +131,13 @@ public abstract class HttpApiBase<R, T> {
         return builder.build();
     }
 
+    /**
+     * 批量上传请求体
+     * @param baseRequest 请求列表
+     * @return 请求上传内容
+     */
     private MultipartBody getUploadRequestBody(HttpBaseRequest baseRequest){
+
         List<String> mImgUrls = baseRequest.getParamsList();
         //拷贝文件的压缩副本，重新建立List
 //        BitmapFactory.decodeFile()
@@ -139,6 +151,8 @@ public abstract class HttpApiBase<R, T> {
                 builder.addFormDataPart("img", f.getName(), RequestBody.create(MEDIA_TYPE_PNG, f));
             }
         }
+
+//        return new ProgressMultipartBody(builder.build());
 
         return builder.build();
     }
@@ -226,8 +240,5 @@ public abstract class HttpApiBase<R, T> {
 
         void onSuccessful(T t, String rawJsonString);
     }
-
-//    //将请求的回调放在主线程中执行，通常是有关界面的操作,用static标识，让handler保持主线程的Looper
-//    private static Handler handler = new Handler(Looper.getMainLooper());
 
 }
