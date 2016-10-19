@@ -1,5 +1,6 @@
 package com.shixia.diudiuma.http.base;
 
+import android.os.Environment;
 import android.support.v4.util.ArrayMap;
 
 import com.google.gson.Gson;
@@ -8,7 +9,9 @@ import com.shixia.diudiuma.MyApplication;
 import com.shixia.diudiuma.common_utils.L;
 import com.shixia.diudiuma.http.ServletHttpConstants;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +53,7 @@ public abstract class HttpApiBase<R, T> {
             .writeTimeout(5000, TimeUnit.MILLISECONDS).build();
 
     /**
-     * 采用POST请求时设置请求体
+     * 采用POST请求时设置请求体，发送请求之前请务必调用该方法
      *
      * @param request request
      */
@@ -59,6 +62,8 @@ public abstract class HttpApiBase<R, T> {
     }
 
     /**
+     * 主要用途：一般请求
+     *
      * 发送携带简单参数的Http POST请求
      */
     public void post() {
@@ -74,12 +79,13 @@ public abstract class HttpApiBase<R, T> {
     }
 
     /**
+     * 主要用途：上传图片
+     *
      * 实现文件批量上传
      */
     public void multFilePost() {
 
         MultipartBody uploadRequestBody = getUploadRequestBody(baseRequest);
-//        ProgressMultipartBody uploadRequestBody = getUploadRequestBody(baseRequest);
 
         //构建请求
         Request request = new Request.Builder()
@@ -88,6 +94,7 @@ public abstract class HttpApiBase<R, T> {
                     @Override
                     public void loading(long current, long total, boolean done) {
                         // TODO: 2016/10/19 上传进度处理
+//                        L.i("upload file","current:"+current+" "+"total:"+total);
                     }
                 })
                 .build();
@@ -98,7 +105,47 @@ public abstract class HttpApiBase<R, T> {
     }
 
     /**
-     * 得到简单http请求参数表单（POST）
+     * 主要用途：发现有更新后下载更新apk
+     *
+     * 实现文件下载
+     */
+    public void downloadFilePost(){
+
+        FormBody requestBody = getSimpleRequestBody(baseRequest);
+
+        Request request = new Request.Builder()
+                .url(ServletHttpConstants.baseUrl + getApiName())//地址
+                .post(requestBody)  //添加请求体
+                .build();
+
+        L.i("url",ServletHttpConstants.baseUrl + getApiName());
+
+        //为了实现拦截器，下载文件的时候重新创建client
+        OkHttpClient downloadClient = new OkHttpClient.Builder()
+                .connectTimeout(5000, TimeUnit.MILLISECONDS)
+                .readTimeout(5000, TimeUnit.MILLISECONDS)
+                .writeTimeout(5000, TimeUnit.MILLISECONDS)
+                .addInterceptor(chain -> {
+                    Response proceed = chain.proceed(request);
+                    return proceed.newBuilder().body(new ProgressResponseBody(proceed.body()) {
+                        @Override
+                        public void loading(long current, long total, boolean done) {
+                            // TODO: 2016/10/19 下载进度处理
+                            if(progressUpdateListener!=null){
+                                MyApplication.UIHandler.post(() ->
+                                        progressUpdateListener.onProgressUpdate(current,total,done));
+                            }
+//                                    L.i("download file","current:"+current+" "+"total:"+total);
+                        }
+                    }).build();
+                })
+                .build();
+
+        downloadClient.newCall(request).enqueue(new DownloadFileCallback());
+    }
+
+    /**
+     * 对应一般http请求，得到简单http请求参数表单（POST）
      *
      * @param baseRequest 请求列表
      * @return 参数表单
@@ -132,7 +179,8 @@ public abstract class HttpApiBase<R, T> {
     }
 
     /**
-     * 批量上传请求体
+     * 对应上传图片http请求，批量上传请求体
+     *
      * @param baseRequest 请求列表
      * @return 请求上传内容
      */
@@ -151,8 +199,6 @@ public abstract class HttpApiBase<R, T> {
                 builder.addFormDataPart("img", f.getName(), RequestBody.create(MEDIA_TYPE_PNG, f));
             }
         }
-
-//        return new ProgressMultipartBody(builder.build());
 
         return builder.build();
     }
@@ -224,6 +270,37 @@ public abstract class HttpApiBase<R, T> {
     }
 
     /**
+     * 下载更新apk请求回调
+     */
+    private class DownloadFileCallback implements Callback {
+
+        @Override
+        public void onFailure(Call call, IOException e) {
+
+        }
+
+        @Override
+        public void onResponse(Call call, Response response) throws IOException {
+            byte[] bytes = response.body().bytes();
+            L.i("apk size",bytes.length + "");
+            //注意执行到该步骤文件流已经下载完成
+            String s = Environment.getExternalStorageDirectory().getPath();
+            L.i("apk file",s);
+            File file = new File(s+"/new_apk.apk");
+            if(!file.exists()){
+                file.createNewFile();
+            }
+            FileOutputStream outputStream = new FileOutputStream(file);
+            BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(outputStream);
+            bufferedOutputStream.write(bytes);
+            outputStream.flush();
+            bufferedOutputStream.flush();
+            outputStream.close();
+            bufferedOutputStream.close();
+        }
+    }
+
+    /**
      * #################################  网络请求自定义回调接口  ###############################
      *
      * 回调的实现在网络请求处
@@ -235,10 +312,22 @@ public abstract class HttpApiBase<R, T> {
         this.jsonResponseListener = jsonResponseListener;
     }
 
+    //网络请求成功或者失败的回调
     public interface JsonHttpResponseListener<T> {
         void onFailure(Exception e, String rawJsonString);
 
         void onSuccessful(T t, String rawJsonString);
+    }
+
+    private ProgressUpdateListener progressUpdateListener;
+
+    public void setOnProgressUpdateListener(ProgressUpdateListener progressUpdateListener){
+        this.progressUpdateListener = progressUpdateListener;
+    }
+
+    //下载或者上传进度的回调
+    public interface ProgressUpdateListener{
+        void onProgressUpdate(long current, long total, boolean done);
     }
 
 }

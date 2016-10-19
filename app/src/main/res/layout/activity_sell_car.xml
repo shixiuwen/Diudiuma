@@ -33,14 +33,30 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/btn_my_bills"
-            android:text="我的账单" />
+            android:text="选择图片" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/btn_upload_pic"
             android:text="上传图片" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_download_apk"
+            android:text="下载apk" />
     </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_progress"
+        android:layout_centerInParent="true"
+        android:text="0%"
+        android:textSize="84px"
+        android:textColor="#1abca1"
+        android:textStyle="bold"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"

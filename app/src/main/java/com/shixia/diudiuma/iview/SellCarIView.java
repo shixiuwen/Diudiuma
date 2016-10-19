@@ -10,4 +10,5 @@ import com.shixia.diudiuma.iview.base.BaseIView;
 
 public interface SellCarIView extends BaseIView {
     void onShowRemind(String msg);
+    void onDownloadProgressUpdate(String progress);
 }

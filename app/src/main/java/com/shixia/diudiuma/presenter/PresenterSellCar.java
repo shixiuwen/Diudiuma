@@ -12,6 +12,9 @@ import com.shixia.diudiuma.common_utils.ImageFactory;
 import com.shixia.diudiuma.common_utils.L;
 import com.shixia.diudiuma.common_utils.PermissionUtils;
 import com.shixia.diudiuma.http.base.HttpApiBase;
+import com.shixia.diudiuma.http.download_apk.DownloadApkApi;
+import com.shixia.diudiuma.http.download_apk.DownloadApkHttpRequest;
+import com.shixia.diudiuma.http.download_apk.DownloadApkHttpResponse;
 import com.shixia.diudiuma.http.upload.UploadApi;
 import com.shixia.diudiuma.http.upload.UploadHttpRequest;
 import com.shixia.diudiuma.http.upload.UploadHttpResponse;
@@ -149,6 +152,31 @@ public class PresenterSellCar extends BasePresenter {
         }
         bufis.close();
         bufos.close();*/
+    }
+
+    //下载软件更新包
+    public void downloadApk() {
+        DownloadApkApi downloadApkApi = new DownloadApkApi();
+        DownloadApkHttpRequest downloadApkHttpRequest = new DownloadApkHttpRequest("0.3");
+        downloadApkApi.setRequest(downloadApkHttpRequest);
+        downloadApkApi.downloadFilePost();
+        downloadApkApi.setOnJsonHttpResponseListener(new HttpApiBase.JsonHttpResponseListener<DownloadApkHttpResponse>() {
+            @Override
+            public void onFailure(Exception e, String rawJsonString) {
+
+            }
+
+            @Override
+            public void onSuccessful(DownloadApkHttpResponse downloadApkHttpResponse, String rawJsonString) {
+
+            }
+        });
+        downloadApkApi.setOnProgressUpdateListener(new HttpApiBase.ProgressUpdateListener() {
+            @Override
+            public void onProgressUpdate(long current, long total, boolean done) {
+                iView.onDownloadProgressUpdate(String.valueOf(current));
+            }
+        });
     }
 
     @Override

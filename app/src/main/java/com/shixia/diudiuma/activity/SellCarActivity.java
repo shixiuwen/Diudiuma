@@ -5,6 +5,7 @@ import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.shixia.diudiuma.MyApplication;
@@ -34,6 +35,8 @@ public class SellCarActivity extends BaseActivity implements SellCarIView {
 
     private Button btnMyBills;
     private Button btnUploadPic;
+    private Button btnDownloadApk;
+    private TextView tvProgress;
 
     private RecyclerView recyclerView;
     private PhotoAdapter photoAdapter;
@@ -45,6 +48,8 @@ public class SellCarActivity extends BaseActivity implements SellCarIView {
         setContentView(R.layout.activity_sell_car);
         btnMyBills = (Button) findViewById(R.id.btn_my_bills);
         btnUploadPic = (Button) findViewById(R.id.btn_upload_pic);
+        btnDownloadApk = (Button) findViewById(R.id.btn_download_apk);
+        tvProgress = (TextView) findViewById(R.id.tv_progress);
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
@@ -67,10 +72,9 @@ public class SellCarActivity extends BaseActivity implements SellCarIView {
         }));
 
         //点击开始上传图片
-        btnUploadPic.setOnClickListener(v ->
-        {
-            presenterSellCar.uploadPic();
-        });
+        btnUploadPic.setOnClickListener(v -> presenterSellCar.uploadPic());
+        //点击开始下载apk
+        btnDownloadApk.setOnClickListener(v -> presenterSellCar.downloadApk());
     }
 
     @Override
@@ -115,5 +119,10 @@ public class SellCarActivity extends BaseActivity implements SellCarIView {
             LoadingDialog.getInstance(this,"").dismiss();
             Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();
         });
+    }
+
+    @Override
+    public void onDownloadProgressUpdate(String progress) {
+        tvProgress.setText(progress+"%");
     }
 }

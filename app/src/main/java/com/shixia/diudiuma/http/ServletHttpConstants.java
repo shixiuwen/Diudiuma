@@ -15,4 +15,7 @@ public class ServletHttpConstants {
 
     //上传图片
     public static final String uploadPic = "/servlet/UploadServlet";
+
+    //下载apk更新包
+    public static final String updataApk = "/servlet/DownloadApkServlet";
 }

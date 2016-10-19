@@ -37,7 +37,7 @@ public abstract class HttpBaseRequest {
      * 设置上传文件的参数集
      * @param paramList 文件地址
      */
-    protected void setParamList(List<String> paramList){
+    protected void setParamsList(List<String> paramList){
         this.paramList = paramList;
     }
 

@@ -21,7 +21,7 @@ public class UploadHttpRequest extends HttpBaseRequest {
     public UploadHttpRequest(List<String> picUri) {
         super();
 
-        setParamList(picUri);
+        setParamsList(picUri);
     }
 
 }
