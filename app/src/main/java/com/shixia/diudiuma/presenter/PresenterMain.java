@@ -9,6 +9,7 @@ import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.google.gson.Gson;
+import com.shixia.diudiuma.MyApplication;
 import com.shixia.diudiuma.R;
 import com.shixia.diudiuma.activity.MainActivity;
 import com.shixia.diudiuma.activity.SellCarActivity;
@@ -67,7 +68,7 @@ public class PresenterMain extends BasePresenter implements AMapLocationListener
      * 意见反馈
      */
     public void feedback() {
-        LoadingDialog.getInstance(context,"nihao").show();
+        MyApplication.UIHandler.post(() -> LoadingDialog.getInstance(context,"nihao").show());
         FeedbackApi feedbackApi = new FeedbackApi();
         FeedbackHttpRequest feedback = new FeedbackHttpRequest("这是意见反馈的内容", "12345678912", "shixiuwen");
         feedbackApi.setRequest(feedback);

@@ -7,6 +7,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.shixia.diudiuma.MyApplication;
 import com.shixia.diudiuma.R;
 import com.shixia.diudiuma.activity.base.BaseActivity;
 import com.shixia.diudiuma.adapter.PhotoAdapter;
@@ -68,7 +69,6 @@ public class SellCarActivity extends BaseActivity implements SellCarIView {
         //点击开始上传图片
         btnUploadPic.setOnClickListener(v ->
         {
-            LoadingDialog.getInstance(this,"上传文件中……").show();
             presenterSellCar.uploadPic();
         });
     }
@@ -111,7 +111,9 @@ public class SellCarActivity extends BaseActivity implements SellCarIView {
      */
     @Override
     public void onShowRemind(String msg) {
-        LoadingDialog.getInstance(this,"").dismiss();
-        Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();
+        MyApplication.UIHandler.post(() -> {
+            LoadingDialog.getInstance(this,"").dismiss();
+            Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();
+        });
     }
 }

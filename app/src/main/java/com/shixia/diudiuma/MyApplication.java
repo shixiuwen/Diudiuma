@@ -1,6 +1,8 @@
 package com.shixia.diudiuma;
 
 import android.app.Application;
+import android.os.Handler;
+import android.os.Looper;
 
 import com.shixia.diudiuma.common_utils.L;
 
@@ -10,6 +12,10 @@ import com.shixia.diudiuma.common_utils.L;
  */
 
 public class MyApplication extends Application {
+
+    //初始化运行在UI线程中的handler
+    public static Handler UIHandler = new Handler(Looper.getMainLooper());
+
     @Override
     public void onCreate() {
         super.onCreate();

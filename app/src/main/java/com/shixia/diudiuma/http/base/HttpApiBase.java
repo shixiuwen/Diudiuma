@@ -1,11 +1,10 @@
 package com.shixia.diudiuma.http.base;
 
-import android.os.Handler;
-import android.os.Looper;
 import android.support.v4.util.ArrayMap;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
+import com.shixia.diudiuma.MyApplication;
 import com.shixia.diudiuma.common_utils.L;
 import com.shixia.diudiuma.http.ServletHttpConstants;
 
@@ -128,6 +127,8 @@ public abstract class HttpApiBase<R, T> {
 
     private MultipartBody getUploadRequestBody(HttpBaseRequest baseRequest){
         List<String> mImgUrls = baseRequest.getParamsList();
+        //拷贝文件的压缩副本，重新建立List
+//        BitmapFactory.decodeFile()
         // mImgUrls为存放图片的url集合
         MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
         for (int i = 0; i < mImgUrls.size(); i++) {
@@ -156,7 +157,7 @@ public abstract class HttpApiBase<R, T> {
             L.i(" http -> onFailure exception:", e.toString());
             if (jsonResponseListener != null) {
                 //主线程执行回调操作
-                handler.post(() -> jsonResponseListener.onFailure(e, null));
+                MyApplication.UIHandler.post(() -> jsonResponseListener.onFailure(e, null));
             }
         }
 
@@ -166,7 +167,7 @@ public abstract class HttpApiBase<R, T> {
             final String result = response.body().string();
             L.i(" http -> onResponse result:", result);
             //主线程执行回调操作
-            handler.post(() -> {
+            MyApplication.UIHandler.post(() -> {
                 if (jsonResponseListener != null) {
                     try {
                         t = json.fromJson(result, getClazz());
@@ -189,7 +190,7 @@ public abstract class HttpApiBase<R, T> {
 
         @Override
         public void onFailure(Call call, IOException e) {
-            handler.post(()->{
+            MyApplication.UIHandler.post(()->{
                 L.i("upload","上传失败:e.getLocalizedMessage() = " + e.getLocalizedMessage());
                 jsonResponseListener.onFailure(e,"上传图片失败");
             });
@@ -197,7 +198,7 @@ public abstract class HttpApiBase<R, T> {
 
         @Override
         public void onResponse(Call call, final Response response) throws IOException {
-            handler.post(()->{
+            MyApplication.UIHandler.post(()->{
                 try {
                     L.i("upload","上传照片成功：response = " + response.body().string());
                     jsonResponseListener.onSuccessful(t,"上传图片成功");
@@ -226,7 +227,7 @@ public abstract class HttpApiBase<R, T> {
         void onSuccessful(T t, String rawJsonString);
     }
 
-    //将请求的回调放在主线程中执行，通常是有关界面的操作
-    private Handler handler = new Handler(Looper.getMainLooper());
+//    //将请求的回调放在主线程中执行，通常是有关界面的操作,用static标识，让handler保持主线程的Looper
+//    private static Handler handler = new Handler(Looper.getMainLooper());
 
 }
