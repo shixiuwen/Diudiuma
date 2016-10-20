@@ -16,7 +16,7 @@ import com.shixia.diudiuma.iview.SellCarIView;
 import com.shixia.diudiuma.listener.RecyclerItemClickListener;
 import com.shixia.diudiuma.presenter.PresenterSellCar;
 import com.shixia.diudiuma.presenter.base.BasePresenter;
-import com.shixia.diudiuma.view.CustomToast;
+import com.shixia.diudiuma.view.CToast;
 import com.shixia.diudiuma.view.LoadingDialog;
 
 import java.util.ArrayList;
@@ -119,7 +119,7 @@ public class SellCarActivity extends BaseActivity implements SellCarIView {
         MyApplication.UIHandler.post(() -> {
             LoadingDialog.getInstance(this,"").dismiss();
 //            Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();
-            CustomToast.showToast(this,msg, Toast.LENGTH_SHORT).show();
+            CToast.makeCText(this,msg, Toast.LENGTH_SHORT).show();
         });
     }
 
