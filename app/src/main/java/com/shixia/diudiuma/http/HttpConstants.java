@@ -2,7 +2,8 @@ package com.shixia.diudiuma.http;
 
 /**
  * Created by AmosShi on 2016/10/13.
- * Description:
+ *
+ * Description: 接口地址
  */
 
 public class HttpConstants {

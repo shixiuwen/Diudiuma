@@ -12,7 +12,8 @@ import okio.Sink;
 
 /**
  * Created by AmosShi on 2016/10/19.
- * Description:
+ *
+ * Description:提供文件上传进度的监听
  */
 
 public abstract class ProgressMultipartBody extends RequestBody {

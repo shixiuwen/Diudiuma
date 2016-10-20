@@ -22,6 +22,7 @@ import com.shixia.diudiuma.http.feedback.FeedbackHttpResponse;
 import com.shixia.diudiuma.iview.MainActivityIView;
 import com.shixia.diudiuma.iview.base.BaseIView;
 import com.shixia.diudiuma.presenter.base.BasePresenter;
+import com.shixia.diudiuma.view.CToast;
 import com.shixia.diudiuma.view.LoadingDialog;
 
 
@@ -82,7 +83,7 @@ public class PresenterMain extends BasePresenter implements AMapLocationListener
             @Override
             public void onSuccessful(FeedbackHttpResponse o, String rawJsonString) {
                 LoadingDialog.getInstance(context,"nihao").dismiss();
-                Toast.makeText(context, o.getStatus() + " " + o.getInfo(), Toast.LENGTH_SHORT).show();
+                CToast.makeCText(context, o.getStatus() + " " + o.getInfo(), Toast.LENGTH_SHORT).show();
             }
         });
     }

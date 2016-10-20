@@ -14,7 +14,8 @@ import okio.Source;
 
 /**
  * Created by AmosShi on 2016/10/19.
- * Description:
+ *
+ * Description: 提供文件下载进度的监听
  */
 
 public abstract class ProgressResponseBody extends ResponseBody {
