@@ -30,6 +30,7 @@ import okhttp3.Response;
 
 /**
  * Created by AmosShi on 2016/10/10.
+ *
  * Description:发送Http请求的基类，其中泛型R为预留参数，供GET请求参数的封装
  */
 
@@ -283,7 +284,7 @@ public abstract class HttpApiBase<R, T> {
         public void onResponse(Call call, Response response) throws IOException {
             byte[] bytes = response.body().bytes();
             L.i("apk size",bytes.length + "");
-            //注意执行到该步骤文件流已经下载完成
+            //注意执行到该步骤文件流已经下载完成,接下来是保存到本地的操作
             String s = Environment.getExternalStorageDirectory().getPath();
             L.i("apk file",s);
             File file = new File(s+"/new_apk.apk");

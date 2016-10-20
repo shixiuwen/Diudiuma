@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Context;
 import android.os.Environment;
 import android.text.TextUtils;
+import android.widget.Toast;
 
 import com.shixia.diudiuma.MyApplication;
 import com.shixia.diudiuma.activity.SellCarActivity;
@@ -120,9 +121,6 @@ public class PresenterSellCar extends BasePresenter {
         //得到文件后缀
         L.i("fiel path",filePath);
         String[] split = filePath.split("\\.");
-        for (int i = 0; i < split.length; i++) {
-            L.i("split",split[i]);
-        }
         String fileType = split[split.length - 1];
         if(TextUtils.isEmpty(fileType)){
             fileType = "jpg";
@@ -163,20 +161,16 @@ public class PresenterSellCar extends BasePresenter {
         downloadApkApi.setOnJsonHttpResponseListener(new HttpApiBase.JsonHttpResponseListener<DownloadApkHttpResponse>() {
             @Override
             public void onFailure(Exception e, String rawJsonString) {
-
+                Toast.makeText(context,"下载更新包失败，请检查网络设置",Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onSuccessful(DownloadApkHttpResponse downloadApkHttpResponse, String rawJsonString) {
-
+                Toast.makeText(context,"下载更新包成功",Toast.LENGTH_SHORT).show();
             }
         });
-        downloadApkApi.setOnProgressUpdateListener(new HttpApiBase.ProgressUpdateListener() {
-            @Override
-            public void onProgressUpdate(long current, long total, boolean done) {
-                iView.onDownloadProgressUpdate(String.valueOf(current));
-            }
-        });
+        downloadApkApi.setOnProgressUpdateListener((current, total, done) ->
+                iView.onDownloadProgressUpdate(String.valueOf(current)));
     }
 
     @Override

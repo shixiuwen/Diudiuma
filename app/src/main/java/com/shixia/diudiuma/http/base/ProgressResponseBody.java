@@ -84,7 +84,7 @@ public abstract class ProgressResponseBody extends ResponseBody {
                 //回调，如果contentLength()不知道长度，会返回 -1
                 int now = (int) (totalBytesRead * 100 / total);
                 if (last < now) {
-                    loading(last, 100, total == totalBytesRead);
+                    loading(now, 100, total == totalBytesRead);
                     last = now;
                 }
                 return bytesRead;
