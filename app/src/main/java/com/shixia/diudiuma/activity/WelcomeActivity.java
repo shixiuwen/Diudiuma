@@ -30,7 +30,9 @@ public class WelcomeActivity extends BaseActivity {
     @Override
     protected void initContentView() {
         setContentView(R.layout.activity_welcome);
-        StatusBarCompat.compat(this);   //设置沉浸式状态栏颜色
+//        StatusBarCompat.compat(this);   //设置沉浸式状态栏颜色,在ViewPager中不要用这种方式，要用直接将状态栏变透明的方式
+        StatusBarCompat.compatBarTraslucent(this);
+
         vpPage = (ViewPager) findViewById(R.id.vp_welcome);
         viewList.add(new WelcomePageOneFragment());
         viewList.add(new WelcomePageTwoFragment());
@@ -49,13 +51,13 @@ public class WelcomeActivity extends BaseActivity {
             @Override
             public void onPageSelected(int position) {
                 //测试沉浸式状态栏
-                if(position == 0){
-                    StatusBarCompat.changeStatusBarColor(WelcomeActivity.this,getResources().getColor(R.color.colorPrimary));
-                }else if(position == 1){
-                    StatusBarCompat.changeStatusBarColor(WelcomeActivity.this,getResources().getColor(R.color.colorPrimaryDark));
-                }else if(position == 2){
-                    StatusBarCompat.changeStatusBarColor(WelcomeActivity.this,getResources().getColor(R.color.__picker_pager_bg));
-                }
+//                if(position == 0){
+//                    StatusBarCompat.changeStatusBarColor(WelcomeActivity.this,getResources().getColor(R.color.colorPrimary));
+//                }else if(position == 1){
+//                    StatusBarCompat.changeStatusBarColor(WelcomeActivity.this,getResources().getColor(R.color.colorPrimaryDark));
+//                }else if(position == 2){
+//                    StatusBarCompat.changeStatusBarColor(WelcomeActivity.this,getResources().getColor(R.color.__picker_pager_bg));
+//                }
             }
 
             @Override
