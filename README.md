@@ -2,7 +2,7 @@
 
 > 个人项目,主要用于代码练习
 
-## 所用到的库：
+## 所用到的库(未完善)
 
 - [x] RxJava
 
@@ -16,7 +16,7 @@
 
 - [x] 强大的BaseQuickAdapter用于适配RecyclerView（library）
 
-## 涉及知识点
+## 涉及知识点(未完善)
 
 - [x] MPV设计模式的使用
 
@@ -30,7 +30,7 @@
 
 - [x] 自定义Dialog,自定义Toast,自定义Log
 
-##第三方SDK
+##第三方SDK(未完善)
 
 - [x] 高德定位SDK
 
