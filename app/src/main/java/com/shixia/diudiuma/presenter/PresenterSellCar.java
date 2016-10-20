@@ -68,7 +68,7 @@ public class PresenterSellCar extends BasePresenter {
                 .observeOn(Schedulers.newThread())
                 .subscribe(stringList -> {
                     if(stringList != null && stringList.size() > 0){
-                        ((SellCarActivity)context).runOnUiThread(() -> LoadingDialog.getInstance(context,"上传文件中……").show());
+                        MyApplication.UIHandler.post(() -> LoadingDialog.getInstance(context,"上传文件中……").show());
                         UploadApi uploadApi = new UploadApi();
                         UploadHttpRequest uploadHttpRequest = new UploadHttpRequest(stringList);
                         uploadApi.setRequest(uploadHttpRequest);
