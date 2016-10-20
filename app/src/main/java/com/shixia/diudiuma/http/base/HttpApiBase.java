@@ -2,6 +2,7 @@ package com.shixia.diudiuma.http.base;
 
 import android.os.Environment;
 import android.support.v4.util.ArrayMap;
+import android.text.TextUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
@@ -30,7 +31,7 @@ import okhttp3.Response;
 
 /**
  * Created by AmosShi on 2016/10/10.
- *
+ * <p>
  * Description:发送Http请求的基类，其中泛型R为预留参数，供GET请求参数的封装
  */
 
@@ -64,7 +65,7 @@ public abstract class HttpApiBase<R, T> {
 
     /**
      * 主要用途：一般请求
-     *
+     * <p>
      * 发送携带简单参数的Http POST请求
      */
     public void post() {
@@ -74,14 +75,14 @@ public abstract class HttpApiBase<R, T> {
                 .post(requestBody)
                 .build();
 
-        L.i("url",ServletHttpConstants.baseUrl + getApiName());
+        L.i("url", ServletHttpConstants.baseUrl + getApiName());
 
         client.newCall(request).enqueue(new JsonCallback());
     }
 
     /**
      * 主要用途：上传图片
-     *
+     * <p>
      * 实现文件批量上传
      */
     public void multFilePost() {
@@ -100,17 +101,17 @@ public abstract class HttpApiBase<R, T> {
                 })
                 .build();
 
-        L.i("url",ServletHttpConstants.baseUrl + getApiName());
+        L.i("url", ServletHttpConstants.baseUrl + getApiName());
 
         client.newCall(request).enqueue(new UploadFileCallback());
     }
 
     /**
      * 主要用途：发现有更新后下载更新apk
-     *
+     * <p>
      * 实现文件下载
      */
-    public void downloadFilePost(){
+    public void downloadFilePost() {
 
         FormBody requestBody = getSimpleRequestBody(baseRequest);
 
@@ -119,7 +120,7 @@ public abstract class HttpApiBase<R, T> {
                 .post(requestBody)  //添加请求体
                 .build();
 
-        L.i("url",ServletHttpConstants.baseUrl + getApiName());
+        L.i("url", ServletHttpConstants.baseUrl + getApiName());
 
         //为了实现拦截器，下载文件的时候重新创建client
         OkHttpClient downloadClient = new OkHttpClient.Builder()
@@ -132,9 +133,9 @@ public abstract class HttpApiBase<R, T> {
                         @Override
                         public void loading(long current, long total, boolean done) {
                             // TODO: 2016/10/19 下载进度处理
-                            if(progressUpdateListener!=null){
+                            if (progressUpdateListener != null) {
                                 MyApplication.UIHandler.post(() ->
-                                        progressUpdateListener.onProgressUpdate(current,total,done));
+                                        progressUpdateListener.onProgressUpdate(current, total, done));
                             }
 //                                    L.i("download file","current:"+current+" "+"total:"+total);
                         }
@@ -185,7 +186,7 @@ public abstract class HttpApiBase<R, T> {
      * @param baseRequest 请求列表
      * @return 请求上传内容
      */
-    private MultipartBody getUploadRequestBody(HttpBaseRequest baseRequest){
+    private MultipartBody getUploadRequestBody(HttpBaseRequest baseRequest) {
 
         List<String> mImgUrls = baseRequest.getParamsList();
         //拷贝文件的压缩副本，重新建立List
@@ -251,18 +252,18 @@ public abstract class HttpApiBase<R, T> {
 
         @Override
         public void onFailure(Call call, IOException e) {
-            MyApplication.UIHandler.post(()->{
-                L.i("upload","上传失败:e.getLocalizedMessage() = " + e.getLocalizedMessage());
-                jsonResponseListener.onFailure(e,"上传图片失败");
+            MyApplication.UIHandler.post(() -> {
+                L.i("upload", "上传失败:e.getLocalizedMessage() = " + e.getLocalizedMessage());
+                jsonResponseListener.onFailure(e, "上传图片失败");
             });
         }
 
         @Override
         public void onResponse(Call call, final Response response) throws IOException {
-            MyApplication.UIHandler.post(()->{
+            MyApplication.UIHandler.post(() -> {
                 try {
-                    L.i("upload","上传照片成功：response = " + response.body().string());
-                    jsonResponseListener.onSuccessful(t,"上传图片成功");
+                    L.i("upload", "上传照片成功：response = " + response.body().string());
+                    jsonResponseListener.onSuccessful(t, "上传图片成功");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -282,13 +283,19 @@ public abstract class HttpApiBase<R, T> {
 
         @Override
         public void onResponse(Call call, Response response) throws IOException {
+            String filename = null;
+//            String filename = response.header("Content-Disposition");  //从头信息中获取要下载的文件名
+            if (TextUtils.isEmpty(filename)) {
+                filename = "new_apk.apk";
+            }
+            L.i("file name",filename);
             byte[] bytes = response.body().bytes();
-            L.i("apk size",bytes.length + "");
+            L.i("apk size", bytes.length + "");
             //注意执行到该步骤文件流已经下载完成,接下来是保存到本地的操作
             String s = Environment.getExternalStorageDirectory().getPath();
-            L.i("apk file",s);
-            File file = new File(s+"/new_apk.apk");
-            if(!file.exists()){
+            L.i("apk file", s);
+            File file = new File(s + "/" + filename);
+            if (!file.exists()) {
                 file.createNewFile();
             }
             FileOutputStream outputStream = new FileOutputStream(file);
@@ -303,7 +310,7 @@ public abstract class HttpApiBase<R, T> {
 
     /**
      * #################################  网络请求自定义回调接口  ###############################
-     *
+     * <p>
      * 回调的实现在网络请求处
      */
 
@@ -322,12 +329,12 @@ public abstract class HttpApiBase<R, T> {
 
     private ProgressUpdateListener progressUpdateListener;
 
-    public void setOnProgressUpdateListener(ProgressUpdateListener progressUpdateListener){
+    public void setOnProgressUpdateListener(ProgressUpdateListener progressUpdateListener) {
         this.progressUpdateListener = progressUpdateListener;
     }
 
     //下载或者上传进度的回调
-    public interface ProgressUpdateListener{
+    public interface ProgressUpdateListener {
         void onProgressUpdate(long current, long total, boolean done);
     }
 
