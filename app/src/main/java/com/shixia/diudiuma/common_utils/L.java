@@ -15,7 +15,7 @@ public class L {
     private static final int LOG_INFO = 100;
     private static final int LOG_DEBUG = 200;
     private static final int LOG_WARNING = 300;
-    private static final int LOG_ERRO = 400;
+    private static final int LOG_ERROR = 400;
 
     private static String LOG_TITLE = "Hello Log->";
 
@@ -49,6 +49,10 @@ public class L {
         }
     }
 
+    public static void i(String msg){
+        printLog(LOG_INFO,LOG_TITLE,msg);
+    }
+
     public static void i(String title, String msg) {
         printLog(LOG_INFO, LOG_TITLE + title, msg);
     }
@@ -62,7 +66,7 @@ public class L {
     }
 
     public static void e(String title, String msg) {
-        printLog(LOG_ERRO, LOG_TITLE + title, msg);
+        printLog(LOG_ERROR, LOG_TITLE + title, msg);
     }
 
     private static void printLog(int logType, String title, String msg) {
@@ -79,7 +83,7 @@ public class L {
             case LOG_WARNING:
                 Log.w(title, msg);
                 break;
-            case LOG_ERRO:
+            case LOG_ERROR:
                 Log.e(title, msg);
                 break;
             default:

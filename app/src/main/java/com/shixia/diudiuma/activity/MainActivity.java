@@ -8,6 +8,7 @@ import com.shixia.diudiuma.activity.base.BaseActivity;
 import com.shixia.diudiuma.iview.MainActivityIView;
 import com.shixia.diudiuma.presenter.PresenterMain;
 import com.shixia.diudiuma.presenter.base.BasePresenter;
+import com.shixia.diudiuma.view.StatusBarCompat;
 
 
 /**
@@ -26,6 +27,8 @@ public class MainActivity extends BaseActivity implements MainActivityIView {
     @Override
     protected void initContentView() {
         setContentView(R.layout.activity_main);
+        //设置沉浸式状态栏颜色
+        StatusBarCompat.compat(this,getResources().getColor(R.color.colorAccent));
 
         tvLocation = (TextView) findViewById(R.id.tv_location);
         btnToSellCar = (Button) findViewById(R.id.btn_to_sell_car);

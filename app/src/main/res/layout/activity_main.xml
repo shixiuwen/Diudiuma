@@ -7,7 +7,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.SplashActivity"
-    android:background="#fff">
+    android:background="#fff"
+    android:fitsSystemWindows="true">
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="200px"
+        android:background="#4af4cf"/>
 
     <TextView
         android:layout_width="wrap_content"

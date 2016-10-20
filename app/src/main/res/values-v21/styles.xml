@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--沉浸式状态栏-->
+
+<resources>
+    <style name="AppTheme" parent="@style/BaseAppTheme">
+
+        <!--对于5.0由于提供了setStatusBarColor去设置状态栏颜色，但是这个方法
+        不能在主题中设置windowTranslucentStatus属性。所以，
+        可以编写一个value-v21文件夹，里面styles.xml写入-->
+
+        <!--<item name="android:windowTranslucentStatus">true</item>-->
+    </style>
+</resources>

@@ -10,6 +10,7 @@ import com.shixia.diudiuma.fragment.WelcomePageThreeFragment;
 import com.shixia.diudiuma.fragment.WelcomePageTwoFragment;
 import com.shixia.diudiuma.fragment.base.BaseFragment;
 import com.shixia.diudiuma.presenter.base.BasePresenter;
+import com.shixia.diudiuma.view.StatusBarCompat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,7 @@ public class WelcomeActivity extends BaseActivity {
     @Override
     protected void initContentView() {
         setContentView(R.layout.activity_welcome);
+        StatusBarCompat.compat(this);   //设置沉浸式状态栏颜色
         vpPage = (ViewPager) findViewById(R.id.vp_welcome);
         viewList.add(new WelcomePageOneFragment());
         viewList.add(new WelcomePageTwoFragment());
@@ -38,7 +40,29 @@ public class WelcomeActivity extends BaseActivity {
 
     @Override
     protected void initListener() {
+        vpPage.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                //测试沉浸式状态栏
+                if(position == 0){
+                    StatusBarCompat.changeStatusBarColor(WelcomeActivity.this,getResources().getColor(R.color.colorPrimary));
+                }else if(position == 1){
+                    StatusBarCompat.changeStatusBarColor(WelcomeActivity.this,getResources().getColor(R.color.colorPrimaryDark));
+                }else if(position == 2){
+                    StatusBarCompat.changeStatusBarColor(WelcomeActivity.this,getResources().getColor(R.color.__picker_pager_bg));
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     @Override
