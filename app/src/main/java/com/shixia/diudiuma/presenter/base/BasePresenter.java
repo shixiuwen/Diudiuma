@@ -1,6 +1,7 @@
 package com.shixia.diudiuma.presenter.base;
 
 import android.content.Context;
+import android.content.Intent;
 
 import com.shixia.diudiuma.iview.base.BaseIView;
 
@@ -21,8 +22,19 @@ public class BasePresenter {
 
     /**
      * 申请完权限后需要进行的操作
+     *
      */
     public void doBizWithPermissionRequest(int requestCode, String[] permissions){
+
+    }
+
+    /**
+     * 调用完startActivityForResult()后的回调
+     * @param requestCode   请求码
+     * @param resultCode    结果码
+     * @param data          请求结果携带的数据
+     */
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
     }
 }

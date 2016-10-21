@@ -176,11 +176,10 @@ public class PresenterSellCar extends BasePresenter {
     @Override
     public void doBizWithPermissionRequest(int resultCode, String[] permissions) {
         super.doBizWithPermissionRequest(resultCode, permissions);
-        if((resultCode == PermissionUtils.PERMISSION_ALREADY_GRANTED && permissions == null)    //该情况表示上一次已经取得了授权
-                || (resultCode == PermissionUtils.READ_EXTERNAL_STORAGE
-                && permissions != null
-                && permissions.length > 0
-                && permissions[0].equals(Manifest.permission.READ_EXTERNAL_STORAGE))){  //该情况表示本次需要请求授权然后执行接下来的操作
+        if(PermissionUtils.isPermissionGranted(resultCode,
+                PermissionUtils.READ_EXTERNAL_STORAGE,
+                permissions,
+                Manifest.permission.READ_EXTERNAL_STORAGE)){//该情况表示本次需要请求授权然后执行接下来的操作
 
             PhotoPicker.builder()
                     .setPhotoCount(9)

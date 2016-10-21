@@ -54,6 +54,7 @@ dependencies {
     compile 'io.reactivex:rxjava:1.1.6'
     compile project(':lib_adapter')
     compile project(':photopicker')
+    compile project(':libzxing')
     compile files('libs/AMap_Location_V3.00_20160922.jar')
 
     //Lambda

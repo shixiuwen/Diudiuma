@@ -22,6 +22,7 @@ public class MainActivity extends BaseActivity implements MainActivityIView {
     private Button btnToSellCar;
     private Button btnFeedback;
     private Button btnGsonTest;
+    private Button btnZXing;
     private PresenterMain sellCarPresenter;
 
     @Override
@@ -34,6 +35,7 @@ public class MainActivity extends BaseActivity implements MainActivityIView {
         btnToSellCar = (Button) findViewById(R.id.btn_to_sell_car);
         btnFeedback = (Button)findViewById(R.id.btn_feedback);
         btnGsonTest = (Button) findViewById(R.id.btn_test_gson);
+        btnZXing = (Button) findViewById(R.id.btn_zxing);
     }
 
     @Override
@@ -41,6 +43,7 @@ public class MainActivity extends BaseActivity implements MainActivityIView {
         btnToSellCar.setOnClickListener(v -> sellCarPresenter.toSellCarActivity());
         btnFeedback.setOnClickListener(v -> sellCarPresenter.feedback());
         btnGsonTest.setOnClickListener(v -> sellCarPresenter.gsonTest());
+        btnZXing.setOnClickListener(v -> sellCarPresenter.toZXingActivity());
     }
 
     @Override

@@ -11,6 +11,7 @@
             <option value="$PROJECT_DIR$/PhotoPicker" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/lib_adapter" />
+            <option value="$PROJECT_DIR$/libzxing" />
           </set>
         </option>
       </GradleProjectSettings>

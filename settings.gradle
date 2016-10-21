@@ -1,1 +1,1 @@
-include ':app','lib_adapter','photopicker'
+include ':app','lib_adapter','photopicker','libzxing'

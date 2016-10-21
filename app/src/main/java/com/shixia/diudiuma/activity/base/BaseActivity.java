@@ -75,4 +75,10 @@ public abstract class BaseActivity extends AppCompatActivity{
             initPresenter().getBasePresenter().doBizWithPermissionRequest(PermissionUtils.PERMISSION_DENIED,permissions);
         }
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+        initPresenter().getBasePresenter().onActivityResult(requestCode,resultCode,data);
+    }
 }

@@ -4,6 +4,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 
 import com.shixia.diudiuma.activity.base.BaseActivity;
 import com.shixia.diudiuma.presenter.base.BasePresenter;
@@ -65,11 +66,15 @@ public class PermissionUtils {
     private static BaseActivity baseActivity;
     private static BasePresenter basePresenter;
 
+    private static final String[] ARR_DO_NOT_NEED_REQUEST_PERMISSION = {"do_not_need_permission"};
+    private static final String DO_NOT_NEED_REQUEST_PERMISSION = "do_not_need_permission";
+
     public static final int PERMISSION_ALREADY_GRANTED = 0x001;
     public static final int PERMISSION_DENIED = 0x002;
 
-    public static final int WRITE_COARSE_LOCATION_REQUEST_CODE = 0x100;
-    public static final int READ_EXTERNAL_STORAGE = 0x200;
+    public static final int WRITE_COARSE_LOCATION_REQUEST_CODE = 0x100; //定位请求码
+    public static final int READ_EXTERNAL_STORAGE = 0x200;  //读写文件请求码
+    public static final int CAMERA = 0x300; //照相机请求码
 
     public static PermissionUtils initCurrentActivity(BaseActivity baseActivity, BasePresenter basePresenter) {
         PermissionUtils.baseActivity = baseActivity;
@@ -84,8 +89,26 @@ public class PermissionUtils {
             ActivityCompat.requestPermissions(baseActivity, new String[]{permission},
                     requestCode);//自定义的code
         } else {
-            basePresenter.doBizWithPermissionRequest(PERMISSION_ALREADY_GRANTED, null);
+            basePresenter.doBizWithPermissionRequest(PERMISSION_ALREADY_GRANTED, ARR_DO_NOT_NEED_REQUEST_PERMISSION);
         }
+    }
+
+    /**
+     * 判断请求的权限是否授予
+     *
+     * @param returnResultCode  请求结果返回的请求码
+     * @param yourRequestCode   你的请求码，同于同返回请求码做对比，判断是否是该次请求的返回结果
+     * @param returnPermissions       返回的请求权限列表
+     * @param yourRequestPermission   你请求的权限
+     * @return  本次请求权限是否被授予
+     */
+    public static boolean isPermissionGranted(int returnResultCode,int yourRequestCode,String[] returnPermissions,String yourRequestPermission){
+        return (returnResultCode == PERMISSION_ALREADY_GRANTED && TextUtils.equals(returnPermissions[0],DO_NOT_NEED_REQUEST_PERMISSION))    //该情况表示上一次已经取得了授权
+                //以下情况表示未授予过权限
+                || (returnResultCode == yourRequestCode
+                && !TextUtils.equals(returnPermissions[0],DO_NOT_NEED_REQUEST_PERMISSION)
+                && returnPermissions.length > 0
+                && returnPermissions[0].equals(yourRequestPermission));
     }
 
     /**###################### 以下时不需要权限检查的 Normal Permission #############################*/
