@@ -22,8 +22,6 @@ public class StatusBarCompat {
 
     private static final int INVALID_VAL = -1;
     private static final int COLOR_DEFAULT = Color.parseColor("#20000000");
-    // TODO: 2016/10/20 此处需修改防止内存泄露
-    private static View statusBarView;
 
     /**
      * 设置状态栏为自己想要的颜色
@@ -48,7 +46,7 @@ public class StatusBarCompat {
             if (statusColor != INVALID_VAL) {
                 color = statusColor;
             }
-            statusBarView = new View(activity);
+            View statusBarView = new View(activity);
             ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, getStatusBarHeight(activity));
             statusBarView.setBackgroundColor(color);
             contentView.addView(statusBarView, layoutParams);
@@ -86,26 +84,6 @@ public class StatusBarCompat {
             window.setFlags(
                     WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION,
                     WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-        }
-    }
-
-    /**
-     * 用于在Fragment中改变bar颜色，以适应不同的Fragment
-     *
-     * @param statusColor change color
-     */
-    @Deprecated //发现实际效果并不好,被方法compatBarTraslucent(Activity activity)替代
-    public static void changeStatusBarColor(Activity activity, int statusColor) {
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            activity.getWindow().setStatusBarColor(statusColor);
-            return;
-        }
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
-                && Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP
-                && statusBarView != null) {
-            statusBarView.setBackgroundResource(statusColor);
         }
     }
 
