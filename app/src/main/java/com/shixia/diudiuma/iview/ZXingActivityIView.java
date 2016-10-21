@@ -16,19 +16,19 @@ public interface ZXingActivityIView extends BaseIView {
      *
      * @param result 解析结果字符串
      */
-    public void onShowScanResult(String result);
+    void onShowScanResult(String result);
 
     /**
      * 显示生成二维码图片结果
      *
      * @param img
      */
-    public void onShowDecodeResult(Bitmap img);
+    void onShowDecodeResult(Bitmap img);
 
     /**
      * 显示包括Toast等的提示信息
      * @param s 提示内容
      */
-    public void showRemind(String s);
+    void showRemind(String s);
 
 }

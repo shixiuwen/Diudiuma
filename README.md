@@ -16,6 +16,8 @@
 
 - [x] 强大的BaseQuickAdapter用于适配RecyclerView（library）
 
+- [x] 二维码库ZXing
+
 ## 涉及知识点(未完善)
 
 - [x] MPV设计模式的使用
@@ -29,6 +31,8 @@
 - [x] 沉浸式状态栏
 
 - [x] 自定义Dialog,自定义Toast,自定义Log
+
+- [x] 二维码扫描和生成
 
 ##第三方SDK(未完善)
 

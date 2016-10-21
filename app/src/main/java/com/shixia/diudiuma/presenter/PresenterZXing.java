@@ -13,6 +13,7 @@ import com.shixia.diudiuma.common_utils.PermissionUtils;
 import com.shixia.diudiuma.iview.ZXingActivityIView;
 import com.shixia.diudiuma.iview.base.BaseIView;
 import com.shixia.diudiuma.presenter.base.BasePresenter;
+import com.xys.libzxing.zxing.activity.CaptureActivity;
 import com.xys.libzxing.zxing.encoding.EncodingUtils;
 
 import static android.app.Activity.RESULT_OK;
@@ -62,7 +63,7 @@ public class PresenterZXing extends BasePresenter {
         super.doBizWithPermissionRequest(requestCode, permissions);
         //如果获取了相机授权，执行以下操作
         if (PermissionUtils.isPermissionGranted(requestCode, PermissionUtils.CAMERA, permissions, Manifest.permission.CAMERA)) {
-            Intent intent = new Intent(activity.getApplicationContext(), com.xys.libzxing.zxing.activity.CaptureActivity.class);
+            Intent intent = new Intent(activity.getApplicationContext(), CaptureActivity.class);
             activity.startActivityForResult(intent, Constants.SCAN_ZXING_CODE);
         }
     }
