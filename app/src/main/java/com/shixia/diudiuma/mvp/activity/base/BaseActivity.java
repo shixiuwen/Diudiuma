@@ -1,4 +1,4 @@
-package com.shixia.diudiuma.activity.base;
+package com.shixia.diudiuma.mvp.activity.base;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,7 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 
 import com.shixia.diudiuma.common_utils.PermissionUtils;
-import com.shixia.diudiuma.presenter.base.BasePresenter;
+import com.shixia.diudiuma.mvp.presenter.base.BasePresenter;
 
 /**
  * Created by AmosShi on 2016/10/11.

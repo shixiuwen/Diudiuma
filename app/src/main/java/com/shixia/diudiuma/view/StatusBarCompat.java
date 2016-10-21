@@ -73,7 +73,7 @@ public class StatusBarCompat {
      *
      * @param activity 对应 activity
      */
-    public static void compatBarTraslucent(Activity activity){
+    public static void compatBarTranslucent(Activity activity){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             Window window = activity.getWindow();
             // Translucent status bar

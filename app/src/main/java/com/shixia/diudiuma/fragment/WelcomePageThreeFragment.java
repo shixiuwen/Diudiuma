@@ -9,8 +9,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.shixia.diudiuma.R;
-import com.shixia.diudiuma.activity.MainActivity;
-import com.shixia.diudiuma.activity.base.BaseActivity;
+import com.shixia.diudiuma.mvp.activity.MainActivity;
+import com.shixia.diudiuma.mvp.activity.base.BaseActivity;
 import com.shixia.diudiuma.fragment.base.BaseFragment;
 
 /**

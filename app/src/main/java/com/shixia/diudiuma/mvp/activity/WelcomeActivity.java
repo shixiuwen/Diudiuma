@@ -1,15 +1,15 @@
-package com.shixia.diudiuma.activity;
+package com.shixia.diudiuma.mvp.activity;
 
 import android.support.v4.view.ViewPager;
 
 import com.shixia.diudiuma.R;
-import com.shixia.diudiuma.activity.base.BaseActivity;
+import com.shixia.diudiuma.mvp.activity.base.BaseActivity;
 import com.shixia.diudiuma.adapter.WelcomePageAdapter;
 import com.shixia.diudiuma.fragment.WelcomePageOneFragment;
 import com.shixia.diudiuma.fragment.WelcomePageThreeFragment;
 import com.shixia.diudiuma.fragment.WelcomePageTwoFragment;
 import com.shixia.diudiuma.fragment.base.BaseFragment;
-import com.shixia.diudiuma.presenter.base.BasePresenter;
+import com.shixia.diudiuma.mvp.presenter.base.BasePresenter;
 import com.shixia.diudiuma.view.StatusBarCompat;
 
 import java.util.ArrayList;
@@ -31,7 +31,7 @@ public class WelcomeActivity extends BaseActivity {
     protected void initContentView() {
         setContentView(R.layout.activity_welcome);
 //        StatusBarCompat.compat(this);   //设置沉浸式状态栏颜色,在ViewPager中不要用这种方式，要用直接将状态栏变透明的方式
-        StatusBarCompat.compatBarTraslucent(this);
+        StatusBarCompat.compatBarTranslucent(this);
 
         vpPage = (ViewPager) findViewById(R.id.vp_welcome);
         viewList.add(new WelcomePageOneFragment());

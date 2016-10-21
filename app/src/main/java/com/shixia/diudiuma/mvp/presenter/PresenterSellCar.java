@@ -1,4 +1,4 @@
-package com.shixia.diudiuma.presenter;
+package com.shixia.diudiuma.mvp.presenter;
 
 import android.Manifest;
 import android.content.Context;
@@ -7,7 +7,7 @@ import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.shixia.diudiuma.MyApplication;
-import com.shixia.diudiuma.activity.SellCarActivity;
+import com.shixia.diudiuma.mvp.activity.SellCarActivity;
 import com.shixia.diudiuma.common_utils.FileUtils;
 import com.shixia.diudiuma.common_utils.ImageFactory;
 import com.shixia.diudiuma.common_utils.L;
@@ -19,9 +19,9 @@ import com.shixia.diudiuma.http.download_apk.DownloadApkHttpResponse;
 import com.shixia.diudiuma.http.upload.UploadApi;
 import com.shixia.diudiuma.http.upload.UploadHttpRequest;
 import com.shixia.diudiuma.http.upload.UploadHttpResponse;
-import com.shixia.diudiuma.iview.SellCarIView;
-import com.shixia.diudiuma.iview.base.BaseIView;
-import com.shixia.diudiuma.presenter.base.BasePresenter;
+import com.shixia.diudiuma.mvp.iview.SellCarIView;
+import com.shixia.diudiuma.mvp.iview.base.BaseIView;
+import com.shixia.diudiuma.mvp.presenter.base.BasePresenter;
 import com.shixia.diudiuma.view.LoadingDialog;
 
 import java.io.IOException;

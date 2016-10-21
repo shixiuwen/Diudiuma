@@ -1,4 +1,4 @@
-package com.shixia.diudiuma.activity;
+package com.shixia.diudiuma.mvp.activity;
 
 import android.content.Intent;
 import android.support.v7.widget.OrientationHelper;
@@ -10,12 +10,12 @@ import android.widget.Toast;
 
 import com.shixia.diudiuma.MyApplication;
 import com.shixia.diudiuma.R;
-import com.shixia.diudiuma.activity.base.BaseActivity;
+import com.shixia.diudiuma.mvp.activity.base.BaseActivity;
 import com.shixia.diudiuma.adapter.PhotoAdapter;
-import com.shixia.diudiuma.iview.SellCarIView;
+import com.shixia.diudiuma.mvp.iview.SellCarIView;
 import com.shixia.diudiuma.listener.RecyclerItemClickListener;
-import com.shixia.diudiuma.presenter.PresenterSellCar;
-import com.shixia.diudiuma.presenter.base.BasePresenter;
+import com.shixia.diudiuma.mvp.presenter.PresenterSellCar;
+import com.shixia.diudiuma.mvp.presenter.base.BasePresenter;
 import com.shixia.diudiuma.view.CToast;
 import com.shixia.diudiuma.view.LoadingDialog;
 

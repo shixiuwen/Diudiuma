@@ -1,7 +1,7 @@
-package com.shixia.diudiuma.iview;
+package com.shixia.diudiuma.mvp.iview;
 
 
-import com.shixia.diudiuma.iview.base.BaseIView;
+import com.shixia.diudiuma.mvp.iview.base.BaseIView;
 
 /**
  * Created by AmosShi on 2016/10/12.

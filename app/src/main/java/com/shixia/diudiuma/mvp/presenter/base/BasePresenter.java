@@ -1,9 +1,9 @@
-package com.shixia.diudiuma.presenter.base;
+package com.shixia.diudiuma.mvp.presenter.base;
 
 import android.content.Context;
 import android.content.Intent;
 
-import com.shixia.diudiuma.iview.base.BaseIView;
+import com.shixia.diudiuma.mvp.iview.base.BaseIView;
 
 /**
  * Created by AmosShi on 2016/10/11.

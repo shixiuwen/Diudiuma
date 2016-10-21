@@ -1,13 +1,13 @@
-package com.shixia.diudiuma.activity;
+package com.shixia.diudiuma.mvp.activity;
 
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.shixia.diudiuma.R;
-import com.shixia.diudiuma.activity.base.BaseActivity;
-import com.shixia.diudiuma.iview.MainActivityIView;
-import com.shixia.diudiuma.presenter.PresenterMain;
-import com.shixia.diudiuma.presenter.base.BasePresenter;
+import com.shixia.diudiuma.mvp.activity.base.BaseActivity;
+import com.shixia.diudiuma.mvp.iview.MainActivityIView;
+import com.shixia.diudiuma.mvp.presenter.PresenterMain;
+import com.shixia.diudiuma.mvp.presenter.base.BasePresenter;
 import com.shixia.diudiuma.view.StatusBarCompat;
 
 

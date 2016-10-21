@@ -1,4 +1,4 @@
-package com.shixia.diudiuma.iview.base;
+package com.shixia.diudiuma.mvp.iview.base;
 
 /**
  * Created by AmosShi on 2016/10/11.

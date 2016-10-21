@@ -6,8 +6,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 
-import com.shixia.diudiuma.activity.base.BaseActivity;
-import com.shixia.diudiuma.presenter.base.BasePresenter;
+import com.shixia.diudiuma.mvp.activity.base.BaseActivity;
+import com.shixia.diudiuma.mvp.presenter.base.BasePresenter;
 
 /**
  * Created by AmosShi on 2016/10/14.

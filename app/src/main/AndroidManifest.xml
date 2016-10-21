@@ -36,7 +36,7 @@
         <meta-data android:name="com.amap.api.v2.apikey"
             android:value="7861c6b5076cb492d5cdc7cfabbff2b9"/>
 
-        <activity android:name=".activity.SplashActivity" >
+        <activity android:name=".mvp.activity.SplashActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -53,13 +53,13 @@
         <activity android:name="me.iwf.photopicker.PhotoPagerActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar"/>
 
-        <activity android:name=".activity.WelcomeActivity"/>
+        <activity android:name=".mvp.activity.WelcomeActivity"/>
 
-        <activity android:name=".activity.MainActivity"/>
+        <activity android:name=".mvp.activity.MainActivity"/>
 
-        <activity android:name=".activity.SellCarActivity"/>
+        <activity android:name=".mvp.activity.SellCarActivity"/>
 
-        <activity android:name=".activity.ZXingActivity"/>
+        <activity android:name=".mvp.activity.ZXingActivity"/>
     </application>
 
 </manifest>

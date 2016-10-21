@@ -1,4 +1,4 @@
-package com.shixia.diudiuma.presenter;
+package com.shixia.diudiuma.mvp.presenter;
 
 import android.Manifest;
 import android.content.Context;
@@ -11,18 +11,18 @@ import com.amap.api.location.AMapLocationListener;
 import com.google.gson.Gson;
 import com.shixia.diudiuma.MyApplication;
 import com.shixia.diudiuma.R;
-import com.shixia.diudiuma.activity.MainActivity;
-import com.shixia.diudiuma.activity.SellCarActivity;
-import com.shixia.diudiuma.activity.ZXingActivity;
+import com.shixia.diudiuma.mvp.activity.MainActivity;
+import com.shixia.diudiuma.mvp.activity.SellCarActivity;
+import com.shixia.diudiuma.mvp.activity.ZXingActivity;
 import com.shixia.diudiuma.bean.User;
 import com.shixia.diudiuma.common_utils.PermissionUtils;
 import com.shixia.diudiuma.http.base.HttpApiBase;
 import com.shixia.diudiuma.http.feedback.FeedbackApi;
 import com.shixia.diudiuma.http.feedback.FeedbackHttpRequest;
 import com.shixia.diudiuma.http.feedback.FeedbackHttpResponse;
-import com.shixia.diudiuma.iview.MainActivityIView;
-import com.shixia.diudiuma.iview.base.BaseIView;
-import com.shixia.diudiuma.presenter.base.BasePresenter;
+import com.shixia.diudiuma.mvp.iview.MainActivityIView;
+import com.shixia.diudiuma.mvp.iview.base.BaseIView;
+import com.shixia.diudiuma.mvp.presenter.base.BasePresenter;
 import com.shixia.diudiuma.view.CToast;
 import com.shixia.diudiuma.view.LoadingDialog;
 

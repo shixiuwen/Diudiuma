@@ -1,9 +1,9 @@
-package com.shixia.diudiuma.activity;
+package com.shixia.diudiuma.mvp.activity;
 
 import com.shixia.diudiuma.R;
-import com.shixia.diudiuma.activity.base.BaseActivity;
+import com.shixia.diudiuma.mvp.activity.base.BaseActivity;
 import com.shixia.diudiuma.common_utils.SpUtil;
-import com.shixia.diudiuma.presenter.base.BasePresenter;
+import com.shixia.diudiuma.mvp.presenter.base.BasePresenter;
 
 import java.util.concurrent.TimeUnit;
 

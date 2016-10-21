@@ -1,4 +1,4 @@
-package com.shixia.diudiuma.presenter;
+package com.shixia.diudiuma.mvp.presenter;
 
 import android.Manifest;
 import android.content.Context;
@@ -7,12 +7,12 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.TextUtils;
 
-import com.shixia.diudiuma.activity.ZXingActivity;
+import com.shixia.diudiuma.mvp.activity.ZXingActivity;
 import com.shixia.diudiuma.bean.Constants;
 import com.shixia.diudiuma.common_utils.PermissionUtils;
-import com.shixia.diudiuma.iview.ZXingActivityIView;
-import com.shixia.diudiuma.iview.base.BaseIView;
-import com.shixia.diudiuma.presenter.base.BasePresenter;
+import com.shixia.diudiuma.mvp.iview.ZXingActivityIView;
+import com.shixia.diudiuma.mvp.iview.base.BaseIView;
+import com.shixia.diudiuma.mvp.presenter.base.BasePresenter;
 import com.xys.libzxing.zxing.activity.CaptureActivity;
 import com.xys.libzxing.zxing.encoding.EncodingUtils;
 

@@ -1,4 +1,4 @@
-package com.shixia.diudiuma.activity;
+package com.shixia.diudiuma.mvp.activity;
 
 import android.graphics.Bitmap;
 import android.widget.Button;
@@ -8,10 +8,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.shixia.diudiuma.R;
-import com.shixia.diudiuma.activity.base.BaseActivity;
-import com.shixia.diudiuma.iview.ZXingActivityIView;
-import com.shixia.diudiuma.presenter.PresenterZXing;
-import com.shixia.diudiuma.presenter.base.BasePresenter;
+import com.shixia.diudiuma.mvp.activity.base.BaseActivity;
+import com.shixia.diudiuma.mvp.iview.ZXingActivityIView;
+import com.shixia.diudiuma.mvp.presenter.PresenterZXing;
+import com.shixia.diudiuma.mvp.presenter.base.BasePresenter;
 import com.shixia.diudiuma.view.CToast;
 
 /**
