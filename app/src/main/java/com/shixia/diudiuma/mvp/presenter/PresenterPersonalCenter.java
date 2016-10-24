@@ -13,7 +13,7 @@ import com.shixia.diudiuma.mvp.presenter.base.BasePresenter;
  * Description:
  */
 
-public class PresenterPersonalCenter extends BasePresenter implements PersonalCenterIView{
+public class PresenterPersonalCenter extends BasePresenter{
 
     private MainActivity_2 activity;
     private PersonalCenterIView iView;

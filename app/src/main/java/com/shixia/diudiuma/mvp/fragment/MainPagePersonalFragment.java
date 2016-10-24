@@ -23,10 +23,11 @@ public class MainPagePersonalFragment extends BaseFragment implements PersonalCe
 
     private Button btnLoginOrExit;  //登录或者退出按钮
     private PresenterPersonalCenter presenter;
+    private View view;
 
     @Override
     public View initView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_main_page_personal_center_layout,container,false);
+        view = inflater.inflate(R.layout.fragment_main_page_personal_center_layout,container,false);
         //设置沉浸式状态栏颜色
         btnLoginOrExit = (Button) view.findViewById(R.id.btn_login_or_exit);
         return view;
@@ -56,7 +57,9 @@ public class MainPagePersonalFragment extends BaseFragment implements PersonalCe
 
     @Override
     public void onShowLoginDialog() {
-
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.view_pop_login_or_regiester_layout,null);
+        Button btnLogin = (Button) view.findViewById(R.id.btn_login);
+        btnLogin.setOnClickListener(v -> presenter.loginOrExit());
     }
 
     @Override

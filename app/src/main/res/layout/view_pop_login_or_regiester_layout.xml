@@ -2,6 +2,59 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
-    
+    <RelativeLayout
+        android:layout_width="@dimen/x800"
+        android:layout_height="@dimen/y1200"
+        android:layout_centerInParent="true"
+        android:id="@+id/rl_login_card"
+        android:background="#dee665ef">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/ll_name"
+            android:layout_centerHorizontal="true">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="用户名"
+                android:textSize="@dimen/x54"/>
+
+            <EditText
+                android:layout_width="@dimen/x600"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/ll_password"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/ll_name">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="密码"
+                android:textSize="@dimen/x54"/>
+
+            <EditText
+                android:layout_width="@dimen/x600"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/btn_login"
+            android:layout_width="@dimen/x300"
+            android:layout_height="@dimen/y120"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:text="登录"
+            android:background="@drawable/btn_exit_selector"
+            android:layout_marginBottom="@dimen/y100"/>
+
+    </RelativeLayout>
 
 </RelativeLayout>
