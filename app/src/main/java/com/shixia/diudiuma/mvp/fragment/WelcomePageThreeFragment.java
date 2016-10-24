@@ -1,4 +1,4 @@
-package com.shixia.diudiuma.fragment;
+package com.shixia.diudiuma.mvp.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -11,7 +11,8 @@ import android.widget.Button;
 import com.shixia.diudiuma.R;
 import com.shixia.diudiuma.mvp.activity.MainActivity;
 import com.shixia.diudiuma.mvp.activity.base.BaseActivity;
-import com.shixia.diudiuma.fragment.base.BaseFragment;
+import com.shixia.diudiuma.mvp.fragment.base.BaseFragment;
+import com.shixia.diudiuma.mvp.presenter.base.BasePresenter;
 
 /**
  * Created by AmosShi on 2016/10/12.
@@ -33,8 +34,8 @@ public class WelcomePageThreeFragment extends BaseFragment implements View.OnCli
     }
 
     @Override
-    public void initPresenter() {
-
+    public BasePresenter initPresenter() {
+        return null;
     }
 
     @Override

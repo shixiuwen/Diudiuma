@@ -1,4 +1,4 @@
-package com.shixia.diudiuma.fragment;
+package com.shixia.diudiuma.mvp.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,7 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.shixia.diudiuma.R;
-import com.shixia.diudiuma.fragment.base.BaseFragment;
+import com.shixia.diudiuma.mvp.fragment.base.BaseFragment;
+import com.shixia.diudiuma.mvp.presenter.base.BasePresenter;
 
 
 /**
@@ -15,15 +16,15 @@ import com.shixia.diudiuma.fragment.base.BaseFragment;
  * Description:
  */
 
-public class WelcomePageOneFragment extends BaseFragment {
+public class WelcomePageTwoFragment extends BaseFragment {
     @Override
     public View initView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_welcome_page_one,container,false);
+        return inflater.inflate(R.layout.fragment_welcome_page_two,container,false);
     }
 
     @Override
-    public void initPresenter() {
-
+    public BasePresenter initPresenter() {
+        return null;
     }
 
     @Override

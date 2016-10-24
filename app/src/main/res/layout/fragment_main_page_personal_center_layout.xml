@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/y126"
+                android:gravity="right"
+                android:background="#d1b63bf4">
+                <RelativeLayout
+                    android:layout_width="@dimen/x190"
+                    android:layout_height="@dimen/y74"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/personal_info_edit_button_bg">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_centerInParent="true">
+                        
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="编辑"/>
+                        
+                        <ImageView
+                            android:layout_width="@dimen/x54"
+                            android:layout_height="@dimen/y54"
+                            android:src="@drawable/ic_launcher"
+                            android:id="@+id/img_edit_personal_info"/>
+                    </LinearLayout>
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/y520"
+                android:background="#d1b63bf4">
+
+                <ImageView
+                    android:layout_width="@dimen/x210"
+                    android:layout_height="@dimen/y210"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/circle_bg"/>
+
+                <com.shixia.diudiuma.view.CircleImageView
+                    android:layout_width="@dimen/x210"
+                    android:layout_height="@dimen/y210"
+                    android:layout_centerInParent="true"
+                    android:id="@+id/civ_avatar"/>
+                
+                <View
+                    android:layout_width="@dimen/x290"
+                    android:layout_height="@dimen/y10"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/civ_avatar"
+                    android:layout_marginRight="@dimen/x15"
+                    android:background="#123"/>
+
+                <View
+                    android:layout_width="@dimen/x290"
+                    android:layout_height="@dimen/y10"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/civ_avatar"
+                    android:layout_marginLeft="@dimen/x15"
+                    android:background="#123"/>
+
+                <ImageView
+                    android:layout_width="@dimen/x215"
+                    android:layout_height="@dimen/x215"
+                    android:background="@drawable/avatar_circle"
+                    android:layout_centerInParent="true"/>
+                
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/y86"
+                    android:layout_alignParentBottom="true">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv_nick_name"
+                        android:layout_centerInParent="true"
+                        android:text="AmosShi"
+                        android:textSize="@dimen/x46"/>
+
+                    <View
+                        android:layout_width="@dimen/x200"
+                        android:layout_height="@dimen/y6"
+                        android:background="#123"
+                        android:layout_toLeftOf="@+id/tv_nick_name"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/x10"/>
+
+                    <View
+                        android:layout_width="@dimen/x200"
+                        android:layout_height="@dimen/y6"
+                        android:background="#123"
+                        android:layout_toRightOf="@+id/tv_nick_name"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/x10"/>
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+            <!--设置-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/y110">
+
+                <TextView
+                    style="@style/setting_text_style"
+                    android:text="设置设置"
+                    android:layout_marginLeft="@dimen/x24"
+                    android:id="@+id/tv_system_setting"/>
+
+            </RelativeLayout>
+
+            <!--版本更新-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/y110">
+
+                <TextView
+                    style="@style/setting_text_style"
+                    android:text="版本更新"
+                    android:layout_marginLeft="@dimen/x24"
+                    android:id="@+id/tv_version_update"/>
+
+            </RelativeLayout>
+
+            <!--意见反馈-->
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/y110">
+
+                <TextView
+                    style="@style/setting_text_style"
+                    android:text="意见反馈"
+                    android:layout_marginLeft="@dimen/x24"
+                    android:id="@+id/tv_feedback"/>
+
+            </RelativeLayout>
+
+            <!--关于我们-->
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/y110">
+
+                <TextView
+                    style="@style/setting_text_style"
+                    android:text="关于我们"
+                    android:layout_marginLeft="@dimen/x24"
+                    android:id="@+id/tv_about_us"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/y600">
+                <Button
+                    android:layout_width="@dimen/x600"
+                    android:layout_height="@dimen/y130"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/btn_exit_selector"
+                    android:text="登录"
+                    android:textSize="@dimen/x54"
+                    android:textColor="#fff"
+                    android:id="@+id/btn_login_or_exit"/>
+            </RelativeLayout>
+
+        </LinearLayout>
+        
+        
+    </ScrollView>
+
+</RelativeLayout>

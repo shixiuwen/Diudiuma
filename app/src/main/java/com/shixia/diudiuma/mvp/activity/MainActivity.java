@@ -67,5 +67,4 @@ public class MainActivity extends BaseActivity implements MainActivityIView {
     public void onEndLocation(String location) {
         tvLocation.setText(location);
     }
-
 }

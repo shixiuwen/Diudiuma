@@ -35,4 +35,13 @@
 
     <!-- 沉浸式状态栏 Base application theme. -->
     <style name="AppTheme" parent="@style/BaseAppTheme"></style>
+
+    <!--个人中心设置相关字体-->
+    <style name="setting_text_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:color">#000</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:textSize">@dimen/x44</item>
+    </style>
 </resources>

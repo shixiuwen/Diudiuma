@@ -36,7 +36,9 @@
         <meta-data android:name="com.amap.api.v2.apikey"
             android:value="7861c6b5076cb492d5cdc7cfabbff2b9"/>
 
-        <activity android:name=".mvp.activity.SplashActivity" >
+        <activity android:name=".mvp.activity.SplashActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -56,6 +58,10 @@
         <activity android:name=".mvp.activity.WelcomeActivity"/>
 
         <activity android:name=".mvp.activity.MainActivity"/>
+
+        <activity android:name=".mvp.activity.MainActivity_2"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"/>
 
         <activity android:name=".mvp.activity.SellCarActivity"/>
 

@@ -66,11 +66,11 @@ public class PermissionUtils {
     private static BaseActivity baseActivity;
     private static BasePresenter basePresenter;
 
-    private static final String[] ARR_DO_NOT_NEED_REQUEST_PERMISSION = {"do_not_need_permission"};
-    private static final String DO_NOT_NEED_REQUEST_PERMISSION = "do_not_need_permission";
+    private static final String[] ARR_DO_NOT_NEED_REQUEST_PERMISSION = {"do_not_need_permission"};  //在权限已被授予的回调中使用
+    private static final String DO_NOT_NEED_REQUEST_PERMISSION = "do_not_need_permission";  //在权限已被授予的回调中使用
 
-    public static final int PERMISSION_ALREADY_GRANTED = 0x001;
-    public static final int PERMISSION_DENIED = 0x002;
+    public static final int PERMISSION_ALREADY_GRANTED = 0x001;     //已被授予权限
+    public static final int PERMISSION_DENIED = 0x002;  //权限被拒绝
 
     public static final int WRITE_COARSE_LOCATION_REQUEST_CODE = 0x100; //定位请求码
     public static final int READ_EXTERNAL_STORAGE = 0x200;  //读写文件请求码
