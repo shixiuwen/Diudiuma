@@ -22,6 +22,14 @@ android {
         }
     }
 
+    sourceSets {
+        main
+                {
+                    jni.srcDirs = []
+                    jniLibs.srcDirs = ['libs']
+                }
+    }
+
     //Lambda
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -36,14 +44,13 @@ ext {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha1'
     testCompile 'junit:junit:4.12'
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
     androidTestCompile 'com.android.support.test:runner:0.5'
     androidTestCompile 'com.android.support:support-annotations:24.2.1'
-
     compile 'com.android.support:support-v4:24.2.1'
     compile 'com.android.support:design:24.2.1'
     compile "com.android.support:recyclerview-v7:$supportLibVersion"
@@ -58,10 +65,7 @@ dependencies {
     compile project(':photopicker')
     compile project(':libzxing')
     compile files('libs/AMap_Location_V3.00_20160922.jar')
-
     //Lambda
     retrolambdaConfig 'net.orfjackal.retrolambda:retrolambda:2.3.0'
-    //Bmob移动云
-    compile 'cn.bmob.android:bmob-sdk:3.5.0'
-
+    compile files('libs/BmobSDK_3.5.1_20160719.jar')
 }

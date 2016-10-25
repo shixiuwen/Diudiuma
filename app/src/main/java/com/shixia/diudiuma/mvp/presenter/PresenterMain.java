@@ -8,18 +8,15 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
-import com.google.gson.Gson;
 import com.shixia.diudiuma.MyApplication;
-import com.shixia.diudiuma.R;
-import com.shixia.diudiuma.mvp.activity.MainActivity;
-import com.shixia.diudiuma.mvp.activity.SellCarActivity;
-import com.shixia.diudiuma.mvp.activity.ZXingActivity;
-import com.shixia.diudiuma.bean.User;
 import com.shixia.diudiuma.common_utils.PermissionUtils;
 import com.shixia.diudiuma.http.base.HttpApiBase;
 import com.shixia.diudiuma.http.feedback.FeedbackApi;
 import com.shixia.diudiuma.http.feedback.FeedbackHttpRequest;
 import com.shixia.diudiuma.http.feedback.FeedbackHttpResponse;
+import com.shixia.diudiuma.mvp.activity.MainActivity;
+import com.shixia.diudiuma.mvp.activity.SellCarActivity;
+import com.shixia.diudiuma.mvp.activity.ZXingActivity;
 import com.shixia.diudiuma.mvp.iview.MainActivityIView;
 import com.shixia.diudiuma.mvp.iview.base.BaseIView;
 import com.shixia.diudiuma.mvp.presenter.base.BasePresenter;
@@ -93,11 +90,11 @@ public class PresenterMain extends BasePresenter implements AMapLocationListener
      * 测试Gson的转换
      */
     public void gsonTest() {
-        String strUser = "{\"name\":\"shixiuwen\",\"age\":2,\"sex\":\"男\"}";
-        String strUser2 = context.getString(R.string.use_json);
-        Gson userGson = new Gson();
-        User user = userGson.fromJson(strUser2, User.class);
-        Toast.makeText(context, user.getName() + " " + user.getAge() + " " + user.getSex(), Toast.LENGTH_SHORT).show();
+//        String strUser = "{\"name\":\"shixiuwen\",\"age\":2,\"sex\":\"男\"}";
+//        String strUser2 = context.getString(R.string.use_json);
+//        Gson userGson = new Gson();
+//        User user = userGson.fromJson(strUser2, User.class);
+//        Toast.makeText(context, user.getName() + " " + user.getAge() + " " + user.getSex(), Toast.LENGTH_SHORT).show();
 
     }
 
