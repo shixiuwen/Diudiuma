@@ -3,4 +3,8 @@
 
     <string name="use_json">{"name":"xiafeifeng","sex":"女","age":"18"}</string>
 
+    <string name="goods_name">品名:</string>
+    <string name="search">搜索</string>
+    <string name="please_input_key">请输入关键词</string>
+    <string name="goods_find_master">失物招领</string>
 </resources>

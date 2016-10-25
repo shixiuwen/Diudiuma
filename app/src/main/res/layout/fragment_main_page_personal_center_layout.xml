@@ -16,25 +16,27 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/y126"
-                android:gravity="right"
+                android:layout_height="@dimen/y520"
                 android:background="#d1b63bf4">
+
                 <RelativeLayout
                     android:layout_width="@dimen/x190"
                     android:layout_height="@dimen/y74"
-                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/x24"
+                    android:layout_marginTop="@dimen/y24"
                     android:background="@drawable/personal_info_edit_button_bg">
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:layout_centerInParent="true">
-                        
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="编辑"/>
-                        
+
                         <ImageView
                             android:layout_width="@dimen/x54"
                             android:layout_height="@dimen/y54"
@@ -42,13 +44,6 @@
                             android:id="@+id/img_edit_personal_info"/>
                     </LinearLayout>
                 </RelativeLayout>
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/y520"
-                android:background="#d1b63bf4">
 
                 <ImageView
                     android:layout_width="@dimen/x210"
@@ -97,21 +92,6 @@
                         android:text="AmosShi"
                         android:textSize="@dimen/x46"/>
 
-                    <View
-                        android:layout_width="@dimen/x200"
-                        android:layout_height="@dimen/y6"
-                        android:background="#123"
-                        android:layout_toLeftOf="@+id/tv_nick_name"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="@dimen/x10"/>
-
-                    <View
-                        android:layout_width="@dimen/x200"
-                        android:layout_height="@dimen/y6"
-                        android:background="#123"
-                        android:layout_toRightOf="@+id/tv_nick_name"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/x10"/>
                 </RelativeLayout>
 
             </RelativeLayout>

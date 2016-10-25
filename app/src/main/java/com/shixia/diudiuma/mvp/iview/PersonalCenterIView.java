@@ -17,9 +17,13 @@ public interface PersonalCenterIView extends BaseIView{
 
     void onChangeToRegisterPage();
 
+    void onChangeToLoginPage();
+
     void onRegisterSuccessful();
 
     void onRegisterFailure();
 
     void onShowRemind();
+
+    void onDismissDialog();
 }

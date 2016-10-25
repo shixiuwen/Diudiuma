@@ -37,16 +37,16 @@ public class PresenterMain_2 extends BasePresenter {
     public void changeFragment(int position){
         switch (position){
             case 0:
-                vpMain.setCurrentItem(0,true);
+                vpMain.setCurrentItem(0,false);
                 break;
             case 1:
-                vpMain.setCurrentItem(1,true);
+                vpMain.setCurrentItem(1,false);
                 break;
             case 2:
-                vpMain.setCurrentItem(2,true);
+                vpMain.setCurrentItem(2,false);
                 break;
             case 3:
-                vpMain.setCurrentItem(3,true);
+                vpMain.setCurrentItem(3,false);
                 break;
             default:
                 break;

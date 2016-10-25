@@ -1,7 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#123">
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y180"
+        android:padding="@dimen/x20">
+
+        <ImageView
+            android:id="@+id/img_main_page_search"
+            android:layout_width="@dimen/x160"
+            android:layout_height="@dimen/y160"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_launcher" />
+
+        <Button
+            android:layout_width="@dimen/x220"
+            android:layout_height="@dimen/x220"
+            android:id="@+id/btn_main_page_search"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="@string/search"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/et_main_page_search"
+            android:layout_toLeftOf="@+id/btn_main_page_search"
+            android:paddingLeft="@dimen/x180"
+            android:hint="@string/please_input_key"
+            android:cursorVisible="false"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/srl_refresh_layout">
+
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/rv_goods_list_recy"/>
+
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+        <!--悬浮按钮-->
+        <ImageView
+            android:layout_width="@dimen/x150"
+            android:layout_height="@dimen/y150"
+            android:id="@+id/img_btn_quick"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_launcher"
+            android:layout_marginRight="@dimen/x48"
+            android:layout_marginBottom="@dimen/y48"/>
+
+    </RelativeLayout>
 
 </LinearLayout>

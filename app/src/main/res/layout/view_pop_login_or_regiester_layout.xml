@@ -7,14 +7,29 @@
         android:layout_height="@dimen/y1200"
         android:layout_centerInParent="true"
         android:id="@+id/rl_login_card"
-        android:background="#dee665ef">
+        android:background="#28afa9">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/rl_login_card_tab_btn">
+
+            <ImageButton
+                android:layout_width="@dimen/x100"
+                android:layout_height="@dimen/y100"
+                android:id="@+id/imgBtn_close_dialog_login"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="@dimen/y24"
+                android:layout_marginRight="@dimen/x24" />
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:id="@+id/ll_name"
-            android:layout_centerHorizontal="true">
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/rl_login_card_tab_btn">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -23,7 +38,8 @@
 
             <EditText
                 android:layout_width="@dimen/x600"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:id="@+id/et_login_name"/>
         </LinearLayout>
 
         <LinearLayout
@@ -41,7 +57,8 @@
 
             <EditText
                 android:layout_width="@dimen/x600"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:id="@+id/et_login_password"/>
         </LinearLayout>
 
 
@@ -55,6 +72,113 @@
             android:background="@drawable/btn_exit_selector"
             android:layout_marginBottom="@dimen/y100"/>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_register"
+            android:text="注册>>"
+            android:textSize="@dimen/x46"
+            android:layout_alignBottom="@+id/btn_login"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/x48"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="@dimen/x800"
+        android:layout_height="@dimen/y1200"
+        android:layout_centerInParent="true"
+        android:id="@+id/rl_register_card"
+        android:background="#28afa9"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/rl_register_card_tab_btn">
+            <ImageButton
+                android:layout_width="@dimen/x100"
+                android:layout_height="@dimen/y100"
+                android:id="@+id/imgBtn_back_to_login_dialog"
+                android:layout_marginTop="@dimen/y24"
+                android:layout_marginLeft="@dimen/x24"/>
+
+            <ImageButton
+                android:layout_width="@dimen/x100"
+                android:layout_height="@dimen/y100"
+                android:id="@+id/imgBtn_close_dialog_register"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="@dimen/y24"
+                android:layout_marginRight="@dimen/x24" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/ll_register_name"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/rl_register_card_tab_btn">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="用户名"
+                android:textSize="@dimen/x54"/>
+
+            <EditText
+                android:layout_width="@dimen/x600"
+                android:layout_height="wrap_content"
+                android:id="@+id/et_register_name"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/ll_register_password"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/ll_register_name">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="密码"
+                android:textSize="@dimen/x54"/>
+
+            <EditText
+                android:layout_width="@dimen/x600"
+                android:layout_height="wrap_content"
+                android:id="@+id/et_register_password"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/ll_register_re_password"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/ll_register_password">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="确认密码"
+                android:textSize="@dimen/x54"/>
+
+            <EditText
+                android:layout_width="@dimen/x600"
+                android:layout_height="wrap_content"
+                android:id="@+id/et_register_re_password"/>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_register"
+            android:layout_width="@dimen/x300"
+            android:layout_height="@dimen/y120"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:text="确认注册"
+            android:background="@drawable/btn_exit_selector"
+            android:layout_marginBottom="@dimen/y100"/>
     </RelativeLayout>
 
 </RelativeLayout>

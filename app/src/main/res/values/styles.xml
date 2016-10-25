@@ -44,4 +44,10 @@
         <item name="android:layout_centerVertical">true</item>
         <item name="android:textSize">@dimen/x44</item>
     </style>
+    
+    <!--登录或者退出弹窗动画-->
+    <style name="login_pop_anim">
+        <item name="android:windowEnterAnimation">@anim/login_pop_in_anim</item>
+        <item name="android:windowExitAnimation">@anim/login_pop_out_anim</item>
+    </style>
 </resources>

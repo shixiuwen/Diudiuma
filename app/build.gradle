@@ -27,6 +27,8 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    useLibrary 'org.apache.http.legacy'
 }
 
 ext {
@@ -59,4 +61,7 @@ dependencies {
 
     //Lambda
     retrolambdaConfig 'net.orfjackal.retrolambda:retrolambda:2.3.0'
+    //Bmob移动云
+    compile 'cn.bmob.android:bmob-sdk:3.5.0'
+
 }
