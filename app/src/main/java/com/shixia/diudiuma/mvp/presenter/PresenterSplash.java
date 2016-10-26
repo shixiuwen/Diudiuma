@@ -38,7 +38,7 @@ public class PresenterSplash extends BasePresenter {
         //如果是第一次使用，3秒之后打开欢迎页面，否则3秒之后进入主页
         Single
                 .just(SpUtil.getBoolean(activity,"isFirstOpenApp",true))
-                .delay(3, TimeUnit.SECONDS)
+                .delay(1, TimeUnit.SECONDS)
                 .subscribe(openNextPageWithJudge());
     }
 

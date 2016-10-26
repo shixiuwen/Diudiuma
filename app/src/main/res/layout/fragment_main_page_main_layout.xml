@@ -4,10 +4,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <RelativeLayout
+    <!--<RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/y180"
-        android:padding="@dimen/x20">
+        android:padding="@dimen/x20"
+        android:background="#9d51ff">
 
         <ImageView
             android:id="@+id/img_main_page_search"
@@ -32,7 +33,9 @@
             android:paddingLeft="@dimen/x180"
             android:hint="@string/please_input_key"
             android:cursorVisible="false"/>
-    </RelativeLayout>
+    </RelativeLayout>-->
+
+    <include layout="@layout/view_search_view"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -52,12 +55,12 @@
 
         <!--悬浮按钮-->
         <ImageView
-            android:layout_width="@dimen/x150"
-            android:layout_height="@dimen/y150"
+            android:layout_width="@dimen/x180"
+            android:layout_height="@dimen/y180"
             android:id="@+id/img_btn_quick"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:src="@drawable/ic_launcher"
+            android:src="@drawable/btn_img_quick_add"
             android:layout_marginRight="@dimen/x48"
             android:layout_marginBottom="@dimen/y48"/>
 

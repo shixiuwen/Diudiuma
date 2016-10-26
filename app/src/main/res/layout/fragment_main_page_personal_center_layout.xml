@@ -17,7 +17,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/y520"
-                android:background="#d1b63bf4">
+                android:background="#d073ff">
 
                 <RelativeLayout
                     android:layout_width="@dimen/x190"

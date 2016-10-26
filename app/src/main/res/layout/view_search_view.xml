@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y130"
+        android:background="#9d51ff"
+        android:padding="@dimen/x16">
+
+        <ImageView
+            android:id="@+id/img_main_page_search"
+            android:layout_width="@dimen/x60"
+            android:layout_height="@dimen/y60"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/x24"
+            android:src="@drawable/search" />
+
+        <Button
+            android:id="@+id/btn_main_page_search"
+            android:layout_width="@dimen/x140"
+            android:layout_height="@dimen/x80"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/btn_search_bg"
+            android:text="@string/search" />
+
+        <EditText
+            android:id="@+id/et_main_page_search"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@+id/btn_main_page_search"
+            android:background="@null"
+            android:cursorVisible="false"
+            android:hint="@string/please_input_key"
+            android:paddingLeft="@dimen/x100" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y3"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/y10"
+            android:layout_marginLeft="@dimen/x24"
+            android:layout_marginRight="@dimen/x160"
+            android:background="#123" />
+
+    </RelativeLayout>
+</LinearLayout>
