@@ -7,6 +7,8 @@ import android.os.Looper;
 
 import com.shixia.diudiuma.common_utils.L;
 
+import cn.bmob.v3.Bmob;
+
 /**
  * Created by AmosShi on 2016/10/17.
  * Description:
@@ -30,5 +32,7 @@ public class MyApplication extends Application {
         L.getInstance().setDebugMode(true);
         //初始化context
         ctx = MyApplication.this;
+        //初始化Bmob服务
+        Bmob.initialize(this,"4dcf2b93508a11193109db16bb6b5c07");
     }
 }

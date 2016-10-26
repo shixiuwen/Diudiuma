@@ -23,7 +23,7 @@ public interface PersonalCenterIView extends BaseIView{
 
     void onRegisterFailure();
 
-    void onShowRemind();
+    void onShowRemind(String content);
 
     void onDismissDialog();
 }

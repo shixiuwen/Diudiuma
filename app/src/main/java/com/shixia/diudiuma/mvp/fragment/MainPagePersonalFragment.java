@@ -13,6 +13,7 @@ import android.widget.ImageButton;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.shixia.diudiuma.R;
 import com.shixia.diudiuma.common_utils.SpUtil;
@@ -20,6 +21,7 @@ import com.shixia.diudiuma.mvp.fragment.base.BaseFragment;
 import com.shixia.diudiuma.mvp.iview.PersonalCenterIView;
 import com.shixia.diudiuma.mvp.presenter.PresenterPersonalCenter;
 import com.shixia.diudiuma.mvp.presenter.base.BasePresenter;
+import com.shixia.diudiuma.view.CToast;
 
 /**
  * Created by AmosShi on 2016/10/24.
@@ -73,10 +75,10 @@ public class MainPagePersonalFragment extends BaseFragment implements PersonalCe
     @Override
     public void afterFragmentCreated() {
         super.afterFragmentCreated();
-        if (SpUtil.getBoolean(getActivity(), "isLogin", false)) {
-            btnLoginOrExit.setText("登录");
-        } else {
+        if (SpUtil.getBoolean(getActivity(), "isLogin", false)) {   //如果已登录，显示退出登录
             btnLoginOrExit.setText("退出登录");
+        } else {                                                    //如果未登录，显示登录
+            btnLoginOrExit.setText("登录");
         }
     }
 
@@ -117,16 +119,19 @@ public class MainPagePersonalFragment extends BaseFragment implements PersonalCe
     }
 
     private void initPopWindowListener() {
-        btnLoginPop.setOnClickListener(v -> presenter.login());
         tvRegisterPop.setOnClickListener(v -> presenter.changeToRegisterDialog());
         imgBtnBackToLoginDialogPop.setOnClickListener(v -> presenter.changeToLoginDialog());
         imgBtnCloseDialogLoginPop.setOnClickListener(v -> presenter.dismissDialog());
         imgBtnCloseDialogRegisterPop.setOnClickListener(v -> presenter.dismissDialog());
+        //点击注册
+        btnRegisterPop.setOnClickListener(v -> presenter.register(etRegisterNamePop.getText().toString(),etRegisterPasswordPop.getText().toString(),null));
+        //点击登录
+        btnLoginPop.setOnClickListener(v -> presenter.login(etLoginNamePop.getText().toString(),etLoginPasswordPop.getText().toString()));
     }
 
     @Override
     public void onLoginSuccessful() {
-
+        btnLoginOrExit.setText("退出登录");
     }
 
     @Override
@@ -179,8 +184,8 @@ public class MainPagePersonalFragment extends BaseFragment implements PersonalCe
     }
 
     @Override
-    public void onShowRemind() {
-
+    public void onShowRemind(String content) {
+        CToast.makeCText(getActivity(),content, Toast.LENGTH_SHORT).show();
     }
 
     @Override
