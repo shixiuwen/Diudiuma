@@ -10,4 +10,10 @@
 
     <string name="add_goods">添加物品</string>
     <string name="sure">确定</string>
+
+    <string name="change_pic">修改图片</string>
+
+    <string name="decode_ddm">生成丢丢码</string>
+
+    <string name="telephone">电话</string>
 </resources>

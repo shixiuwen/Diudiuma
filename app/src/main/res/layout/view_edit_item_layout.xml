@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/y108"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:background="#d2dedede"
+    android:id="@+id/ll_edit_item">
+
+    <ImageView
+        android:layout_width="@dimen/x50"
+        android:layout_height="@dimen/y50"
+        android:id="@+id/img_icon"
+        android:layout_marginLeft="@dimen/x24"
+        android:background="@drawable/img_hall_01"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_item_key"
+        android:text="@string/telephone"
+        android:layout_marginLeft="@dimen/x24"/>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_item_value"
+        android:text="@string/telephone"
+        android:layout_marginLeft="@dimen/x24"
+        android:layout_marginRight="@dimen/x50"/>
+
+    <ImageView
+        android:layout_width="@dimen/x50"
+        android:layout_height="@dimen/y50"
+        android:layout_marginRight="@dimen/x24"
+        android:background="@drawable/img_get_in"/>
+
+</LinearLayout>

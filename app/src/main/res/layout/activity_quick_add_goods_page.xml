@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:amos="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/view_common_title_view"/>
+    <include layout="@layout/view_common_title_view" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,11 +17,38 @@
             android:layout_height="@dimen/y400"
             android:layout_weight="1">
 
-            <ImageView
-                android:layout_width="@dimen/x250"
-                android:layout_height="@dimen/y250"
-                android:id="@+id/img_goods_pic"
-                android:layout_centerInParent="true"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="@dimen/x260"
+                    android:layout_height="@dimen/y260">
+
+                    <TextView
+                        android:layout_width="@dimen/x260"
+                        android:layout_height="@dimen/y260"
+                        android:layout_centerInParent="true"
+                        android:background="#fff" />
+
+                    <ImageView
+                        android:id="@+id/img_goods_pic"
+                        android:layout_width="@dimen/x250"
+                        android:layout_height="@dimen/y250"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/default_lose_goods_pic" />
+                </RelativeLayout>
+
+                <Button
+                    android:id="@+id/btn_changePic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/y80"
+                    android:layout_marginTop="@dimen/y24"
+                    android:background="@drawable/common_btn_selector"
+                    android:text="@string/change_pic" />
+            </LinearLayout>
 
         </RelativeLayout>
 
@@ -29,13 +57,48 @@
             android:layout_height="@dimen/y400"
             android:layout_weight="1">
 
-            <ImageView
-                android:layout_width="@dimen/x250"
-                android:layout_height="@dimen/y250"
-                android:id="@+id/img_goods_ddm"
-                android:layout_centerInParent="true"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="@dimen/x260"
+                    android:layout_height="@dimen/y260">
+
+                    <TextView
+                        android:layout_width="@dimen/x260"
+                        android:layout_height="@dimen/y260"
+                        android:layout_centerInParent="true"
+                        android:background="#fff" />
+
+                    <ImageView
+                        android:id="@+id/img_goods_ddm"
+                        android:layout_width="@dimen/x250"
+                        android:layout_height="@dimen/y250"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/default_ddm" />
+                </RelativeLayout>
+
+                <Button
+                    android:id="@+id/btn_decode_ddm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/y80"
+                    android:layout_marginTop="@dimen/y24"
+                    android:background="@drawable/common_btn_selector"
+                    android:text="@string/decode_ddm" />
+            </LinearLayout>
 
         </RelativeLayout>
 
     </LinearLayout>
+
+    <com.shixia.diudiuma.view.EditItemView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        amos:editItemIcon="@drawable/img_hall_06"
+        amos:keyText="品名"
+        amos:valueText="钱包"
+        android:id="@+id/etv_name"/>
 </LinearLayout>
