@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 
@@ -43,6 +44,13 @@ public class MainPageDefaultFragment extends BaseFragment implements DefaultFrag
     private MainPageGoodsAdapter mainPageGoodsAdapter;
     private ImageView imgQuick; //快速添加按钮
     private View contentView;
+
+    //快速添加popWindow
+    private LinearLayout popLl01;
+    private LinearLayout popLl03;
+    private LinearLayout popLl02;
+    private LinearLayout popLl04;
+    private PopupWindow popupWindow;
 
     @Override
     public View initView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -140,9 +148,42 @@ public class MainPageDefaultFragment extends BaseFragment implements DefaultFrag
     @Override
     public void onShowQuickOptWindow() {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.view_pop_quick_opt_layout, null);
-        PopupWindow popupWindow = new PopupWindow(view, ViewGroup.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.MATCH_PARENT);
+        popupWindow = new PopupWindow(view, ViewGroup.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.MATCH_PARENT);
         popupWindow.setFocusable(true);
         popupWindow.setAnimationStyle(R.style.login_pop_anim);
-        popupWindow.showAtLocation(contentView, Gravity.CENTER,0,0);
+        popupWindow.showAtLocation(contentView, Gravity.CENTER, 0, 0);
+        //初始化快速添加popupWindow控件
+        initPopWindowView(view);
+        //初始化快速添加popupWindow控件监听事件
+        initPopupWindowViewListener();
+    }
+
+    @Override
+    public void onQuickOptWindowDismiss() {
+        if (popupWindow != null) {
+            popupWindow.dismiss();
+        }
+    }
+
+    /**
+     * 初始化快速添加popupWindow控件
+     *
+     * @param view popLayout
+     */
+    private void initPopWindowView(View view) {
+        popLl01 = (LinearLayout) view.findViewById(R.id.pop_ll_01);
+        popLl03 = (LinearLayout) view.findViewById(R.id.pop_ll_03);
+        popLl02 = (LinearLayout) view.findViewById(R.id.pop_ll_02);
+        popLl04 = (LinearLayout) view.findViewById(R.id.pop_ll_04);
+    }
+
+    /**
+     * 初始化快速添加popupWindow控件监听事件
+     */
+    private void initPopupWindowViewListener() {
+        popLl01.setOnClickListener(v -> presenter.toQuickPage(0));    //点击进入发布寻物启事界面
+        popLl02.setOnClickListener(v -> presenter.toQuickPage(1));    //点击进入添加失物招领界面
+        popLl03.setOnClickListener(v -> presenter.toQuickPage(2));    //点击进入添加物品界面
+        popLl04.setOnClickListener(v -> presenter.toQuickPage(3));    //点击进入扫描二维码界面
     }
 }

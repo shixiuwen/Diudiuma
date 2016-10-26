@@ -67,6 +67,14 @@
         <activity android:name=".mvp.activity.SellCarActivity"/>
 
         <activity android:name=".mvp.activity.ZXingActivity"/>
+
+        <activity android:name=".mvp.activity.QuickAddGoodsActivity"/>
+
+        <activity android:name=".mvp.activity.QuickFindLoserActivity"/>
+
+        <activity android:name=".mvp.activity.QuickFindGoodsActivity"/>
+
+        <activity android:name=".mvp.activity.QuickScanGoodsActivity"/>
     </application>
 
 </manifest>

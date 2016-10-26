@@ -10,7 +10,12 @@ import com.shixia.diudiuma.mvp.iview.base.BaseIView;
 public interface DefaultFragmentIView extends BaseIView {
 
     /**
-     * 显示快速添加等按钮
+     * 显示快速添加等按钮的弹窗
      */
     void onShowQuickOptWindow();
+
+    /**
+     * 弹窗消失
+     */
+    void onQuickOptWindowDismiss();
 }
