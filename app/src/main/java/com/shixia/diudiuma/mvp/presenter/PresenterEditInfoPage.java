@@ -6,14 +6,13 @@ import com.shixia.diudiuma.mvp.iview.base.BaseIView;
 import com.shixia.diudiuma.mvp.presenter.base.BasePresenter;
 
 /**
- * Created by AmosShi on 2016/10/26.
- *
+ * Created by AmosShi on 2016/10/27.
  * Description:
  */
 
-public class PresenterAddGoods extends BasePresenter {
+public class PresenterEditInfoPage extends BasePresenter {
 
-    public PresenterAddGoods(Context context, BaseIView iView) {
+    public PresenterEditInfoPage(Context context, BaseIView iView) {
         super(context, iView);
     }
 }

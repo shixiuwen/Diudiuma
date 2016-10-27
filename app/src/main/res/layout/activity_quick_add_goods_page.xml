@@ -5,7 +5,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/view_common_title_view" />
+    <!--<include layout="@layout/view_common_title_view" />-->
+    <com.shixia.diudiuma.view.CommonTitleView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        amos:titleName="@string/add_goods"
+        amos:btnSureText="@string/sure"/>
 
     <View
         android:layout_width="match_parent"
@@ -123,7 +128,8 @@
         amos:editItemIcon="@drawable/img_hall_03"
         amos:keyText="悬赏金额"
         amos:valueText="点击设置"
-        android:id="@+id/etv_money"/>
+        amos:bottomSplitVisible="false"
+        android:id="@+id/etv_money" />
 
     <com.shixia.diudiuma.view.EditItemView
         android:layout_width="match_parent"
@@ -148,5 +154,6 @@
         amos:editItemIcon="@drawable/img_hall_06"
         amos:keyText="QQ"
         amos:valueText="点击添加"
+        amos:bottomSplitVisible="false"
         android:id="@+id/etv_qq"/>
 </LinearLayout>

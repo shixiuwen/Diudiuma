@@ -68,13 +68,15 @@
 
         <activity android:name=".mvp.activity.ZXingActivity"/>
 
-        <activity android:name=".mvp.activity.QuickAddGoodsActivity"/>
+        <activity android:name=".mvp.activity.QuickActivity"/>
 
         <activity android:name=".mvp.activity.QuickFindLoserActivity"/>
 
         <activity android:name=".mvp.activity.QuickFindGoodsActivity"/>
 
         <activity android:name=".mvp.activity.QuickScanGoodsActivity"/>
+
+        <activity android:name=".mvp.activity.EditInfoPageActivity"/>
     </application>
 
 </manifest>

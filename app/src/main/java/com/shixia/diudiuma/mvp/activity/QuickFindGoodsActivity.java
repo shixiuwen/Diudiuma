@@ -2,7 +2,7 @@ package com.shixia.diudiuma.mvp.activity;
 
 import com.shixia.diudiuma.R;
 import com.shixia.diudiuma.mvp.activity.base.BaseActivity;
-import com.shixia.diudiuma.mvp.iview.AddGoodsIView;
+import com.shixia.diudiuma.mvp.iview.QuickIView;
 import com.shixia.diudiuma.mvp.presenter.base.BasePresenter;
 
 /**
@@ -10,7 +10,7 @@ import com.shixia.diudiuma.mvp.presenter.base.BasePresenter;
  * Description:
  */
 
-public class QuickFindGoodsActivity extends BaseActivity implements AddGoodsIView{
+public class QuickFindGoodsActivity extends BaseActivity implements QuickIView{
     @Override
     protected void initContentView() {
         setContentView(R.layout.activity_quick_find_goods_page);

@@ -1,8 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!--公共设置条目-->
     <declare-styleable name="EditItemView">
         <attr name="editItemIcon" format="reference|color"/>
         <attr name="keyText" format="string"/>
         <attr name="valueText" format="string"/>
+        <attr name="topSplitVisible" format="boolean"/>
+        <attr name="bottomSplitVisible" format="boolean"/>
     </declare-styleable>
+
+    <!--通用Title-->
+    <declare-styleable name="CommonTitleView">
+        <attr name="titleName" format="string"/>
+        <attr name="btnSureText" format="string"/>
+        <attr name="isSureBtnVisible" format="boolean"/>
+    </declare-styleable>
+
+    <!--通用条目编辑页面-->
+    <declare-styleable name="EditPageView">
+        <attr name="editTitleRemind" format="string"/>
+        <attr name="editContentRemind" format="string"/>
+        <attr name="editIcon" format="reference|color"/>
+    </declare-styleable>
+
 </resources>

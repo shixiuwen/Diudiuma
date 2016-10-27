@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:amos="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/view_common_title_view"/>
+    <!--<include layout="@layout/view_common_title_view"/>-->
+    <com.shixia.diudiuma.view.CommonTitleView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        amos:titleName="@string/add_goods"
+        amos:btnSureText="@string/sure"/>
 
     <LinearLayout
         android:layout_width="match_parent"

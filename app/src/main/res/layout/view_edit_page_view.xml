@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_edit_title_remind"
+        android:text="请输入内容"
+        android:layout_marginTop="@dimen/y40"
+        android:layout_marginLeft="@dimen/x24"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y100"
+        android:orientation="horizontal"
+        android:background="@drawable/edit_bg"
+        android:layout_marginLeft="@dimen/x24"
+        android:layout_marginRight="@dimen/x24"
+        android:layout_marginTop="@dimen/y40">
+
+        <ImageView
+            android:layout_width="@dimen/x50"
+            android:layout_height="@dimen/y50"
+            android:id="@+id/edit_icon"
+            android:background="@drawable/img_hall_06"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/x24"/>
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="@dimen/y80"
+            android:background="@null"
+            android:layout_weight="1"
+            android:id="@+id/et_edit_content"/>
+
+        <Button
+            android:layout_width="@dimen/x150"
+            android:layout_height="match_parent"
+            android:id="@+id/btn_edit_commit"
+            android:background="@drawable/edit_sure_btn_bg"
+            android:text="@string/sure"
+            android:textColor="#263441"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_edit_content_remind"
+        android:text="请输入符合你的内容的数据"
+        android:layout_marginTop="@dimen/y40"
+        android:layout_marginLeft="@dimen/x24"/>
+</LinearLayout>
