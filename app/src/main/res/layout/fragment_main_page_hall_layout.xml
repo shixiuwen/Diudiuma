@@ -66,6 +66,11 @@
 
             </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/y50"
+                android:background="#123"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -98,7 +103,8 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/goods_name" />
+                                android:text="@string/goods_name"
+                                android:layout_marginTop="@dimen/y24"/>
 
                         </LinearLayout>
 
@@ -125,7 +131,8 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/goods_name" />
+                                android:text="@string/goods_name"
+                                android:layout_marginTop="@dimen/y24"/>
 
                         </LinearLayout>
                     </RelativeLayout>
@@ -159,7 +166,8 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/goods_name" />
+                                android:text="@string/goods_name"
+                                android:layout_marginTop="@dimen/y24"/>
 
                         </LinearLayout>
                     </RelativeLayout>
@@ -185,7 +193,8 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/goods_name" />
+                                android:text="@string/goods_name"
+                                android:layout_marginTop="@dimen/y24"/>
 
                         </LinearLayout>
                     </RelativeLayout>
@@ -220,7 +229,8 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/goods_name" />
+                                android:text="@string/goods_name"
+                                android:layout_marginTop="@dimen/y24"/>
 
                         </LinearLayout>
                     </RelativeLayout>
@@ -246,7 +256,8 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/goods_name" />
+                                android:text="@string/goods_name"
+                                android:layout_marginTop="@dimen/y24"/>
 
                         </LinearLayout>
                     </RelativeLayout>
@@ -254,6 +265,10 @@
                 </LinearLayout>
 
             </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/y50"/>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_hall"

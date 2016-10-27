@@ -66,6 +66,18 @@ public abstract class BaseActivity extends AppCompatActivity{
         }
     }
 
+    public void startActivityForResult(Context context,Class c,Bundle bundle,int resultCode,boolean isFinishCurrentActivity){
+        Intent intent = new Intent(context,c);
+        if (bundle != null) {
+            intent.putExtras(bundle);
+        }
+//        startActivity(intent);
+        startActivityForResult(intent,resultCode);
+        if(isFinishCurrentActivity){
+            finish();
+        }
+    }
+
     /**
      * 权限申请的回调
      * @param requestCode 请求码

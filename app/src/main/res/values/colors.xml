@@ -6,4 +6,11 @@
 
     <color name="transparent">#00000000</color>
 
+    <color name="color_green_A">#15c2a8</color>
+    <color name="color_green_A_press">#0b6b5c</color>
+
+    <color name="color_blue_A">#224364</color>
+
+    <color name="color_blue_Z">#123</color>
+
 </resources>

@@ -16,4 +16,14 @@
     <string name="decode_ddm">生成丢丢码</string>
 
     <string name="telephone">电话</string>
+    <string name="personal_info">个人信息</string>
+    <string name="setting">通用设置</string>
+    <string name="version_update">版本更新</string>
+    <string name="feedback">意见反馈</string>
+    <string name="about_us">关于我们</string>
+    <string name="submit">提 交</string>
+    <string name="date">丢失日期</string>
+    <string name="is_card">是否卡类</string>
+    <string name="is_certificate">是否证件</string>
+    <string name="goods_tag">标签</string>
 </resources>

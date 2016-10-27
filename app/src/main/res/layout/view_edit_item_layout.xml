@@ -10,7 +10,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/y2"
-        android:background="#30112233"
+        android:background="#1b112233"
         android:id="@+id/view_split_top"/>
 
     <LinearLayout
@@ -44,7 +44,7 @@
             android:id="@+id/tv_item_value"
             android:text="@string/telephone"
             android:layout_marginLeft="@dimen/x24"
-            android:layout_marginRight="@dimen/x50"/>
+            android:layout_marginRight="@dimen/x24"/>
 
         <ImageView
             android:layout_width="@dimen/x50"
@@ -57,7 +57,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/y2"
-        android:background="#30112233"
+        android:background="#1b112233"
         android:id="@+id/view_split_bottom" />
 
 </LinearLayout>

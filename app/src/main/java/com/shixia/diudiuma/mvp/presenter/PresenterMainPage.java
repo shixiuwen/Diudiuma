@@ -2,7 +2,7 @@ package com.shixia.diudiuma.mvp.presenter;
 
 import android.content.Context;
 
-import com.shixia.diudiuma.mvp.activity.QuickActivity;
+import com.shixia.diudiuma.mvp.activity.QuickAddGoodsActivity;
 import com.shixia.diudiuma.mvp.activity.QuickFindGoodsActivity;
 import com.shixia.diudiuma.mvp.activity.QuickFindLoserActivity;
 import com.shixia.diudiuma.mvp.activity.QuickScanGoodsActivity;
@@ -48,7 +48,7 @@ public class PresenterMainPage extends BasePresenter {
                     c = QuickFindLoserActivity.class;
                     break;
                 case 2:
-                    c = QuickActivity.class;
+                    c = QuickAddGoodsActivity.class;
                     break;
                 case 3:
                     c = QuickScanGoodsActivity.class;

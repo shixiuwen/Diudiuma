@@ -14,6 +14,12 @@ import com.shixia.diudiuma.R;
  * Created by AmosShi on 2016/10/26.
  * <p>
  * Description:自定义组合控件，用于一些界面（如设置）的 Item 条目
+ * 有如下自定义属性：
+ * 1.keyText
+ * 2.valueText
+ * 3.editItemIcon
+ * 4.topSplitVisible
+ * 5.bottomSplitVisible
  */
 
 public class EditItemView extends LinearLayout {

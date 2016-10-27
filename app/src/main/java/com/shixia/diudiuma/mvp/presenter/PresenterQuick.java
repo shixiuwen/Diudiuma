@@ -14,12 +14,12 @@ import com.shixia.diudiuma.mvp.presenter.base.BasePresenter;
  * Description:
  */
 
-public class PresenterQuickAddGoods extends BasePresenter {
+public class PresenterQuick extends BasePresenter {
 
     private BaseActivity activity;
     private QuickAddGoodsIView iView;
 
-    public PresenterQuickAddGoods(Context context, BaseIView iView) {
+    public PresenterQuick(Context context, BaseIView iView) {
         super(context, iView);
         this.activity = (BaseActivity) context;
         this.iView = (QuickAddGoodsIView) iView;

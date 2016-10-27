@@ -55,28 +55,55 @@
         <activity android:name="me.iwf.photopicker.PhotoPagerActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar"/>
 
-        <activity android:name=".mvp.activity.WelcomeActivity"/>
+        <activity android:name=".mvp.activity.WelcomeActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden"/>
 
-        <activity android:name=".mvp.activity.MainActivity"/>
+        <activity android:name=".mvp.activity.MainActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden"/>
 
         <activity android:name=".mvp.activity.MainActivity_2"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden"/>
 
-        <activity android:name=".mvp.activity.SellCarActivity"/>
+        <activity android:name=".mvp.activity.SellCarActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden"/>
 
-        <activity android:name=".mvp.activity.ZXingActivity"/>
+        <activity android:name=".mvp.activity.ZXingActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden"/>
 
-        <activity android:name=".mvp.activity.QuickActivity"/>
+        <activity android:name=".mvp.activity.QuickAddGoodsActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden"/>
 
-        <activity android:name=".mvp.activity.QuickFindLoserActivity"/>
+        <activity android:name=".mvp.activity.QuickFindLoserActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden"/>
 
-        <activity android:name=".mvp.activity.QuickFindGoodsActivity"/>
+        <activity android:name=".mvp.activity.QuickFindGoodsActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden"/>
 
-        <activity android:name=".mvp.activity.QuickScanGoodsActivity"/>
+        <activity android:name=".mvp.activity.QuickScanGoodsActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden"/>
 
-        <activity android:name=".mvp.activity.EditInfoPageActivity"/>
+        <activity android:name=".mvp.activity.EditInfoPageActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden"/>
     </application>
 
 </manifest>

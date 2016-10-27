@@ -39,7 +39,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="@dimen/y3"
+            android:layout_height="@dimen/y2"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="@dimen/y10"
             android:layout_marginLeft="@dimen/x24"

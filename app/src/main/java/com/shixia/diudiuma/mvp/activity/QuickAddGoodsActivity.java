@@ -2,7 +2,7 @@ package com.shixia.diudiuma.mvp.activity;
 
 import com.shixia.diudiuma.R;
 import com.shixia.diudiuma.mvp.activity.base.BaseActivity;
-import com.shixia.diudiuma.mvp.iview.QuickIView;
+import com.shixia.diudiuma.mvp.iview.QuickAddGoodsIView;
 import com.shixia.diudiuma.mvp.presenter.PresenterQuickAddGoods;
 import com.shixia.diudiuma.mvp.presenter.base.BasePresenter;
 import com.shixia.diudiuma.view.EditItemView;
@@ -12,7 +12,7 @@ import com.shixia.diudiuma.view.EditItemView;
  * Description:
  */
 
-public class QuickActivity extends BaseActivity implements QuickIView {
+public class QuickAddGoodsActivity extends BaseActivity implements QuickAddGoodsIView {
 
     private PresenterQuickAddGoods presenter;
 
