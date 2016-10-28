@@ -25,4 +25,14 @@ public class QuickFindLoserActivity extends BaseActivity implements QuickAddGood
     protected BasePresenter initPresenter() {
         return null;
     }
+
+    @Override
+    public void onChangeValueAfterEdit(int requestCode, String value) {
+
+    }
+
+    @Override
+    public void onShowRemind(String content) {
+
+    }
 }

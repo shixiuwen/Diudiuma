@@ -14,7 +14,7 @@ import com.shixia.diudiuma.R;
 
 /**
  * Created by AmosShi on 2016/10/27.
- *
+ * <p>
  * Description:信息编辑页面通用控件
  * 包含以下自定义属性：
  * 1.editTitleRemind：信息头提示
@@ -30,13 +30,16 @@ public class EditPageView extends RelativeLayout {
     private Button btnEditCommit;
     private EditText etEditContent;
 
+    private Context context;
+
     public EditPageView(Context context) {
 //        super(context);
-        this(context,null);
+        this(context, null);
     }
 
     public EditPageView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        this.context = context;
         initView(context);
 
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.EditPageView);
@@ -52,7 +55,7 @@ public class EditPageView extends RelativeLayout {
         typedArray.recycle();
     }
 
-    private void initView(Context context){
+    private void initView(Context context) {
         View view = View.inflate(context, R.layout.view_edit_page_view, this);
 
         tvEditTitleRemind = (TextView) view.findViewById(R.id.tv_edit_title_remind);
@@ -62,36 +65,38 @@ public class EditPageView extends RelativeLayout {
         etEditContent = (EditText) view.findViewById(R.id.et_edit_content);
 
         btnEditCommit.setOnClickListener(v -> {
-            if(onCommitClickListener!=null){
+            if (onCommitClickListener != null) {
                 onCommitClickListener.onCommitListener();
             }
         });
     }
 
-    public void setTvEditTitleRemind(String titleRemind){
+    public void setTvEditTitleRemind(String titleRemind) {
         tvEditTitleRemind.setText(titleRemind);
     }
 
-    public void setTvEditContentRemind(String contentRemind){
+    public void setTvEditContentRemind(String contentRemind) {
         tvEditContentRemind.setText(contentRemind);
     }
 
-    public void setImgEditIcon(int resourceId){
+    public void setImgEditIcon(int resourceId) {
         imgEditIcon.setImageResource(resourceId);
     }
 
-    public String getEditContent(){
+    public String getEditContent() {
         return etEditContent.getText().toString();
     }
 
-    /** ######################### 回调接口 ########################*/
+    /**
+     * ######################### 回调接口 ########################
+     */
     private OnCommitClickListener onCommitClickListener;
 
-    public void setOnCommitClickListener(OnCommitClickListener onCommitClickListener){
+    public void setOnCommitClickListener(OnCommitClickListener onCommitClickListener) {
         this.onCommitClickListener = onCommitClickListener;
     }
 
-    public interface OnCommitClickListener{
+    public interface OnCommitClickListener {
         void onCommitListener();
     }
 }

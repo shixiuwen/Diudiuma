@@ -5,7 +5,6 @@ import android.os.Bundle;
 
 import com.shixia.diudiuma.mvp.activity.EditInfoPageActivity;
 import com.shixia.diudiuma.mvp.activity.base.BaseActivity;
-import com.shixia.diudiuma.mvp.iview.QuickAddGoodsIView;
 import com.shixia.diudiuma.mvp.iview.base.BaseIView;
 import com.shixia.diudiuma.mvp.presenter.base.BasePresenter;
 
@@ -17,12 +16,12 @@ import com.shixia.diudiuma.mvp.presenter.base.BasePresenter;
 public class PresenterQuick extends BasePresenter {
 
     private BaseActivity activity;
-    private QuickAddGoodsIView iView;
+    private BaseIView iView;
 
     public PresenterQuick(Context context, BaseIView iView) {
         super(context, iView);
         this.activity = (BaseActivity) context;
-        this.iView = (QuickAddGoodsIView) iView;
+        this.iView = (BaseIView) iView;
     }
 
     /**
@@ -35,7 +34,7 @@ public class PresenterQuick extends BasePresenter {
      * @param iconResourceId    编辑页面的输入框icon
      *
      */
-    public void toEditInfoPage(String pageTitle,boolean isSureBtnVisible,String titleRemind,String contentRemind,int iconResourceId){
+    public void toEditInfoPage(int requestCode,String pageTitle,boolean isSureBtnVisible,String titleRemind,String contentRemind,int iconResourceId){
         Bundle bundle = new Bundle();
         bundle.putString("pageTitle",pageTitle);
         bundle.putBoolean("isSureBtnVisible",isSureBtnVisible);
@@ -43,6 +42,7 @@ public class PresenterQuick extends BasePresenter {
         bundle.putString("contentRemind",contentRemind);
         bundle.putInt("iconResourceId",iconResourceId);
 
-        activity.startActivity(activity, EditInfoPageActivity.class,bundle,false);
+        activity.startActivityForResult(activity,EditInfoPageActivity.class,bundle,requestCode,false);
     }
+
 }

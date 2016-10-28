@@ -38,4 +38,14 @@ public class QuickAddGoodsActivity extends BaseActivity implements QuickAddGoods
         presenter = new PresenterQuickAddGoods(this,this);
         return presenter;
     }
+
+    @Override
+    public void onChangeValueAfterEdit(int requestCode,String value) {
+
+    }
+
+    @Override
+    public void onShowRemind(String content) {
+
+    }
 }

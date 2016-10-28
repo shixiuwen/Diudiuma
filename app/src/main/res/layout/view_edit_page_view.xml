@@ -25,7 +25,6 @@
             android:layout_width="@dimen/x70"
             android:layout_height="@dimen/y70"
             android:id="@+id/edit_icon"
-            android:background="@drawable/img_hall_06"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/x24"/>
 

@@ -15,9 +15,12 @@ import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import com.jlcf.lib_adapter.base.BaseQuickAdapter;
+import com.shixia.diudiuma.MyApplication;
 import com.shixia.diudiuma.R;
 import com.shixia.diudiuma.adapter.MainPageGoodsAdapter;
 import com.shixia.diudiuma.bean.MyGoods;
+import com.shixia.diudiuma.bmob.bean.DDMGoods;
+import com.shixia.diudiuma.common_utils.L;
 import com.shixia.diudiuma.listener.RecyclerItemClickListener;
 import com.shixia.diudiuma.mvp.fragment.base.BaseFragment;
 import com.shixia.diudiuma.mvp.iview.DefaultFragmentIView;
@@ -27,6 +30,10 @@ import com.shixia.diudiuma.view.CToast;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
 
 /**
  * Created by AmosShi on 2016/10/24.
@@ -66,7 +73,7 @@ public class MainPageDefaultFragment extends BaseFragment implements DefaultFrag
 
     //初始化假的数据
     private void initData() {
-        MyGoods myGoods01 = new MyGoods("钥匙", "2016/09/07", "钥匙 黑色 两根", " ", 20.0f, "15620633843", "shixiuwen", "1987370591", "ddm_123455");
+        /*MyGoods myGoods01 = new MyGoods("钥匙", "2016/09/07", "钥匙 黑色 两根", " ", 20.0f, "15620633843", "shixiuwen", "1987370591", "ddm_123455");
         MyGoods myGoods02 = new MyGoods("钥匙", "2016/09/07", "钥匙 黑色 两根", " ", 20.0f, "15620633843", "shixiuwen", "1987370591", "ddm_123455");
         MyGoods myGoods03 = new MyGoods("钥匙", "2016/09/07", "钥匙 黑色 两根", " ", 20.0f, "15620633843", "shixiuwen", "1987370591", "ddm_123455");
         MyGoods myGoods04 = new MyGoods("钥匙", "2016/09/07", "钥匙 黑色 两根", " ", 20.0f, "15620633843", "shixiuwen", "1987370591", "ddm_123455");
@@ -90,7 +97,33 @@ public class MainPageDefaultFragment extends BaseFragment implements DefaultFrag
         myGoodsList.add(myGoods09);
         myGoodsList.add(myGoods10);
         myGoodsList.add(myGoods11);
-        myGoodsList.add(myGoods12);
+        myGoodsList.add(myGoods12);*/
+
+        BmobQuery<DDMGoods> query = new BmobQuery<DDMGoods>();
+        query.findObjects(new FindListener<DDMGoods>() {
+            @Override
+            public void done(List<DDMGoods> list, BmobException e) {
+                if (e == null) {
+                    CToast.makeCText(getActivity(), "查询成功", Toast.LENGTH_SHORT).show();
+                    //查询成功
+                    for (int i = 0; i < list.size(); i++) {
+                        DDMGoods ddmGoods = list.get(i);
+                        MyGoods myGoods = new MyGoods(ddmGoods.getDdmGoodsName(), ddmGoods.getUpdatedAt().toString(), ddmGoods.getDdmGoodsTag(), " ", 20.0f, "15620633843", "shixiuwen", "1987370591", "ddm_123455");
+                        myGoodsList.add(myGoods);
+                    }
+                    MyApplication.UIHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            mainPageGoodsAdapter.notifyDataSetChanged();
+                        }
+                    });
+                } else {
+                    //查询失败
+                    L.i(e.getMessage() + " " + e.getErrorCode());
+                    CToast.makeCText(getActivity(), "查询失败", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
     }
 
