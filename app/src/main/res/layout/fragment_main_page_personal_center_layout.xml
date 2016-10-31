@@ -19,7 +19,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/y520"
-            android:background="#d073ff">
+            android:background="#a864ff">
 
             <RelativeLayout
                 android:layout_width="@dimen/x190"
@@ -44,41 +44,25 @@
                         android:id="@+id/img_edit_personal_info"
                         android:layout_width="@dimen/x54"
                         android:layout_height="@dimen/y54"
-                        android:src="@drawable/ic_launcher" />
+                        android:src="@drawable/btn_edit_bg" />
                 </LinearLayout>
             </RelativeLayout>
 
             <ImageView
-                android:layout_width="@dimen/x210"
-                android:layout_height="@dimen/y210"
+                android:layout_width="@dimen/x250"
+                android:layout_height="@dimen/y250"
                 android:layout_centerInParent="true"
                 android:background="@drawable/circle_bg" />
 
             <com.shixia.diudiuma.view.CircleImageView
                 android:id="@+id/civ_avatar"
-                android:layout_width="@dimen/x210"
-                android:layout_height="@dimen/y210"
+                android:layout_width="@dimen/x250"
+                android:layout_height="@dimen/y250"
                 android:layout_centerInParent="true" />
 
-            <View
-                android:layout_width="@dimen/x290"
-                android:layout_height="@dimen/y10"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/x15"
-                android:layout_toLeftOf="@+id/civ_avatar"
-                android:background="#123" />
-
-            <View
-                android:layout_width="@dimen/x290"
-                android:layout_height="@dimen/y10"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/x15"
-                android:layout_toRightOf="@+id/civ_avatar"
-                android:background="#123" />
-
             <ImageView
-                android:layout_width="@dimen/x215"
-                android:layout_height="@dimen/x215"
+                android:layout_width="@dimen/x255"
+                android:layout_height="@dimen/x255"
                 android:layout_centerInParent="true"
                 android:background="@drawable/avatar_circle" />
 

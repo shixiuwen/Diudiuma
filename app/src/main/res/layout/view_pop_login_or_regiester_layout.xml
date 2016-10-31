@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:amos="http://schemas.android.com/apk/res-auto">
 
     <RelativeLayout
-        android:layout_width="@dimen/x800"
-        android:layout_height="@dimen/y1200"
+        android:layout_width="@dimen/x900"
+        android:layout_height="@dimen/y1400"
         android:layout_centerInParent="true"
         android:id="@+id/rl_login_card"
-        android:background="#28afa9">
+        android:background="@drawable/pop_login_or_register_view_bg">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -30,7 +32,8 @@
             android:orientation="horizontal"
             android:id="@+id/ll_name"
             android:layout_centerHorizontal="true"
-            android:layout_below="@+id/rl_login_card_tab_btn">
+            android:layout_below="@+id/rl_login_card_tab_btn"
+            android:visibility="gone">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -49,7 +52,8 @@
             android:orientation="horizontal"
             android:id="@+id/ll_password"
             android:layout_centerHorizontal="true"
-            android:layout_below="@+id/ll_name">
+            android:layout_below="@+id/ll_name"
+            android:visibility="gone">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -61,6 +65,25 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/et_login_password"/>
         </LinearLayout>
+
+        <com.shixia.diudiuma.view.EditLoginInfoView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            amos:editTitle="@string/user_name"
+            android:layout_below="@+id/rl_login_card_tab_btn"
+            android:id="@+id/eiv_user_name"
+            android:layout_marginLeft="@dimen/x24"
+            android:layout_marginRight="@dimen/x24"
+            android:layout_marginTop="@dimen/y48"/>
+
+        <com.shixia.diudiuma.view.EditLoginInfoView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            amos:editTitle="@string/password"
+            android:layout_below="@+id/eiv_user_name"
+            android:layout_marginTop="@dimen/y24"
+            android:layout_marginLeft="@dimen/x24"
+            android:layout_marginRight="@dimen/x24"/>
 
 
         <Button
@@ -86,11 +109,11 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_width="@dimen/x800"
-        android:layout_height="@dimen/y1200"
+        android:layout_width="@dimen/x900"
+        android:layout_height="@dimen/y1400"
         android:layout_centerInParent="true"
         android:id="@+id/rl_register_card"
-        android:background="#28afa9"
+        android:background="@drawable/pop_login_or_register_view_bg"
         android:visibility="gone">
 
         <RelativeLayout

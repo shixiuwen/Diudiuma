@@ -35,4 +35,6 @@
     <string name="goods_wechat">微信</string>
     <string name="goods_qq">QQ</string>
     <string name="goods_describe">描述</string>
+    <string name="user_name">用户名</string>
+    <string name="password">密码</string>
 </resources>

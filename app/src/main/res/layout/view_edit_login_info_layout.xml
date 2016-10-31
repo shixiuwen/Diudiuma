@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/y112"
+    android:orientation="vertical"
+    android:gravity="center_vertical"
+    android:background="@drawable/custom_edit_info_bg"
+    android:id="@+id/ll_edit_item"
+    android:paddingLeft="@dimen/x24"
+    android:paddingRight="@dimen/x24">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y108"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="@dimen/x150"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_item_key"
+            android:text="@string/telephone"
+            android:layout_marginLeft="@dimen/x24"
+            android:gravity="left" />
+
+        <View
+            android:layout_width="2px"
+            android:layout_height="@dimen/y80"
+            android:background="#d6d6d6"/>
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/et_login_info"
+            android:layout_weight="1"
+            android:background="@null"
+            android:layout_marginLeft="@dimen/x24"/>
+
+        <ImageView
+            android:layout_width="@dimen/x50"
+            android:layout_height="@dimen/y50"
+            android:id="@+id/img_clear_input"
+            android:layout_marginRight="@dimen/x24"
+            android:background="@drawable/btn_close_selector"/>
+
+    </LinearLayout>
+
+</LinearLayout>

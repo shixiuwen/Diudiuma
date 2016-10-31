@@ -24,4 +24,9 @@
         <attr name="editIcon" format="reference|color"/>
     </declare-styleable>
 
+    <!--登录注册信息编辑条目-->
+    <declare-styleable name="EditLoginInfoView">
+        <attr name="editTitle" format="string"/>
+    </declare-styleable>
+
 </resources>
