@@ -34,6 +34,10 @@ public class PresenterMainPage extends BasePresenter {
         iView.onShowQuickOptWindow();
     }
 
+    public void initData(){
+
+    }
+
     /**
      * 打开添加物品界面
      */

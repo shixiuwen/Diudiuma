@@ -15,12 +15,13 @@
             android:id="@+id/rl_login_card_tab_btn">
 
             <ImageButton
-                android:layout_width="@dimen/x100"
-                android:layout_height="@dimen/y100"
+                android:layout_width="@dimen/x80"
+                android:layout_height="@dimen/y80"
                 android:id="@+id/imgBtn_close_dialog_login"
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="@dimen/y24"
-                android:layout_marginRight="@dimen/x24" />
+                android:layout_marginRight="@dimen/x24"
+                android:background="@drawable/btn_close_selector"/>
         </RelativeLayout>
 
         <LinearLayout
@@ -97,19 +98,21 @@
             android:layout_height="wrap_content"
             android:id="@+id/rl_register_card_tab_btn">
             <ImageButton
-                android:layout_width="@dimen/x100"
-                android:layout_height="@dimen/y100"
+                android:layout_width="@dimen/x80"
+                android:layout_height="@dimen/y80"
                 android:id="@+id/imgBtn_back_to_login_dialog"
                 android:layout_marginTop="@dimen/y24"
-                android:layout_marginLeft="@dimen/x24"/>
+                android:layout_marginLeft="@dimen/x24"
+                android:background="@drawable/btn_back"/>
 
             <ImageButton
-                android:layout_width="@dimen/x100"
-                android:layout_height="@dimen/y100"
+                android:layout_width="@dimen/x80"
+                android:layout_height="@dimen/y80"
                 android:id="@+id/imgBtn_close_dialog_register"
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="@dimen/y24"
-                android:layout_marginRight="@dimen/x24" />
+                android:layout_marginRight="@dimen/x24"
+                android:background="@drawable/btn_close_selector"/>
         </RelativeLayout>
 
         <LinearLayout

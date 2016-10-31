@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/x48"
+    android:paddingRight="@dimen/x48"
+    android:paddingBottom="@dimen/y48">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y400"
+        android:orientation="horizontal"
+        android:padding="@dimen/x24">
+
+        <ImageView
+            android:layout_width="@dimen/x200"
+            android:layout_height="@dimen/y200"
+            android:id="@+id/img_goods_icon"
+            android:layout_gravity="center_vertical"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="@dimen/x48">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/goods_diudiu_code"
+                    android:id="@+id/tv_goods_diudiu_code_title"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_diudiu_code"
+                    android:text="123"
+                    android:layout_alignBottom="@id/tv_goods_diudiu_code_title"
+                    android:layout_toRightOf="@+id/tv_goods_diudiu_code_title"
+                    android:layout_marginLeft="@dimen/x50"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_goods_goods_address_title"
+                    android:text="@string/goods_address"
+                    android:layout_below="@+id/tv_goods_diudiu_code_title"
+                    android:layout_marginTop="@dimen/y24"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_address"
+                    android:layout_alignBottom="@+id/tv_goods_goods_address_title"
+                    android:text="武汉"
+                    android:layout_toRightOf="@id/tv_goods_goods_address_title"
+                    android:layout_marginLeft="@dimen/x50"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_goods_is_card_title"
+                    android:text="@string/goods_is_card"
+                    android:layout_below="@+id/tv_goods_goods_address_title"
+                    android:layout_marginTop="@dimen/y24"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_is_card"
+                    android:layout_alignBottom="@id/tv_goods_is_card_title"
+                    android:layout_toRightOf="@+id/tv_goods_is_card_title"
+                    android:layout_marginLeft="@dimen/x50"
+                    android:text="不是"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_goods_is_certificate_title"
+                    android:text="@string/goods_is_credit"
+                    android:layout_below="@+id/tv_goods_is_card_title"
+                    android:layout_marginTop="@dimen/y24"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_is_certification"
+                    android:layout_alignBottom="@id/tv_goods_is_certificate_title"
+                    android:layout_toRightOf="@+id/tv_goods_is_certificate_title"
+                    android:layout_marginLeft="@dimen/x50"
+                    android:text="不是"/>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="电话" />
+
+        <TextView
+            android:id="@+id/tv_tel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12345"
+            android:layout_marginLeft="@dimen/x48"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="微信：" />
+
+        <TextView
+            android:id="@+id/tv_wechat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/x48"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="QQ：" />
+
+        <TextView
+            android:id="@+id/tv_qq"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/x48"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="描述：" />
+
+        <TextView
+            android:id="@+id/tv_descrip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/x48"/>
+    </LinearLayout>
+
+</LinearLayout>

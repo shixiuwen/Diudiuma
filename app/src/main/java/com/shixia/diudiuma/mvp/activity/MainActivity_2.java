@@ -77,6 +77,7 @@ public class MainActivity_2 extends BaseActivity implements MainActivity_2IView 
         fragmentList.add(new MainPagePersonalFragment());
         MainPageAdapter pageAdapter = new MainPageAdapter(getSupportFragmentManager(),fragmentList);
         vpMain.setAdapter(pageAdapter);
+        imgTabMain.setSelected(true);
     }
 
     @Override
@@ -86,6 +87,36 @@ public class MainActivity_2 extends BaseActivity implements MainActivity_2IView 
         rlPageHall.setOnClickListener(v -> presenter.changeFragment(1));
         rlPageMsg.setOnClickListener(v -> presenter.changeFragment(2));
         rlPagePersonalCenter.setOnClickListener(v -> presenter.changeFragment(3));
+
+        vpMain.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                switch (position){
+                    case 0:
+                        onPageChanged(0);
+                        break;
+                    case 1:
+                        onPageChanged(1);
+                        break;
+                    case 2:
+                        onPageChanged(2);
+                        break;
+                    case 3:
+                        onPageChanged(3);
+                        break;
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     @Override
@@ -102,6 +133,31 @@ public class MainActivity_2 extends BaseActivity implements MainActivity_2IView 
 
     @Override
     public void onPageChanged(int position) {
-
+        switch (position){
+            case 0:
+                imgTabMain.setSelected(true);
+                imgTabHall.setSelected(false);
+                imgTabMsg.setSelected(false);
+                imgTabCenter.setSelected(false);
+                break;
+            case 1:
+                imgTabMain.setSelected(false);
+                imgTabHall.setSelected(true);
+                imgTabMsg.setSelected(false);
+                imgTabCenter.setSelected(false);
+                break;
+            case 2:
+                imgTabMain.setSelected(false);
+                imgTabHall.setSelected(false);
+                imgTabMsg.setSelected(true);
+                imgTabCenter.setSelected(false);
+                break;
+            case 3:
+                imgTabMain.setSelected(false);
+                imgTabHall.setSelected(false);
+                imgTabMsg.setSelected(false);
+                imgTabCenter.setSelected(true);
+                break;
+        }
     }
 }

@@ -17,11 +17,12 @@ import android.widget.Toast;
 import com.jlcf.lib_adapter.base.BaseQuickAdapter;
 import com.shixia.diudiuma.MyApplication;
 import com.shixia.diudiuma.R;
-import com.shixia.diudiuma.adapter.MainPageGoodsAdapter;
-import com.shixia.diudiuma.bean.MyGoods;
+import com.shixia.diudiuma.adapter.ExpandableItemAdapter;
+import com.shixia.diudiuma.bean.MultiItemEntity;
 import com.shixia.diudiuma.bmob.bean.DDMGoods;
+import com.shixia.diudiuma.bmob.bean.DDMGoodsLever0Item;
+import com.shixia.diudiuma.bmob.bean.DDMGoodsLever1Item;
 import com.shixia.diudiuma.common_utils.L;
-import com.shixia.diudiuma.listener.RecyclerItemClickListener;
 import com.shixia.diudiuma.mvp.fragment.base.BaseFragment;
 import com.shixia.diudiuma.mvp.iview.DefaultFragmentIView;
 import com.shixia.diudiuma.mvp.presenter.PresenterMainPage;
@@ -44,11 +45,11 @@ public class MainPageDefaultFragment extends BaseFragment implements DefaultFrag
 
     private PresenterMainPage presenter;
 
-    private List<MyGoods> myGoodsList = new ArrayList<>();
+    private List<MultiItemEntity> lever01List = new ArrayList<MultiItemEntity>();
 
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView recyclerView;
-    private MainPageGoodsAdapter mainPageGoodsAdapter;
+    //    private MainPageGoodsAdapter mainPageGoodsAdapter;
     private ImageView imgQuick; //快速添加按钮
     private View contentView;
 
@@ -58,6 +59,9 @@ public class MainPageDefaultFragment extends BaseFragment implements DefaultFrag
     private LinearLayout popLl02;
     private LinearLayout popLl04;
     private PopupWindow popupWindow;
+    private ExpandableItemAdapter expandableItemAdapter;
+
+    private static boolean isNotInitData = true;
 
     @Override
     public View initView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -67,37 +71,14 @@ public class MainPageDefaultFragment extends BaseFragment implements DefaultFrag
 
         imgQuick = (ImageView) contentView.findViewById(R.id.img_btn_quick);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        initData();
+        if (isNotInitData) {
+            initData();
+        }
         return contentView;
     }
 
     //初始化假的数据
     private void initData() {
-        /*MyGoods myGoods01 = new MyGoods("钥匙", "2016/09/07", "钥匙 黑色 两根", " ", 20.0f, "15620633843", "shixiuwen", "1987370591", "ddm_123455");
-        MyGoods myGoods02 = new MyGoods("钥匙", "2016/09/07", "钥匙 黑色 两根", " ", 20.0f, "15620633843", "shixiuwen", "1987370591", "ddm_123455");
-        MyGoods myGoods03 = new MyGoods("钥匙", "2016/09/07", "钥匙 黑色 两根", " ", 20.0f, "15620633843", "shixiuwen", "1987370591", "ddm_123455");
-        MyGoods myGoods04 = new MyGoods("钥匙", "2016/09/07", "钥匙 黑色 两根", " ", 20.0f, "15620633843", "shixiuwen", "1987370591", "ddm_123455");
-        MyGoods myGoods05 = new MyGoods("钥匙", "2016/09/07", "钥匙 黑色 两根", " ", 20.0f, "15620633843", "shixiuwen", "1987370591", "ddm_123455");
-        MyGoods myGoods06 = new MyGoods("钥匙", "2016/09/07", "钥匙 黑色 两根", " ", 20.0f, "15620633843", "shixiuwen", "1987370591", "ddm_123455");
-        MyGoods myGoods07 = new MyGoods("钥匙", "2016/09/07", "钥匙 黑色 两根", " ", 20.0f, "15620633843", "shixiuwen", "1987370591", "ddm_123455");
-        MyGoods myGoods08 = new MyGoods("钥匙", "2016/09/07", "钥匙 黑色 两根", " ", 20.0f, "15620633843", "shixiuwen", "1987370591", "ddm_123455");
-        MyGoods myGoods09 = new MyGoods("钥匙", "2016/09/07", "钥匙 黑色 两根", " ", 20.0f, "15620633843", "shixiuwen", "1987370591", "ddm_123455");
-        MyGoods myGoods10 = new MyGoods("钥匙", "2016/09/07", "钥匙 黑色 两根", " ", 20.0f, "15620633843", "shixiuwen", "1987370591", "ddm_123455");
-        MyGoods myGoods11 = new MyGoods("钥匙", "2016/09/07", "钥匙 黑色 两根", " ", 20.0f, "15620633843", "shixiuwen", "1987370591", "ddm_123455");
-        MyGoods myGoods12 = new MyGoods("钥匙", "2016/09/07", "钥匙 黑色 两根", " ", 20.0f, "15620633843", "shixiuwen", "1987370591", "ddm_123455");
-
-        myGoodsList.add(myGoods01);
-        myGoodsList.add(myGoods02);
-        myGoodsList.add(myGoods03);
-        myGoodsList.add(myGoods04);
-        myGoodsList.add(myGoods05);
-        myGoodsList.add(myGoods06);
-        myGoodsList.add(myGoods07);
-        myGoodsList.add(myGoods08);
-        myGoodsList.add(myGoods09);
-        myGoodsList.add(myGoods10);
-        myGoodsList.add(myGoods11);
-        myGoodsList.add(myGoods12);*/
 
         BmobQuery<DDMGoods> query = new BmobQuery<DDMGoods>();
         query.findObjects(new FindListener<DDMGoods>() {
@@ -108,15 +89,16 @@ public class MainPageDefaultFragment extends BaseFragment implements DefaultFrag
                     //查询成功
                     for (int i = 0; i < list.size(); i++) {
                         DDMGoods ddmGoods = list.get(i);
-                        MyGoods myGoods = new MyGoods(ddmGoods.getDdmGoodsName(), ddmGoods.getUpdatedAt().toString(), ddmGoods.getDdmGoodsTag(), " ", 20.0f, "15620633843", "shixiuwen", "1987370591", "ddm_123455");
-                        myGoodsList.add(myGoods);
+                        DDMGoodsLever0Item ddmGoodsLever0Item = new DDMGoodsLever0Item(ddmGoods.getDdmGoodsName(), ddmGoods.getUpdatedAt().toString(), ddmGoods.getDdmGoodsReward(), ddmGoods.getDdmGoodsTag(), ddmGoods.getPic());
+                        DDMGoodsLever1Item ddmGoodsLever1Item = new DDMGoodsLever1Item(ddmGoods.getDdmGoodsAddress(), ddmGoods.getDdmCode(),
+                                ddmGoods.getCard(), ddmGoods.getCertificate(),
+                                ddmGoods.getTel(), ddmGoods.getWechat(),
+                                ddmGoods.getQq(), ddmGoods.getDescribe());
+                        ddmGoodsLever0Item.addSubItem(ddmGoodsLever1Item);
+                        lever01List.add(ddmGoodsLever0Item);
                     }
-                    MyApplication.UIHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            mainPageGoodsAdapter.notifyDataSetChanged();
-                        }
-                    });
+                    isNotInitData = false;
+                    MyApplication.UIHandler.post(() -> expandableItemAdapter.notifyDataSetChanged());
                 } else {
                     //查询失败
                     L.i(e.getMessage() + " " + e.getErrorCode());
@@ -124,7 +106,6 @@ public class MainPageDefaultFragment extends BaseFragment implements DefaultFrag
                 }
             }
         });
-
     }
 
     @Override
@@ -150,14 +131,16 @@ public class MainPageDefaultFragment extends BaseFragment implements DefaultFrag
      * 初始化adapter
      */
     private void initAdapter() {
-        mainPageGoodsAdapter = new MainPageGoodsAdapter(R.layout.recy_goods_item, myGoodsList);
-        mainPageGoodsAdapter.openLoadAnimation();
-        mainPageGoodsAdapter.openLoadMore(true);
-        recyclerView.setAdapter(mainPageGoodsAdapter);
-        mainPageGoodsAdapter.setOnLoadMoreListener(this);
-        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), (view, position) -> {
-            CToast.makeCText(getActivity(), "" + position, Toast.LENGTH_SHORT).show();
-        }));
+        expandableItemAdapter = new ExpandableItemAdapter(lever01List);
+        expandableItemAdapter.openLoadMore(5);
+        expandableItemAdapter.openLoadAnimation();
+        recyclerView.setAdapter(expandableItemAdapter);
+        /*recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                CToast.makeCText(getActivity(), "" + position, Toast.LENGTH_SHORT).show();
+            }
+        }));*/
     }
 
     /**
@@ -165,7 +148,7 @@ public class MainPageDefaultFragment extends BaseFragment implements DefaultFrag
      */
     private void addHeaderView() {
         View headView = getActivity().getLayoutInflater().inflate(R.layout.recy_goods_header_view, (ViewGroup) recyclerView.getParent(), false);
-        mainPageGoodsAdapter.addHeaderView(headView);
+        expandableItemAdapter.addHeaderView(headView);
     }
 
     @Override

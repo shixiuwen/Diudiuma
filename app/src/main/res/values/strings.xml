@@ -26,4 +26,13 @@
     <string name="is_card">是否卡类</string>
     <string name="is_certificate">是否证件</string>
     <string name="goods_tag">标签</string>
+
+    <string name="goods_diudiu_code">丢丢码</string>
+    <string name="goods_address">地址</string>
+    <string name="goods_is_card">是否卡类</string>
+    <string name="goods_is_credit">是否证件类</string>
+    <string name="goods_tel">电话</string>
+    <string name="goods_wechat">微信</string>
+    <string name="goods_qq">QQ</string>
+    <string name="goods_describe">描述</string>
 </resources>

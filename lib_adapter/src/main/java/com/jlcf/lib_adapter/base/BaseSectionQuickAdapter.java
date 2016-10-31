@@ -1,9 +1,7 @@
 package com.jlcf.lib_adapter.base;
 
-import android.view.ViewGroup;
-
-
 import com.jlcf.lib_adapter.base.entity.SectionEntity;
+import com.jlcf.lib_adapter.base.listener.BaseViewHolder;
 
 import java.util.List;
 
@@ -32,14 +30,6 @@ public abstract class BaseSectionQuickAdapter<T extends SectionEntity> extends B
     @Override
     protected int getDefItemViewType(int position) {
         return ((SectionEntity) mData.get(position)).isHeader ? SECTION_HEADER_VIEW : 0;
-    }
-
-    @Override
-    protected BaseViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == SECTION_HEADER_VIEW)
-            return new BaseViewHolder(getItemView(mSectionHeadResId, parent));
-
-        return super.onCreateDefViewHolder(parent, viewType);
     }
 
     /**

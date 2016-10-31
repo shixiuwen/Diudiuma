@@ -3,8 +3,8 @@ package com.jlcf.lib_adapter.base;
 import android.util.SparseArray;
 import android.view.ViewGroup;
 
-
 import com.jlcf.lib_adapter.base.entity.MultiItemEntity;
+import com.jlcf.lib_adapter.base.listener.BaseViewHolder;
 
 import java.util.List;
 

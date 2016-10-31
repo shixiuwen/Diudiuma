@@ -3,6 +3,8 @@
 
     <item android:drawable="@drawable/img_main_page_031" android:state_pressed="true"/>
 
+    <item android:drawable="@drawable/img_main_page_031" android:state_selected="true"/>
+
     <item android:drawable="@drawable/img_main_page_030"/>
 
 </selector>

@@ -1,22 +1,36 @@
-
+/**
+ * Copyright 2013 Joan Zapata
+ * <p/>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p/>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p/>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.jlcf.lib_adapter.base;
 
 import android.animation.Animator;
 import android.content.Context;
 import android.support.annotation.IntDef;
+import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
-import android.support.v4.view.MotionEventCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.RecyclerView.LayoutParams;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
-
+import android.widget.LinearLayout;
 
 import com.jlcf.lib_adapter.R;
 import com.jlcf.lib_adapter.base.animation.AlphaInAnimation;
@@ -25,14 +39,16 @@ import com.jlcf.lib_adapter.base.animation.ScaleInAnimation;
 import com.jlcf.lib_adapter.base.animation.SlideInBottomAnimation;
 import com.jlcf.lib_adapter.base.animation.SlideInLeftAnimation;
 import com.jlcf.lib_adapter.base.animation.SlideInRightAnimation;
-import com.jlcf.lib_adapter.base.listener.OnItemDragListener;
-import com.jlcf.lib_adapter.base.listener.OnItemSwipeListener;
+import com.jlcf.lib_adapter.base.entity.IExpandable;
+import com.jlcf.lib_adapter.base.listener.BaseViewHolder;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 
 /**
@@ -50,30 +66,36 @@ public abstract class BaseQuickAdapter<T> extends RecyclerView.Adapter<RecyclerV
     private Interpolator mInterpolator = new LinearInterpolator();
     private int mDuration = 300;
     private int mLastPosition = -1;
-    private OnRecyclerViewItemClickListener onRecyclerViewItemClickListener;
-    private OnRecyclerViewItemLongClickListener onRecyclerViewItemLongClickListener;
     private RequestLoadMoreListener mRequestLoadMoreListener;
     @AnimationType
     private BaseAnimation mCustomAnimation;
     private BaseAnimation mSelectAnimation = new AlphaInAnimation();
-    private View mHeaderView;
-    private View mFooterView;
+    private LinearLayout mHeaderLayout;
+    private LinearLayout mFooterLayout;
+    private LinearLayout mCopyHeaderLayout = null;
+    private LinearLayout mCopyFooterLayout = null;
     private int pageSize = -1;
     private View mContentView;
     /**
      * View to show if there are no items to show.
      */
     private View mEmptyView;
+    private View mCopyEmptyLayout;
+
+    /**
+     * View to show if load more failed.
+     */
+    private View loadMoreFailedView;
 
     protected static final String TAG = BaseQuickAdapter.class.getSimpleName();
     protected Context mContext;
     protected int mLayoutResId;
     protected LayoutInflater mLayoutInflater;
     protected List<T> mData;
-    protected static final int HEADER_VIEW = 0x00000111;
-    protected static final int LOADING_VIEW = 0x00000222;
-    protected static final int FOOTER_VIEW = 0x00000333;
-    protected static final int EMPTY_VIEW = 0x00000555;
+    public static final int HEADER_VIEW = 0x00000111;
+    public static final int LOADING_VIEW = 0x00000222;
+    public static final int FOOTER_VIEW = 0x00000333;
+    public static final int EMPTY_VIEW = 0x00000555;
     private View mLoadingView;
 
     @IntDef({ALPHAIN, SCALEIN, SLIDEIN_BOTTOM, SLIDEIN_LEFT, SLIDEIN_RIGHT})
@@ -102,33 +124,6 @@ public abstract class BaseQuickAdapter<T> extends RecyclerView.Adapter<RecyclerV
      */
     public static final int SLIDEIN_RIGHT = 0x00000005;
 
-    private static final int NO_TOGGLE_VIEW = 0;
-    private int mToggleViewId = NO_TOGGLE_VIEW;
-    private ItemTouchHelper mItemTouchHelper;
-    private boolean itemDragEnabled = false;
-    private boolean itemSwipeEnabled = false;
-    private OnItemDragListener mOnItemDragListener;
-    private OnItemSwipeListener mOnItemSwipeListener;
-    private boolean mDragOnLongPress = true;
-
-    private View.OnTouchListener mOnToggleViewTouchListener;
-    private View.OnLongClickListener mOnToggleViewLongClickListener;
-
-    private static final String ERROR_NOT_SAME_ITEMTOUCHHELPER = "Item drag and item swipe should pass the same ItemTouchHelper";
-
-    /**
-     * call the method will not enable the loadMore funcation and the params pageSize is invalid
-     * more infomation see{@link  public void openLoadMore(int pageSize, boolean enable),@link  public void setOnLoadMoreListener(RequestLoadMoreListener requestLoadMoreListener)} method
-     *
-     * @param pageSize
-     * @param requestLoadMoreListener
-     */
-    @Deprecated
-    public void setOnLoadMoreListener(int pageSize, RequestLoadMoreListener requestLoadMoreListener) {
-
-        setOnLoadMoreListener(requestLoadMoreListener);
-    }
-
     public void setOnLoadMoreListener(RequestLoadMoreListener requestLoadMoreListener) {
         this.mRequestLoadMoreListener = requestLoadMoreListener;
     }
@@ -146,33 +141,11 @@ public abstract class BaseQuickAdapter<T> extends RecyclerView.Adapter<RecyclerV
      * when adapter's data size than pageSize and enable is true,the loading more function is enable,or disable
      *
      * @param pageSize
-     * @param enable
      */
-    public void openLoadMore(int pageSize, boolean enable) {
+    public void openLoadMore(int pageSize) {
         this.pageSize = pageSize;
-        mNextLoadEnable = enable;
+        mNextLoadEnable = true;
 
-    }
-
-    /**
-     * call the method before you should call setPageSize() method to setting up the enablePagerSize value,whether it will  invalid
-     * enable the loading more data function if enable's value is true,or disable
-     *
-     * @param enable
-     */
-    public void openLoadMore(boolean enable) {
-        mNextLoadEnable = enable;
-
-    }
-
-    /**
-     * setting up the size to decide the loading more data funcation whether enable
-     * enable if the data size than pageSize,or diable
-     *
-     * @param pageSize
-     */
-    public void setPageSize(int pageSize) {
-        this.pageSize = pageSize;
     }
 
     /**
@@ -182,85 +155,6 @@ public abstract class BaseQuickAdapter<T> extends RecyclerView.Adapter<RecyclerV
      */
     public int getPageSize() {
         return this.pageSize;
-    }
-
-    /**
-     * Register a callback to be invoked when an item in this AdapterView has
-     * been clicked.
-     *
-     * @param onRecyclerViewItemClickListener The callback that will be invoked.
-     */
-    public void setOnRecyclerViewItemClickListener(OnRecyclerViewItemClickListener onRecyclerViewItemClickListener) {
-        this.onRecyclerViewItemClickListener = onRecyclerViewItemClickListener;
-    }
-
-    /**
-     * Interface definition for a callback to be invoked when an item in this
-     * AdapterView has been clicked.
-     */
-    public interface OnRecyclerViewItemClickListener {
-        /**
-         * Callback method to be invoked when an item in this AdapterView has
-         * been clicked.
-         *
-         * @param view     The view within the AdapterView that was clicked (this
-         *                 will be a view provided by the adapter)
-         * @param position The position of the view in the adapter.
-         */
-        public void onItemClick(View view, int position);
-    }
-
-    /**
-     * Register a callback to be invoked when an item in this AdapterView has
-     * been clicked and held
-     *
-     * @param onRecyclerViewItemLongClickListener The callback that will run
-     */
-    public void setOnRecyclerViewItemLongClickListener(OnRecyclerViewItemLongClickListener onRecyclerViewItemLongClickListener) {
-        this.onRecyclerViewItemLongClickListener = onRecyclerViewItemLongClickListener;
-    }
-
-    /**
-     * Interface definition for a callback to be invoked when an item in this
-     * view has been clicked and held
-     */
-    public interface OnRecyclerViewItemLongClickListener {
-        /**
-         * callback method to be invoked when an item in this view has been
-         * click and held
-         *
-         * @param view     The view whihin the AbsListView that was clicked
-         * @param position The position of the view int the adapter
-         * @return true if the callback consumed the long click ,false otherwise
-         */
-        public boolean onItemLongClick(View view, int position);
-    }
-
-    private OnRecyclerViewItemChildClickListener mChildClickListener;
-
-    /**
-     * Register a callback to be invoked when childView in this AdapterView has
-     * been clicked and held
-     * {@link OnRecyclerViewItemChildClickListener}
-     *
-     * @param childClickListener The callback that will run
-     */
-    public void setOnRecyclerViewItemChildClickListener(OnRecyclerViewItemChildClickListener childClickListener) {
-        this.mChildClickListener = childClickListener;
-    }
-
-    public interface OnRecyclerViewItemChildClickListener {
-        void onItemChildClick(BaseQuickAdapter adapter, View view, int position);
-    }
-
-    public class OnItemChildClickListener implements View.OnClickListener {
-        public RecyclerView.ViewHolder mViewHolder;
-
-        @Override
-        public void onClick(View v) {
-            if (mChildClickListener != null)
-                mChildClickListener.onItemChildClick(BaseQuickAdapter.this, v, mViewHolder.getLayoutPosition() - getHeaderViewsCount());
-        }
     }
 
 
@@ -294,7 +188,7 @@ public abstract class BaseQuickAdapter<T> extends RecyclerView.Adapter<RecyclerV
      */
     public void remove(int position) {
         mData.remove(position);
-        notifyItemRemoved(position + getHeaderViewsCount());
+        notifyItemRemoved(position + getHeaderLayoutCount());
 
     }
 
@@ -316,22 +210,84 @@ public abstract class BaseQuickAdapter<T> extends RecyclerView.Adapter<RecyclerV
      * @param data
      */
     public void setNewData(List<T> data) {
-        this.mData = data;
+        this.mData = data == null ? new ArrayList<T>() : data;
         if (mRequestLoadMoreListener != null) {
             mNextLoadEnable = true;
-            mFooterView = null;
+            // mFooterLayout = null;
+        }
+        if (loadMoreFailedView != null) {
+            removeFooterView(loadMoreFailedView);
         }
         mLastPosition = -1;
         notifyDataSetChanged();
     }
 
     /**
+     * add one new data in to certain location
+     *
+     * @param position
+     */
+    public void addData(int position, T data) {
+        if (0 <= position && position < mData.size()) {
+            mData.add(position, data);
+            notifyItemInserted(position);
+            notifyItemRangeChanged(position, mData.size() - position);
+        } else {
+            throw new ArrayIndexOutOfBoundsException("inserted position most greater than 0 and less than data size");
+        }
+    }
+
+    /**
+     * add one new data
+     */
+    public void addData(T data) {
+        mData.add(data);
+        notifyItemInserted(mData.size());
+    }
+
+    /**
+     * add new data in to certain location
+     *
+     * @param position
+     */
+    public void addData(int position, List<T> data) {
+        if (0 <= position && position < mData.size()) {
+            mData.addAll(position, data);
+            notifyItemInserted(position);
+            notifyItemRangeChanged(position, mData.size() - position - data.size());
+        } else {
+            throw new ArrayIndexOutOfBoundsException("inserted position most greater than 0 and less than data size");
+        }
+    }
+
+    /**
      * additional data;
      *
-     * @param data
+     * @param newData
      */
-    public void addData(List<T> data) {
-        this.mData.addAll(data);
+    public void addData(List<T> newData) {
+        this.mData.addAll(newData);
+        if (mNextLoadEnable) {
+            mLoadingMoreEnable = false;
+        }
+        notifyItemRangeChanged(mData.size() - newData.size() + getHeaderLayoutCount(), newData.size());
+    }
+
+    /**
+     * @return Whether the Adapter is actively showing load
+     * progress.
+     */
+    public boolean isLoading() {
+        return mLoadingMoreEnable;
+    }
+
+    /**
+     * same as addData(List<T>) but for when data is manually added to the adapter
+     */
+    public void dataAdded() {
+        if (mNextLoadEnable) {
+            mLoadingMoreEnable = false;
+        }
         notifyDataSetChanged();
     }
 
@@ -349,7 +305,7 @@ public abstract class BaseQuickAdapter<T> extends RecyclerView.Adapter<RecyclerV
      *
      * @return
      */
-    public List getData() {
+    public List<T> getData() {
         return mData;
     }
 
@@ -365,21 +321,39 @@ public abstract class BaseQuickAdapter<T> extends RecyclerView.Adapter<RecyclerV
     }
 
     /**
-     * if setHeadView will be return 1 if not will be return 0
+     * if setHeadView will be return 1 if not will be return 0.
+     * notice: Deprecated! Use {@link ViewGroup#getChildCount()} of {@link #getHeaderLayout()} to replace.
      *
      * @return
      */
+    @Deprecated
     public int getHeaderViewsCount() {
-        return mHeaderView == null ? 0 : 1;
+        return mHeaderLayout == null ? 0 : 1;
     }
 
     /**
-     * if mFooterView will be return 1 or not will be return 0
+     * if mFooterLayout will be return 1 or not will be return 0.
+     * notice: Deprecated! Use {@link ViewGroup#getChildCount()} of {@link #getFooterLayout()} to replace.
      *
      * @return
      */
+    @Deprecated
     public int getFooterViewsCount() {
-        return mFooterView == null ? 0 : 1;
+        return mFooterLayout == null ? 0 : 1;
+    }
+
+    /**
+     * if addHeaderView will be return 1, if not will be return 0
+     */
+    public int getHeaderLayoutCount() {
+        return mHeaderLayout == null ? 0 : 1;
+    }
+
+    /**
+     * if addFooterView will be return 1, if not will be return 0
+     */
+    public int getFooterLayoutCount() {
+        return mFooterLayout == null ? 0 : 1;
     }
 
     /**
@@ -399,7 +373,7 @@ public abstract class BaseQuickAdapter<T> extends RecyclerView.Adapter<RecyclerV
     @Override
     public int getItemCount() {
         int i = isLoadMore() ? 1 : 0;
-        int count = mData.size() + i + getHeaderViewsCount() + getFooterViewsCount();
+        int count = mData.size() + i + getHeaderLayoutCount() + getFooterLayoutCount();
         if (mData.size() == 0 && mEmptyView != null) {
             /**
              *  setEmptyView(false) and add emptyView
@@ -413,7 +387,7 @@ public abstract class BaseQuickAdapter<T> extends RecyclerView.Adapter<RecyclerV
                 count += getmEmptyViewCount();
             }
 
-            if ((mHeadAndEmptyEnable && getHeaderViewsCount() == 1 && count == 1) || count == 0) {
+            if ((mHeadAndEmptyEnable && getHeaderLayoutCount() == 1 && count == 1) || count == 0) {
                 mEmptyEnable = true;
                 count += getmEmptyViewCount();
             }
@@ -436,7 +410,7 @@ public abstract class BaseQuickAdapter<T> extends RecyclerView.Adapter<RecyclerV
         /**
          * if set headView and positon =0
          */
-        if (mHeaderView != null && position == 0) {
+        if (mHeaderLayout != null && position == 0) {
             return HEADER_VIEW;
         }
         /**
@@ -450,43 +424,45 @@ public abstract class BaseQuickAdapter<T> extends RecyclerView.Adapter<RecyclerV
                 /**
                  * if user want to show headview and footview and emptyView but not add headview
                  */
-                if (mHeaderView == null && mEmptyView != null && mFooterView != null) {
+                if (mHeaderLayout == null && mFooterLayout != null) {
                     return FOOTER_VIEW;
                     /**
                      * add headview
                      */
-                } else if (mHeaderView != null && mEmptyView != null) {
+                } else if (mHeaderLayout != null) {
                     return EMPTY_VIEW;
                 }
             } else if (position == 0) {
                 /**
                  * has no emptyView just add emptyview
                  */
-                if (mHeaderView == null) {
+                if (mHeaderLayout == null) {
                     return EMPTY_VIEW;
-                } else if (mFooterView != null)
+                } else if (mFooterLayout != null)
 
                     return EMPTY_VIEW;
 
 
-            } else if (position == 2 && (mFootAndEmptyEnable || mHeadAndEmptyEnable) && mHeaderView != null && mEmptyView != null) {
+            } else if (position == 2 && (mFootAndEmptyEnable || mHeadAndEmptyEnable) && mHeaderLayout != null && mEmptyView != null) {
                 return FOOTER_VIEW;
 
             } /**
              * user forget to set {@link #setEmptyView(boolean, boolean, View)}  but add footview and headview and emptyview
              */
-            else if ((!mFootAndEmptyEnable || !mHeadAndEmptyEnable) && position == 1 && mFooterView != null) {
+            else if ((!mFootAndEmptyEnable || !mHeadAndEmptyEnable) && position == 1 && mFooterLayout != null) {
                 return FOOTER_VIEW;
             }
         } else if (mData.size() == 0 && mEmptyView != null && getItemCount() == (mHeadAndEmptyEnable ? 2 : 1) && mEmptyEnable) {
             return EMPTY_VIEW;
-        } else if (position == mData.size() + getHeaderViewsCount()) {
+        } else if (position == mData.size() + getHeaderLayoutCount()) {
             if (mNextLoadEnable)
                 return LOADING_VIEW;
             else
                 return FOOTER_VIEW;
+        } else if (position > mData.size() + getHeaderLayoutCount()) {
+            return FOOTER_VIEW;
         }
-        return getDefItemViewType(position - getHeaderViewsCount());
+        return getDefItemViewType(position - getHeaderLayoutCount());
     }
 
     protected int getDefItemViewType(int position) {
@@ -503,17 +479,16 @@ public abstract class BaseQuickAdapter<T> extends RecyclerView.Adapter<RecyclerV
                 baseViewHolder = getLoadingView(parent);
                 break;
             case HEADER_VIEW:
-                baseViewHolder = new BaseViewHolder(mHeaderView);
+                baseViewHolder = new BaseViewHolder(mHeaderLayout);
                 break;
             case EMPTY_VIEW:
-                baseViewHolder = new BaseViewHolder(mEmptyView);
+                baseViewHolder = new BaseViewHolder(mEmptyView == mCopyEmptyLayout ? mCopyEmptyLayout : mEmptyView);
                 break;
             case FOOTER_VIEW:
-                baseViewHolder = new BaseViewHolder(mFooterView);
+                baseViewHolder = new BaseViewHolder(mFooterLayout);
                 break;
             default:
                 baseViewHolder = onCreateDefViewHolder(parent, viewType);
-                initItemClickListener(baseViewHolder);
         }
         return baseViewHolder;
 
@@ -540,6 +515,8 @@ public abstract class BaseQuickAdapter<T> extends RecyclerView.Adapter<RecyclerV
         int type = holder.getItemViewType();
         if (type == EMPTY_VIEW || type == HEADER_VIEW || type == FOOTER_VIEW || type == LOADING_VIEW) {
             setFullSpan(holder);
+        } else {
+            addAnimation(holder);
         }
     }
 
@@ -559,7 +536,7 @@ public abstract class BaseQuickAdapter<T> extends RecyclerView.Adapter<RecyclerV
     }
 
     @Override
-    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+    public void onAttachedToRecyclerView(final RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
         RecyclerView.LayoutManager manager = recyclerView.getLayoutManager();
         if (manager instanceof GridLayoutManager) {
@@ -568,10 +545,39 @@ public abstract class BaseQuickAdapter<T> extends RecyclerView.Adapter<RecyclerV
                 @Override
                 public int getSpanSize(int position) {
                     int type = getItemViewType(position);
-                    return (type == EMPTY_VIEW || type == HEADER_VIEW || type == FOOTER_VIEW || type == LOADING_VIEW) ? gridManager.getSpanCount() : 1;
+                    if (mSpanSizeLookup == null)
+                        return (type == EMPTY_VIEW || type == HEADER_VIEW || type == FOOTER_VIEW || type == LOADING_VIEW) ? gridManager.getSpanCount() : 1;
+                    else
+                        return (type == EMPTY_VIEW || type == HEADER_VIEW || type == FOOTER_VIEW || type == LOADING_VIEW) ? gridManager.getSpanCount() : mSpanSizeLookup.getSpanSize(gridManager, position - getHeaderLayoutCount());
                 }
             });
         }
+        recyclerView.post(new Runnable() {
+            @Override
+            public void run() {
+                if (mRequestLoadMoreListener != null && pageSize == -1) {
+                    RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
+                    int visibleItemCount = layoutManager.getChildCount();
+                    Log.e("visibleItemCount", visibleItemCount + "");
+                    openLoadMore(visibleItemCount);
+                }
+            }
+        });
+
+    }
+
+    private boolean flag = true;
+    private SpanSizeLookup mSpanSizeLookup;
+
+    public interface SpanSizeLookup {
+        int getSpanSize(GridLayoutManager gridLayoutManager, int position);
+    }
+
+    /**
+     * @param spanSizeLookup instance to be used to query number of spans occupied by each item
+     */
+    public void setSpanSizeLookup(SpanSizeLookup spanSizeLookup) {
+        this.mSpanSizeLookup = spanSizeLookup;
     }
 
     /**
@@ -587,8 +593,7 @@ public abstract class BaseQuickAdapter<T> extends RecyclerView.Adapter<RecyclerV
 
         switch (viewType) {
             case 0:
-                convert((BaseViewHolder) holder, mData.get(holder.getLayoutPosition() - getHeaderViewsCount()));
-                addAnimation(holder);
+                convert((BaseViewHolder) holder, mData.get(holder.getLayoutPosition() - getHeaderLayoutCount()));
                 break;
             case LOADING_VIEW:
                 addLoadMore(holder);
@@ -600,28 +605,11 @@ public abstract class BaseQuickAdapter<T> extends RecyclerView.Adapter<RecyclerV
             case FOOTER_VIEW:
                 break;
             default:
-                convert((BaseViewHolder) holder, mData.get(holder.getLayoutPosition() - getHeaderViewsCount()));
-                onBindDefViewHolder((BaseViewHolder) holder, mData.get(holder.getLayoutPosition() - getHeaderViewsCount()));
+                convert((BaseViewHolder) holder, mData.get(holder.getLayoutPosition() - getHeaderLayoutCount()));
+                onBindDefViewHolder((BaseViewHolder) holder, mData.get(holder.getLayoutPosition() - getHeaderLayoutCount()));
                 break;
         }
 
-        if (mItemTouchHelper != null && itemDragEnabled && viewType != LOADING_VIEW && viewType != HEADER_VIEW
-                && viewType != EMPTY_VIEW && viewType != FOOTER_VIEW) {
-            if (mToggleViewId != NO_TOGGLE_VIEW) {
-                View toggleView = ((BaseViewHolder) holder).getView(mToggleViewId);
-                if (toggleView != null) {
-                    toggleView.setTag(holder);
-                    if (mDragOnLongPress) {
-                        toggleView.setOnLongClickListener(mOnToggleViewLongClickListener);
-                    } else {
-                        toggleView.setOnTouchListener(mOnToggleViewTouchListener);
-                    }
-                }
-            } else {
-                holder.itemView.setTag(holder);
-                holder.itemView.setOnLongClickListener(mOnToggleViewLongClickListener);
-            }
-        }
     }
 
     protected BaseViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
@@ -636,24 +624,172 @@ public abstract class BaseQuickAdapter<T> extends RecyclerView.Adapter<RecyclerV
     }
 
     /**
-     * easy to show a simple headView
+     * Return root layout of header
+     */
+    public LinearLayout getHeaderLayout() {
+        return mHeaderLayout;
+    }
+
+    /**
+     * Return root layout of footer
+     */
+    public LinearLayout getFooterLayout() {
+        return mFooterLayout;
+    }
+
+    /**
+     * Append header to the rear of the mHeaderLayout.
      *
      * @param header
      */
     public void addHeaderView(View header) {
-        this.mHeaderView = header;
+        addHeaderView(header, -1);
+    }
+
+    /**
+     * Add header view to mHeaderLayout and set header view position in mHeaderLayout.
+     * When index = -1 or index >= child count in mHeaderLayout,
+     * the effect of this method is the same as that of {@link #addHeaderView(View)}.
+     *
+     * @param header
+     * @param index  the position in mHeaderLayout of this header.
+     *               When index = -1 or index >= child count in mHeaderLayout,
+     *               the effect of this method is the same as that of {@link #addHeaderView(View)}.
+     */
+    public void addHeaderView(View header, int index) {
+        if (mHeaderLayout == null) {
+            if (mCopyHeaderLayout == null) {
+                mHeaderLayout = new LinearLayout(header.getContext());
+                mHeaderLayout.setOrientation(LinearLayout.VERTICAL);
+                mHeaderLayout.setLayoutParams(new LayoutParams(MATCH_PARENT, WRAP_CONTENT));
+                mCopyHeaderLayout = mHeaderLayout;
+            } else {
+                mHeaderLayout = mCopyHeaderLayout;
+            }
+        }
+        index = index >= mHeaderLayout.getChildCount() ? -1 : index;
+        mHeaderLayout.addView(header, index);
         this.notifyDataSetChanged();
     }
 
     /**
-     * easy to show a simple footerView
+     * Append footer to the rear of the mFooterLayout.
      *
      * @param footer
      */
     public void addFooterView(View footer) {
+        addFooterView(footer, -1);
+    }
+
+    /**
+     * Add footer view to mFooterLayout and set footer view position in mFooterLayout.
+     * When index = -1 or index >= child count in mFooterLayout,
+     * the effect of this method is the same as that of {@link #addFooterView(View)}.
+     *
+     * @param footer
+     * @param index  the position in mFooterLayout of this footer.
+     *               When index = -1 or index >= child count in mFooterLayout,
+     *               the effect of this method is the same as that of {@link #addFooterView(View)}.
+     */
+    public void addFooterView(View footer, int index) {
         mNextLoadEnable = false;
-        this.mFooterView = footer;
+        if (mFooterLayout == null) {
+            if (mCopyFooterLayout == null) {
+                mFooterLayout = new LinearLayout(footer.getContext());
+                mFooterLayout.setOrientation(LinearLayout.VERTICAL);
+                mFooterLayout.setLayoutParams(new LayoutParams(MATCH_PARENT, WRAP_CONTENT));
+                mCopyFooterLayout = mFooterLayout;
+            } else {
+                mFooterLayout = mCopyFooterLayout;
+            }
+        }
+        index = index >= mFooterLayout.getChildCount() ? -1 : index;
+        mFooterLayout.addView(footer, index);
+        this.notifyItemChanged(getItemCount());
+    }
+
+    /**
+     * remove header view from mHeaderLayout.
+     * When the child count of mHeaderLayout is 0, mHeaderLayout will be set to null.
+     *
+     * @param header
+     */
+    public void removeHeaderView(View header) {
+        if (mHeaderLayout == null) return;
+
+        mHeaderLayout.removeView(header);
+        if (mHeaderLayout.getChildCount() == 0) {
+            mHeaderLayout = null;
+        }
         this.notifyDataSetChanged();
+    }
+
+    /**
+     * remove footer view from mFooterLayout,
+     * When the child count of mFooterLayout is 0, mFooterLayout will be set to null.
+     *
+     * @param footer
+     */
+    public void removeFooterView(View footer) {
+        if (mFooterLayout == null) return;
+
+        mFooterLayout.removeView(footer);
+        if (mFooterLayout.getChildCount() == 0) {
+            mFooterLayout = null;
+        }
+        this.notifyDataSetChanged();
+    }
+
+    /**
+     * remove all header view from mHeaderLayout and set null to mHeaderLayout
+     */
+    public void removeAllHeaderView() {
+        if (mHeaderLayout == null) return;
+
+        mHeaderLayout.removeAllViews();
+        mHeaderLayout = null;
+    }
+
+    /**
+     * remove all footer view from mFooterLayout and set null to mFooterLayout
+     */
+    public void removeAllFooterView() {
+        if (mFooterLayout == null) return;
+
+        mFooterLayout.removeAllViews();
+        mFooterLayout = null;
+    }
+
+    /**
+     * Set the view to show when load more failed.
+     */
+    public void setLoadMoreFailedView(View view) {
+        loadMoreFailedView = view;
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                removeFooterView(loadMoreFailedView);
+                openLoadMore(pageSize);
+            }
+        });
+    }
+
+    /**
+     * Call this method when load more failed.
+     */
+    public void showLoadMoreFailedView() {
+        loadComplete();
+        if (loadMoreFailedView == null) {
+            loadMoreFailedView = mLayoutInflater.inflate(R.layout.def_load_more_failed, null);
+            loadMoreFailedView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    removeFooterView(loadMoreFailedView);
+                    openLoadMore(pageSize);
+                }
+            });
+        }
+        addFooterView(loadMoreFailedView);
     }
 
     /**
@@ -682,6 +818,9 @@ public abstract class BaseQuickAdapter<T> extends RecyclerView.Adapter<RecyclerV
         mHeadAndEmptyEnable = isHeadAndEmpty;
         mFootAndEmptyEnable = isFootAndEmpty;
         mEmptyView = emptyView;
+        if (mCopyEmptyLayout == null) {
+            mCopyEmptyLayout = emptyView;
+        }
         mEmptyEnable = true;
     }
 
@@ -696,40 +835,14 @@ public abstract class BaseQuickAdapter<T> extends RecyclerView.Adapter<RecyclerV
         return mEmptyView;
     }
 
+
     /**
-     * see more {@link  public void notifyDataChangedAfterLoadMore(boolean isNextLoad)}
      *
-     * @param isNextLoad
      */
-    @Deprecated
-    public void isNextLoad(boolean isNextLoad) {
-        mNextLoadEnable = isNextLoad;
+    public void loadComplete() {
+        mNextLoadEnable = false;
         mLoadingMoreEnable = false;
-        notifyDataSetChanged();
-
-    }
-
-    /**
-     * @param isNextLoad true
-     *                   if true when loading more data can show loadingView
-     */
-    public void notifyDataChangedAfterLoadMore(boolean isNextLoad) {
-        mNextLoadEnable = isNextLoad;
-        mLoadingMoreEnable = false;
-        notifyDataSetChanged();
-
-    }
-
-    /**
-     * add more data
-     *
-     * @param data
-     * @param isNextLoad
-     */
-    public void notifyDataChangedAfterLoadMore(List<T> data, boolean isNextLoad) {
-        mData.addAll(data);
-        notifyDataChangedAfterLoadMore(isNextLoad);
-
+        this.notifyItemChanged(getItemCount());
     }
 
 
@@ -740,29 +853,6 @@ public abstract class BaseQuickAdapter<T> extends RecyclerView.Adapter<RecyclerV
         }
     }
 
-    /**
-     * init the baseViewHolder to register onRecyclerViewItemClickListener and onRecyclerViewItemLongClickListener
-     *
-     * @param baseViewHolder
-     */
-    private void initItemClickListener(final BaseViewHolder baseViewHolder) {
-        if (onRecyclerViewItemClickListener != null) {
-            baseViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onRecyclerViewItemClickListener.onItemClick(v, baseViewHolder.getLayoutPosition() - getHeaderViewsCount());
-                }
-            });
-        }
-        if (onRecyclerViewItemLongClickListener != null) {
-            baseViewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    return onRecyclerViewItemLongClickListener.onItemLongClick(v, baseViewHolder.getLayoutPosition() - getHeaderViewsCount());
-                }
-            });
-        }
-    }
 
     /**
      * add animation when you want to show time
@@ -830,6 +920,7 @@ public abstract class BaseQuickAdapter<T> extends RecyclerView.Adapter<RecyclerV
     public interface RequestLoadMoreListener {
 
         void onLoadMoreRequested();
+
     }
 
 
@@ -907,174 +998,264 @@ public abstract class BaseQuickAdapter<T> extends RecyclerView.Adapter<RecyclerV
         return position;
     }
 
-    /**
-     * Set the toggle view's id which will trigger drag event.
-     * If the toggle view id is not set, drag event will be triggered when the item is long pressed.
-     *
-     * @param toggleViewId the toggle view's id
-     */
-    public void setToggleViewId(int toggleViewId) {
-        mToggleViewId = toggleViewId;
-    }
-
-    /**
-     * Set the drag event should be trigger on long press.
-     * Work when the toggleViewId has been set.
-     *
-     * @param longPress by default is true.
-     */
-    public void setToggleDragOnLongPress(boolean longPress) {
-        mDragOnLongPress = longPress;
-        if (mDragOnLongPress) {
-            mOnToggleViewTouchListener = null;
-            mOnToggleViewLongClickListener = new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    if (mItemTouchHelper != null && itemDragEnabled) {
-                        mItemTouchHelper.startDrag((RecyclerView.ViewHolder) v.getTag());
-                    }
-                    return true;
+    private int recursiveExpand(int position, @NonNull List list) {
+        int count = 0;
+        int pos = position + list.size() - 1;
+        for (int i = list.size() - 1; i >= 0; i--, pos--) {
+            if (list.get(i) instanceof IExpandable) {
+                IExpandable item = (IExpandable) list.get(i);
+                if (item.isExpanded() && hasSubItems(item)) {
+                    List subList = item.getSubItems();
+                    mData.addAll(pos + 1, subList);
+                    int subItemCount = recursiveExpand(pos + 1, subList);
+                    count += subItemCount;
                 }
-            };
-        } else {
-            mOnToggleViewTouchListener = new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    if (MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_DOWN
-                            && !mDragOnLongPress) {
-                        if (mItemTouchHelper != null && itemDragEnabled) {
-                            mItemTouchHelper.startDrag((RecyclerView.ViewHolder) v.getTag());
-                        }
-                        return true;
-                    } else {
-                        return false;
-                    }
-                }
-            };
-            mOnToggleViewLongClickListener = null;
-        }
-    }
-
-    /**
-     * Enable drag items.
-     * Use itemView as the toggleView when long pressed.
-     *
-     * @param itemTouchHelper {@link ItemTouchHelper}
-     */
-    public void enableDragItem(@NonNull ItemTouchHelper itemTouchHelper) {
-        enableDragItem(itemTouchHelper, NO_TOGGLE_VIEW, true);
-    }
-
-    /**
-     * Enable drag items. Use the specified view as toggle.
-     *
-     * @param itemTouchHelper {@link ItemTouchHelper}
-     * @param toggleViewId    The toggle view's id.
-     * @param dragOnLongPress If true the drag event will be trigger on long press, otherwise on touch down.
-     */
-    public void enableDragItem(@NonNull ItemTouchHelper itemTouchHelper, int toggleViewId, boolean dragOnLongPress) {
-        itemDragEnabled = true;
-        mItemTouchHelper = itemTouchHelper;
-        setToggleViewId(toggleViewId);
-        setToggleDragOnLongPress(dragOnLongPress);
-    }
-
-    /**
-     * Disable drag items.
-     */
-    public void disableDragItem() {
-        itemDragEnabled = false;
-        mItemTouchHelper = null;
-    }
-
-    public boolean isItemDraggable() {
-        return itemDragEnabled;
-    }
-
-    /**
-     * <p>Enable swipe items.</p>
-     * You should attach {@link ItemTouchHelper} which construct with {@link ItemDragAndSwipeCallback} to the Recycler when you enable this.
-     */
-    public void enableSwipeItem() {
-        itemSwipeEnabled = true;
-    }
-
-    public void disableSwipeItem() {
-        itemSwipeEnabled = false;
-    }
-
-    public boolean isItemSwipeEnable() {
-        return itemSwipeEnabled;
-    }
-
-    /**
-     * @param onItemDragListener Register a callback to be invoked when drag event happen.
-     */
-    public void setOnItemDragListener(OnItemDragListener onItemDragListener) {
-        mOnItemDragListener = onItemDragListener;
-    }
-
-    public int getViewHolderPosition(RecyclerView.ViewHolder viewHolder) {
-        return viewHolder.getAdapterPosition() - getHeaderViewsCount();
-    }
-
-    public void onItemDragStart(RecyclerView.ViewHolder viewHolder) {
-        if (mOnItemDragListener != null && itemDragEnabled) {
-            mOnItemDragListener.onItemDragStart(viewHolder, getViewHolderPosition(viewHolder));
-        }
-    }
-
-    public void onItemDragMoving(RecyclerView.ViewHolder source, RecyclerView.ViewHolder target) {
-        int from = getViewHolderPosition(source);
-        int to = getViewHolderPosition(target);
-
-        if (from < to) {
-            for (int i = from; i < to; i++) {
-                Collections.swap(mData, i, i + 1);
-            }
-        } else {
-            for (int i = from; i > to; i--) {
-                Collections.swap(mData, i, i - 1);
             }
         }
-        notifyItemMoved(source.getAdapterPosition(), target.getAdapterPosition());
+        return count;
 
-        if (mOnItemDragListener != null && itemDragEnabled) {
-            mOnItemDragListener.onItemDragMoving(source, from, target, to);
+    }
+
+    /**
+     * Expand an expandable item
+     *
+     * @param position     position of the item
+     * @param animate      expand items with animation
+     * @param shouldNotify notify the RecyclerView to rebind items, <strong>false</strong> if you want to do it yourself.
+     * @return the number of items that have been added.
+     */
+    public int expand(@IntRange(from = 0) int position, boolean animate, boolean shouldNotify) {
+        position -= getHeaderLayoutCount();
+
+        IExpandable expandable = getExpandableItem(position);
+        if (expandable == null) {
+            return 0;
+        }
+        if (!hasSubItems(expandable)) {
+            expandable.setExpanded(false);
+            return 0;
+        }
+        int subItemCount = 0;
+        if (!expandable.isExpanded()) {
+            List list = expandable.getSubItems();
+            mData.addAll(position + 1, list);
+            subItemCount += recursiveExpand(position + 1, list);
+
+            expandable.setExpanded(true);
+            subItemCount += list.size();
+        }
+        int parentPos = position + getHeaderLayoutCount();
+        if (shouldNotify) {
+            if (animate) {
+                notifyItemChanged(parentPos);
+                notifyItemRangeInserted(parentPos + 1, subItemCount);
+            } else {
+                notifyDataSetChanged();
+            }
+        }
+        return subItemCount;
+    }
+
+    /**
+     * Expand an expandable item
+     *
+     * @param position position of the item, which includes the header layout count.
+     * @param animate  expand items with animation
+     * @return the number of items that have been added.
+     */
+    public int expand(@IntRange(from = 0) int position, boolean animate) {
+        return expand(position, animate, true);
+    }
+
+    /**
+     * Expand an expandable item with animation.
+     *
+     * @param position position of the item, which includes the header layout count.
+     * @return the number of items that have been added.
+     */
+    public int expand(@IntRange(from = 0) int position) {
+        return expand(position, true, true);
+    }
+
+    public int expandAll(int position, boolean animate, boolean notify) {
+        position -= getHeaderLayoutCount();
+
+        T endItem = null;
+        if (position + 1 < this.mData.size()) {
+            endItem = getItem(position + 1);
+        }
+
+        IExpandable expandable = getExpandableItem(position);
+        if (!hasSubItems(expandable)) {
+            return 0;
+        }
+
+        int count = expand(position + getHeaderLayoutCount(), false, false);
+        for (int i = position + 1; i < this.mData.size(); i++) {
+            T item = getItem(i);
+
+            if (item == endItem) {
+                break;
+            }
+            if (isExpandable(item)) {
+                count += expand(i + getHeaderLayoutCount(), false, false);
+            }
+        }
+
+        if (notify) {
+            if (animate) {
+                notifyItemRangeInserted(position + getHeaderLayoutCount() + 1, count);
+            } else {
+                notifyDataSetChanged();
+            }
+        }
+        return count;
+    }
+
+    /**
+     * expand the item and all its subItems
+     *
+     * @param position position of the item, which includes the header layout count.
+     * @param init     whether you are initializing the recyclerView or not.
+     *                 if <strong>true</strong>, it won't notify recyclerView to redraw UI.
+     * @return the number of items that have been added to the adapter.
+     */
+    public int expandAll(int position, boolean init) {
+        return expandAll(position, true, !init);
+    }
+
+    private int recursiveCollapse(@IntRange(from = 0) int position) {
+        T item = getItem(position);
+        if (!isExpandable(item)) {
+            return 0;
+        }
+        IExpandable expandable = (IExpandable) item;
+        int subItemCount = 0;
+        if (expandable.isExpanded()) {
+            List<T> subItems = expandable.getSubItems();
+            for (int i = subItems.size() - 1; i >= 0; i--) {
+                T subItem = subItems.get(i);
+                int pos = getItemPosition(subItem);
+                if (pos < 0) {
+                    continue;
+                }
+                if (subItem instanceof IExpandable) {
+                    subItemCount += recursiveCollapse(pos);
+                }
+                mData.remove(pos);
+                subItemCount++;
+            }
+        }
+        return subItemCount;
+    }
+
+    /**
+     * Collapse an expandable item that has been expanded..
+     *
+     * @param position the position of the item, which includes the header layout count.
+     * @param animate  collapse with animation or not.
+     * @param notify   notify the recyclerView refresh UI or not.
+     * @return the number of subItems collapsed.
+     */
+    public int collapse(@IntRange(from = 0) int position, boolean animate, boolean notify) {
+        position -= getHeaderLayoutCount();
+
+        IExpandable expandable = getExpandableItem(position);
+        if (expandable == null) {
+            return 0;
+        }
+        int subItemCount = recursiveCollapse(position);
+        expandable.setExpanded(false);
+        int parentPos = position + getHeaderLayoutCount();
+        if (notify) {
+            if (animate) {
+                notifyItemChanged(parentPos);
+                notifyItemRangeRemoved(parentPos + 1, subItemCount);
+            } else {
+                notifyDataSetChanged();
+            }
+        }
+        return subItemCount;
+    }
+
+    /**
+     * Collapse an expandable item that has been expanded..
+     *
+     * @param position the position of the item, which includes the header layout count.
+     * @return the number of subItems collapsed.
+     */
+    public int collapse(@IntRange(from = 0) int position) {
+        return collapse(position, true, true);
+    }
+
+    /**
+     * Collapse an expandable item that has been expanded..
+     *
+     * @param position the position of the item, which includes the header layout count.
+     * @return the number of subItems collapsed.
+     */
+    public int collapse(@IntRange(from = 0) int position, boolean animate) {
+        return collapse(position, animate, true);
+    }
+
+    private int getItemPosition(T item) {
+        return item != null && mData != null && !mData.isEmpty() ? mData.indexOf(item) : -1;
+    }
+
+    private boolean hasSubItems(IExpandable item) {
+        List list = item.getSubItems();
+        return list != null && list.size() > 0;
+    }
+
+    private boolean isExpandable(T item) {
+        return item != null && item instanceof IExpandable;
+    }
+
+    private IExpandable getExpandableItem(int position) {
+        T item = getItem(position);
+        if (isExpandable(item)) {
+            return (IExpandable) item;
+        } else {
+            return null;
         }
     }
 
-    public void onItemDragEnd(RecyclerView.ViewHolder viewHolder) {
-        if (mOnItemDragListener != null && itemDragEnabled) {
-            mOnItemDragListener.onItemDragEnd(viewHolder, getViewHolderPosition(viewHolder));
-        }
-    }
-
-    public void setOnItemSwipeListener(OnItemSwipeListener listener) {
-        mOnItemSwipeListener = listener;
-    }
-
-    public void onItemSwipeStart(RecyclerView.ViewHolder viewHolder) {
-        if (mOnItemSwipeListener != null && itemSwipeEnabled) {
-            mOnItemSwipeListener.onItemSwipeStart(viewHolder, getViewHolderPosition(viewHolder));
-        }
-    }
-
-    public void onItemSwipeClear(RecyclerView.ViewHolder viewHolder) {
-        if (mOnItemSwipeListener != null && itemSwipeEnabled) {
-            mOnItemSwipeListener.clearView(viewHolder, getViewHolderPosition(viewHolder));
-        }
-    }
-
-    public void onItemSwiped(RecyclerView.ViewHolder viewHolder) {
-        if (mOnItemSwipeListener != null && itemSwipeEnabled) {
-            mOnItemSwipeListener.onItemSwiped(viewHolder, getViewHolderPosition(viewHolder));
+    /**
+     * Get the parent item position of the IExpandable item
+     * @return return the closest parent item position of the IExpandable.
+     *         if the IExpandable item's level is 0, return itself position.
+     *         if the item's level is negative which mean do not implement this, return a negative
+     *         if the item is not exist in the data list, return a negative.
+     */
+    public int getParentPosition(@NonNull T item) {
+        int position = getItemPosition(item);
+        if (position == -1) {
+            return -1;
         }
 
-        int pos = getViewHolderPosition(viewHolder);
+        // if the item is IExpandable, return a closest IExpandable item position whose level smaller than this.
+        // if it is not, return the closest IExpandable item position whose level is not negative
+        int level;
+        if (item instanceof IExpandable) {
+            level = ((IExpandable)item).getLevel();
+        } else {
+            level = Integer.MAX_VALUE;
+        }
+        if (level == 0) {
+            return position;
+        } else if (level == -1) {
+            return -1;
+        }
 
-        mData.remove(pos);
-        notifyItemRemoved(viewHolder.getAdapterPosition());
+        for (int i = position; i >= 0; i--) {
+            T temp = mData.get(i);
+            if (temp instanceof IExpandable) {
+                IExpandable expandable = (IExpandable)temp;
+                if (expandable.getLevel() >= 0 && expandable.getLevel() < level) {
+                    return i;
+                }
+            }
+        }
+        return -1;
     }
-
 }
