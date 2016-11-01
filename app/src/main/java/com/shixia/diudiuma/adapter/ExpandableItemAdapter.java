@@ -2,15 +2,15 @@ package com.shixia.diudiuma.adapter;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.text.TextUtils;
 import android.util.Log;
-import android.view.View;
 
 import com.jlcf.lib_adapter.base.listener.BaseViewHolder;
 import com.shixia.diudiuma.R;
+import com.shixia.diudiuma.bean.Constants;
 import com.shixia.diudiuma.bean.MultiItemEntity;
 import com.shixia.diudiuma.bmob.bean.DDMGoodsLever0Item;
 import com.shixia.diudiuma.bmob.bean.DDMGoodsLever1Item;
-import com.shixia.diudiuma.common_utils.L;
 import com.xys.libzxing.zxing.encoding.EncodingUtils;
 
 import java.io.IOException;
@@ -30,6 +30,9 @@ import rx.schedulers.Schedulers;
  */
 public class ExpandableItemAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity> {
     private static final String TAG = ExpandableItemAdapter.class.getSimpleName();
+
+    //默认图片地址
+    private String fileUrl = Constants.defPic;
 
     public static final int TYPE_LEVEL_0 = 0;
     public static final int TYPE_LEVEL_1 = 1;
@@ -51,13 +54,16 @@ public class ExpandableItemAdapter extends BaseMultiItemQuickAdapter<MultiItemEn
         switch (holder.getItemViewType()) {
             case TYPE_LEVEL_0:
                 final DDMGoodsLever0Item lv0 = (DDMGoodsLever0Item) item;
-                L.i("url", lv0.getPic().getFileUrl());
-
+                String pic = lv0.getPic();
                 Observable
                         .create(new Observable.OnSubscribe<String>() {
                             @Override
                             public void call(Subscriber<? super String> subscriber) {
-                                subscriber.onNext(lv0.getPic().getFileUrl());
+                                if (TextUtils.isEmpty(pic)) {
+                                    subscriber.onNext(fileUrl);
+                                }else {
+                                    subscriber.onNext(pic);
+                                }
                             }
                         })
                         .map(this::returnBitmap)
@@ -91,12 +97,9 @@ public class ExpandableItemAdapter extends BaseMultiItemQuickAdapter<MultiItemEn
                         .setText(R.id.tv_qq, lv1.getQq())
                         .setText(R.id.tv_descrip, lv1.getDescribe())
                         .setImageBitmap(R.id.img_goods_icon,image );
-                holder.itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        int pos = holder.getAdapterPosition();
-                        Log.d(TAG, "Level 1 item pos: " + pos);
-                    }
+                holder.itemView.setOnClickListener(v -> {
+                    int pos = holder.getAdapterPosition();
+                    Log.d(TAG, "Level 1 item pos: " + pos);
                 });
                 break;
         }

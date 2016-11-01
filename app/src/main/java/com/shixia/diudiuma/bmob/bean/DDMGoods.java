@@ -1,7 +1,6 @@
 package com.shixia.diudiuma.bmob.bean;
 
 import cn.bmob.v3.BmobObject;
-import cn.bmob.v3.datatype.BmobFile;
 
 /**
  * Created by AmosShi on 2016/10/28.
@@ -14,7 +13,7 @@ public class DDMGoods extends BmobObject {
 //    private Date date;                  //注册日期服务器会自动保存,所以不需要特殊声明
     private Float ddmGoodsReward;       //赏金
     private String ddmGoodsTag;         //标签
-    private BmobFile pic;               //图像
+    private String pic;               //图像
 
     //以下几条是展开的详细信息
     private String ddmGoodsAddress;     //地址
@@ -90,11 +89,11 @@ public class DDMGoods extends BmobObject {
         this.ddmGoodsAddress = ddmGoodsAddress;
     }
 
-    public BmobFile getPic() {
+    public String getPic() {
         return pic;
     }
 
-    public void setPic(BmobFile pic) {
+    public void setPic(String pic) {
         this.pic = pic;
     }
 

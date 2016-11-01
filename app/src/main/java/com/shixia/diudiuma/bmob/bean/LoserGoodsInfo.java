@@ -1,7 +1,6 @@
 package com.shixia.diudiuma.bmob.bean;
 
 import cn.bmob.v3.BmobObject;
-import cn.bmob.v3.datatype.BmobFile;
 
 /**
  * Created by AmosShi on 2016/10/27.
@@ -19,7 +18,7 @@ public class LoserGoodsInfo extends BmobObject {
     private Float reward;       //赏金
     private String discribe;    //描述（200字以内）
     private String goodsTag;    //标签
-    private BmobFile goodsIcon; //照片
+    private String goodsIcon; //照片
     private String tel;         //手机号
     private String wechat;      //微信
     private String qq;          //QQ
@@ -88,11 +87,11 @@ public class LoserGoodsInfo extends BmobObject {
         this.goodsTag = goodsTag;
     }
 
-    public BmobFile getGoodsIcon() {
+    public String getGoodsIcon() {
         return goodsIcon;
     }
 
-    public void setGoodsIcon(BmobFile goodsIcon) {
+    public void setGoodsIcon(String goodsIcon) {
         this.goodsIcon = goodsIcon;
     }
 

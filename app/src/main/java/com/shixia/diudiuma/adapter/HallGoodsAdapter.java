@@ -2,10 +2,12 @@ package com.shixia.diudiuma.adapter;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.text.TextUtils;
 
 import com.jlcf.lib_adapter.base.BaseQuickAdapter;
 import com.jlcf.lib_adapter.base.listener.BaseViewHolder;
 import com.shixia.diudiuma.R;
+import com.shixia.diudiuma.bean.Constants;
 import com.shixia.diudiuma.bmob.bean.LoserGoodsInfo;
 
 import java.io.IOException;
@@ -15,7 +17,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
-import cn.bmob.v3.datatype.BmobFile;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -29,7 +30,7 @@ import rx.schedulers.Schedulers;
 public class HallGoodsAdapter extends BaseQuickAdapter<LoserGoodsInfo> {
 
     //默认图片地址
-    private String fileUrl = "http://bmob-cdn-7143.b0.upaiyun.com/2016/11/01/cf9f12004007632b8046fd60b661516b.png";
+    private String fileUrl = Constants.defPic;
 
     /*private ImageView imgGoodsIcon;
     private TextView tvGoodsName;
@@ -48,15 +49,17 @@ public class HallGoodsAdapter extends BaseQuickAdapter<LoserGoodsInfo> {
 
     @Override
     protected void convert(BaseViewHolder helper, LoserGoodsInfo item) {
-        BmobFile goodsIcon = item.getGoodsIcon();
-        if (goodsIcon != null) {
-            fileUrl = goodsIcon.getFileUrl();
-        }
+        String goodsIcon = item.getGoodsIcon();
+
         Observable
                 .create(new Observable.OnSubscribe<String>() {
                     @Override
                     public void call(Subscriber<? super String> subscriber) {
-                        subscriber.onNext(fileUrl);
+                        if (TextUtils.isEmpty(goodsIcon)) {
+                            subscriber.onNext(fileUrl);
+                        }else {
+                            subscriber.onNext(goodsIcon);
+                        }
                     }
                 })
                 .map(this::returnBitmap)

@@ -3,8 +3,6 @@ package com.shixia.diudiuma.bmob.bean;
 import com.shixia.diudiuma.adapter.ExpandableItemAdapter;
 import com.shixia.diudiuma.bean.MultiItemEntity;
 
-import cn.bmob.v3.datatype.BmobFile;
-
 /**
  * Created by AmosShi on 2016/10/31.
  * Description:
@@ -17,10 +15,10 @@ public class DDMGoodsLever0Item extends AbstractExpandableItem<DDMGoodsLever1Ite
     private String registerDate;                  //注册日期服务器会自动保存,所以不需要特殊声明
     private Float ddmGoodsReward;       //赏金
     private String ddmGoodsTag;         //标签
-    private BmobFile pic;               //图像
+    private String pic;               //图像
 
     public DDMGoodsLever0Item(String ddmGoodsName, String registerDate, Float ddmGoodsReward,
-                              String ddmGoodsTag, BmobFile pic) {
+                              String ddmGoodsTag, String pic) {
         this.ddmGoodsName = ddmGoodsName;
         this.registerDate = registerDate;
         this.ddmGoodsReward = ddmGoodsReward;
@@ -52,11 +50,11 @@ public class DDMGoodsLever0Item extends AbstractExpandableItem<DDMGoodsLever1Ite
         this.ddmGoodsTag = ddmGoodsTag;
     }
 
-    public BmobFile getPic() {
+    public String getPic() {
         return pic;
     }
 
-    public void setPic(BmobFile pic) {
+    public void setPic(String pic) {
         this.pic = pic;
     }
 
