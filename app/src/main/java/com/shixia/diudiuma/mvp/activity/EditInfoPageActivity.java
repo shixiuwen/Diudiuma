@@ -59,7 +59,9 @@ public class EditInfoPageActivity extends BaseActivity implements EditInfoPageIV
         epvEditView.setTvEditContentRemind(contentRemind);
         epvEditView.setImgEditIcon(iconResourceId);
 
-        if (!TextUtils.equals(defValue, "点击设置") && !TextUtils.equals(defValue, "点击添加")) {
+        if (!TextUtils.equals(defValue, "点击设置")
+                && !TextUtils.equals(defValue, "点击添加")
+                && !TextUtils.equals(defValue, "未知")) {
             epvEditView.setTvEditContent(defValue);
         }
     }

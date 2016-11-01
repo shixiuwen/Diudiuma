@@ -19,7 +19,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/y520"
-            android:background="#a864ff">
+            android:background="@color/color_green_boss">
 
             <RelativeLayout
                 android:layout_width="@dimen/x190"

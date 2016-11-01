@@ -24,7 +24,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/y460"
-                android:background="#8e4ae6"
+                android:background="@color/color_green_boss"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -37,11 +37,11 @@
                         android:id="@+id/img_lose_goods_pic"
                         android:layout_width="@dimen/x260"
                         android:layout_height="@dimen/y260"
-                        android:background="#123" />
+                        android:background="@drawable/img_no_data" />
 
                     <Button
                         android:id="@+id/btn_change_pic"
-                        android:layout_width="@dimen/x160"
+                        android:layout_width="@dimen/x180"
                         android:layout_height="@dimen/y80"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="@dimen/y24"
@@ -67,7 +67,7 @@
                 android:layout_height="wrap_content"
                 amos:editItemIcon="@drawable/img_hall_02"
                 amos:keyText="@string/date"
-                amos:valueText="武汉" />
+                amos:valueText="点击设置" />
 
             <com.shixia.diudiuma.view.EditItemView
                 android:id="@+id/etv_address"

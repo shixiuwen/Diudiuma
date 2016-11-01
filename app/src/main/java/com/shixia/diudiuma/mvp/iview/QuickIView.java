@@ -15,5 +15,11 @@ public interface QuickIView extends BaseIView {
      */
     void onChangeValueAfterEdit(int requestCode,String value);
 
+    /**
+     * 显示提示信息
+     *
+     * @param content 提示信息
+     */
     void onShowRemind(String content);
+
 }

@@ -6,4 +6,9 @@ package com.shixia.diudiuma.mvp.iview;
  */
 
 public interface QuickFindGoodsIView extends QuickIView {
+
+    /**
+     * 显示图片预览界面
+     */
+    void onShowPreviewPop();
 }
