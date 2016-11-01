@@ -62,7 +62,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/goods_find_master"
+                        android:text="@string/register_goods"
                         android:layout_marginTop="@dimen/y20"/>
 
                 </LinearLayout>
@@ -94,7 +94,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/goods_find_master"
+                        android:text="@string/find_loser"
                         android:layout_marginTop="@dimen/y20"/>
 
                 </LinearLayout>
@@ -119,7 +119,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/goods_find_master"
+                        android:text="@string/scan_ddm"
                         android:layout_marginTop="@dimen/y20"/>
 
                 </LinearLayout>

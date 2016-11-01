@@ -29,8 +29,8 @@ public class PresenterQuickFindGoods extends PresenterQuick {
     }
 
     @Override
-    public void toEditInfoPage(int requestCode, String pageTitle, boolean isSureBtnVisible, String titleRemind, String contentRemind, int iconResourceId) {
-        super.toEditInfoPage(requestCode, pageTitle, isSureBtnVisible, titleRemind, contentRemind, iconResourceId);
+    public void toEditInfoPage(int requestCode,String defValue, String pageTitle, boolean isSureBtnVisible, String titleRemind, String contentRemind, int iconResourceId) {
+        super.toEditInfoPage(requestCode,defValue, pageTitle, isSureBtnVisible, titleRemind, contentRemind, iconResourceId);
     }
 
     public void submitData(LoserGoodsInfo loserGoodsInfo){

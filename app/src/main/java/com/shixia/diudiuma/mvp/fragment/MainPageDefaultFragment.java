@@ -15,13 +15,9 @@ import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import com.jlcf.lib_adapter.base.BaseQuickAdapter;
-import com.shixia.diudiuma.MyApplication;
 import com.shixia.diudiuma.R;
 import com.shixia.diudiuma.adapter.ExpandableItemAdapter;
 import com.shixia.diudiuma.bean.MultiItemEntity;
-import com.shixia.diudiuma.bmob.bean.DDMGoods;
-import com.shixia.diudiuma.bmob.bean.DDMGoodsLever0Item;
-import com.shixia.diudiuma.bmob.bean.DDMGoodsLever1Item;
 import com.shixia.diudiuma.common_utils.L;
 import com.shixia.diudiuma.mvp.fragment.base.BaseFragment;
 import com.shixia.diudiuma.mvp.iview.DefaultFragmentIView;
@@ -31,10 +27,6 @@ import com.shixia.diudiuma.view.CToast;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.FindListener;
 
 /**
  * Created by AmosShi on 2016/10/24.
@@ -62,6 +54,7 @@ public class MainPageDefaultFragment extends BaseFragment implements DefaultFrag
     private ExpandableItemAdapter expandableItemAdapter;
 
     private static boolean isNotInitData = true;
+    private View emptyView; //当列表为空的时候显示的控件
 
     @Override
     public View initView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -72,40 +65,9 @@ public class MainPageDefaultFragment extends BaseFragment implements DefaultFrag
         imgQuick = (ImageView) contentView.findViewById(R.id.img_btn_quick);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         if (isNotInitData) {
-            initData();
+            swipeRefreshLayout.setRefreshing(true);
         }
         return contentView;
-    }
-
-    //初始化假的数据
-    private void initData() {
-
-        BmobQuery<DDMGoods> query = new BmobQuery<DDMGoods>();
-        query.findObjects(new FindListener<DDMGoods>() {
-            @Override
-            public void done(List<DDMGoods> list, BmobException e) {
-                if (e == null) {
-                    CToast.makeCText(getActivity(), "查询成功", Toast.LENGTH_SHORT).show();
-                    //查询成功
-                    for (int i = 0; i < list.size(); i++) {
-                        DDMGoods ddmGoods = list.get(i);
-                        DDMGoodsLever0Item ddmGoodsLever0Item = new DDMGoodsLever0Item(ddmGoods.getDdmGoodsName(), ddmGoods.getUpdatedAt().toString(), ddmGoods.getDdmGoodsReward(), ddmGoods.getDdmGoodsTag(), ddmGoods.getPic());
-                        DDMGoodsLever1Item ddmGoodsLever1Item = new DDMGoodsLever1Item(ddmGoods.getDdmGoodsAddress(), ddmGoods.getDdmCode(),
-                                ddmGoods.getCard(), ddmGoods.getCertificate(),
-                                ddmGoods.getTel(), ddmGoods.getWechat(),
-                                ddmGoods.getQq(), ddmGoods.getDescribe());
-                        ddmGoodsLever0Item.addSubItem(ddmGoodsLever1Item);
-                        lever01List.add(ddmGoodsLever0Item);
-                    }
-                    isNotInitData = false;
-                    MyApplication.UIHandler.post(() -> expandableItemAdapter.notifyDataSetChanged());
-                } else {
-                    //查询失败
-                    L.i(e.getMessage() + " " + e.getErrorCode());
-                    CToast.makeCText(getActivity(), "查询失败", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
     }
 
     @Override
@@ -119,6 +81,9 @@ public class MainPageDefaultFragment extends BaseFragment implements DefaultFrag
         super.afterFragmentCreated();
         initAdapter();
         addHeaderView();
+        if (isNotInitData) {
+            presenter.isShowEmptyView();
+        }
     }
 
     @Override
@@ -135,12 +100,8 @@ public class MainPageDefaultFragment extends BaseFragment implements DefaultFrag
         expandableItemAdapter.openLoadMore(5);
         expandableItemAdapter.openLoadAnimation();
         recyclerView.setAdapter(expandableItemAdapter);
-        /*recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                CToast.makeCText(getActivity(), "" + position, Toast.LENGTH_SHORT).show();
-            }
-        }));*/
+
+        expandableItemAdapter.setOnLoadMoreListener(this);
     }
 
     /**
@@ -153,33 +114,51 @@ public class MainPageDefaultFragment extends BaseFragment implements DefaultFrag
 
     @Override
     public void onRefresh() {
-
+        L.i("refresh", "refreshing");
+        presenter.isShowEmptyView();
     }
 
     @Override
     public void onLoadMoreRequested() {
-
+        // TODO: 2016/11/1  加载更多
     }
 
     @Override
-    public void onShowQuickOptWindow() {
-        View view = LayoutInflater.from(getActivity()).inflate(R.layout.view_pop_quick_opt_layout, null);
-        popupWindow = new PopupWindow(view, ViewGroup.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.MATCH_PARENT);
-        popupWindow.setFocusable(true);
-        popupWindow.setAnimationStyle(R.style.login_pop_anim);
-        popupWindow.showAtLocation(contentView, Gravity.CENTER, 0, 0);
-        //初始化快速添加popupWindow控件
-        initPopWindowView(view);
-        //初始化快速添加popupWindow控件监听事件
-        initPopupWindowViewListener();
-    }
-
-    @Override
-    public void onQuickOptWindowDismiss() {
-        if (popupWindow != null) {
-            popupWindow.dismiss();
+    public void onShowEmptyView() {
+        if (emptyView == null) {
+            emptyView = LayoutInflater.from(getActivity()).inflate(R.layout.view_no_data_view, null);
         }
+        lever01List.clear();
+        lever01List.addAll(null);
+        expandableItemAdapter.setEmptyView(emptyView);
+        expandableItemAdapter.notifyDataSetChanged();
     }
+
+    @Override
+    public void onShowRefresh() {
+
+    }
+
+    @Override
+    public void onRefreshEnd() {
+        swipeRefreshLayout.setRefreshing(false);
+        isNotInitData = false;
+    }
+
+    @Override
+    public void onShowRemind(String s) {
+        CToast.makeCText(getActivity(), s, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onNotifyDataSetChange(ArrayList<MultiItemEntity> goodsList) {
+        lever01List.clear();
+        lever01List.addAll(goodsList);
+        expandableItemAdapter.notifyDataSetChanged();
+    }
+
+
+    /** ############################### 快速弹窗相关 #################################### */
 
     /**
      * 初始化快速添加popupWindow控件
@@ -202,4 +181,26 @@ public class MainPageDefaultFragment extends BaseFragment implements DefaultFrag
         popLl03.setOnClickListener(v -> presenter.toQuickPage(2));    //点击进入添加物品界面
         popLl04.setOnClickListener(v -> presenter.toQuickPage(3));    //点击进入扫描二维码界面
     }
+
+    @Override
+    public void onShowQuickOptWindow() {
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.view_pop_quick_opt_layout, null);
+        popupWindow = new PopupWindow(view, ViewGroup.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.MATCH_PARENT);
+        popupWindow.setFocusable(true);
+        popupWindow.setAnimationStyle(R.style.login_pop_anim);
+        popupWindow.showAtLocation(contentView, Gravity.CENTER, 0, 0);
+        //初始化快速添加popupWindow控件
+        initPopWindowView(view);
+        //初始化快速添加popupWindow控件监听事件
+        initPopupWindowViewListener();
+    }
+
+    @Override
+    public void onQuickOptWindowDismiss() {
+        if (popupWindow != null) {
+            popupWindow.dismiss();
+        }
+    }
+
+
 }

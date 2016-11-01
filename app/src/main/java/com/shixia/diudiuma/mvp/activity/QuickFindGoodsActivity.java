@@ -79,15 +79,23 @@ public class QuickFindGoodsActivity extends BaseActivity implements QuickFindGoo
 
     @Override
     protected void initListener() {
-        etvName.setOnEditItemClickListener(() -> presenter.toEditInfoPage(EDIT_GOODS_NAME_REQUEST_CODE, "修改品名", false, "您的物品名称", "物品名称请尽量简洁明了，如钱包，钥匙", R.drawable.img_hall_02));
-        etvDate.setOnEditItemClickListener(() -> presenter.toEditInfoPage(EDIT_GOODS_DATE_REQUEST_CODE, "丢失日期", false, "您的物品丢失日期", "不是今天的日期而是您什么时候遗失了您的物品日期，请务必注意哦~", R.drawable.img_hall_03));
-        etvAddress.setOnEditItemClickListener(() -> presenter.toEditInfoPage(EDIT_GOODS_ADDRESS_REQUEST_CODE, "丢失地点", false, "您的物品丢失地点", "请输入您的物品丢失地点，如果不知道，请精确到区", R.drawable.img_hall_04));
-        etvReward.setOnEditItemClickListener(() -> presenter.toEditInfoPage(EDIT_GOODS_REWARD_REQUEST_CODE, "悬赏金额", false, "您发布的悬赏金额", "高额的悬赏金能增加您找回宝贝的几率哦~", R.drawable.img_hall_03));
-        etvIsCard.setOnEditItemClickListener(() -> presenter.toEditInfoPage(EDIT_GOODS_IS_CARD_REQUEST_CODE, "是否卡类", false, "丢失物品是否属于卡类", "如果选择了是，我们将会要求您输入其他额外选项，帮助您增加宝贝找回的几率~", R.drawable.img_hall_04));
-        etvIsCertificate.setOnEditItemClickListener(() -> presenter.toEditInfoPage(EDIT_GOODS_IS_CERTIFICATE_REQUEST_CODE, "是否证件", false, "是否证件类", "如果选择了是，我们将会要求您输入其他额外选项，帮助您增加宝贝找回的几率~", R.drawable.img_hall_03));
-        etvTel.setOnEditItemClickListener(() -> presenter.toEditInfoPage(EDIT_GOODS_TEL_REQUEST_CODE, "手机号", false, "您的手机号", "输入手机号能够使找到您宝贝的人直接联系您", R.drawable.img_hall_03));
-        etvWechat.setOnEditItemClickListener(() -> presenter.toEditInfoPage(EDIT_GOODS_WECHAT_REQUEST_CODE, "微信号", false, "您的微信号", "微信号可使找到您宝贝的人更加方便的联系您，和您沟通~", R.drawable.img_hall_03));
-        etvQq.setOnEditItemClickListener(() -> presenter.toEditInfoPage(EDIT_GOODS_QQ_REQUEST_CODE, "QQ号", false, "您的QQ号", "QQ号可使找到您宝贝的人更加方便的联系您，和您沟通~", R.drawable.img_hall_03));
+        etvName.setOnEditItemClickListener(() -> presenter.toEditInfoPage(EDIT_GOODS_NAME_REQUEST_CODE, etvName.getTvItemValue(),
+                "修改品名", false, "您的物品名称", "物品名称请尽量简洁明了，如钱包，钥匙", R.drawable.img_hall_02));
+        etvDate.setOnEditItemClickListener(() -> presenter.toEditInfoPage(EDIT_GOODS_DATE_REQUEST_CODE, etvDate.getTvItemValue(),
+                "丢失日期", false, "您的物品丢失日期", "不是今天的日期而是您什么时候遗失了您的物品日期，请务必注意哦~", R.drawable.img_hall_03));
+        etvAddress.setOnEditItemClickListener(() -> presenter.toEditInfoPage(EDIT_GOODS_ADDRESS_REQUEST_CODE, etvAddress.getTvItemValue(),
+                "丢失地点", false, "您的物品丢失地点", "请输入您的物品丢失地点，如果不知道，请精确到区", R.drawable.img_hall_04));
+        etvReward.setOnEditItemClickListener(() -> presenter.toEditInfoPage(EDIT_GOODS_REWARD_REQUEST_CODE, etvReward.getTvItemValue(),
+                "悬赏金额", false, "您发布的悬赏金额", "高额的悬赏金能增加您找回宝贝的几率哦~", R.drawable.img_hall_03));
+        etvIsCard.setOnEditItemClickListener(() -> presenter.toEditInfoPage(EDIT_GOODS_IS_CARD_REQUEST_CODE, etvIsCard.getTvItemValue(),
+                "是否卡类", false, "丢失物品是否属于卡类", "如果选择了是，我们将会要求您输入其他额外选项，帮助您增加宝贝找回的几率~", R.drawable.img_hall_04));
+        etvIsCertificate.setOnEditItemClickListener(() -> presenter.toEditInfoPage(EDIT_GOODS_IS_CERTIFICATE_REQUEST_CODE, etvIsCertificate.getTvItemValue(),
+                "是否证件", false, "是否证件类", "如果选择了是，我们将会要求您输入其他额外选项，帮助您增加宝贝找回的几率~", R.drawable.img_hall_03));
+        etvTel.setOnEditItemClickListener(() -> presenter.toEditInfoPage(EDIT_GOODS_TEL_REQUEST_CODE, etvTel.getTvItemValue(),
+                "手机号", false, "您的手机号", "输入手机号能够使找到您宝贝的人直接联系您", R.drawable.img_hall_03));
+        etvWechat.setOnEditItemClickListener(() -> presenter.toEditInfoPage(EDIT_GOODS_WECHAT_REQUEST_CODE, etvWechat.getTvItemValue(),
+                "微信号", false, "您的微信号", "微信号可使找到您宝贝的人更加方便的联系您，和您沟通~", R.drawable.img_hall_03));
+        etvQq.setOnEditItemClickListener(() -> presenter.toEditInfoPage(EDIT_GOODS_QQ_REQUEST_CODE, etvQq.getTvItemValue(),  "QQ号", false, "您的QQ号", "QQ号可使找到您宝贝的人更加方便的联系您，和您沟通~", R.drawable.img_hall_03));
 
         btnSubmit.setOnClickListener(v -> presenter.submitData(loserGoodsInfo));
     }

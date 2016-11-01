@@ -4,37 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <!--<RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/y180"
-        android:padding="@dimen/x20"
-        android:background="#9d51ff">
-
-        <ImageView
-            android:id="@+id/img_main_page_search"
-            android:layout_width="@dimen/x160"
-            android:layout_height="@dimen/y160"
-            android:layout_centerVertical="true"
-            android:src="@drawable/ic_launcher" />
-
-        <Button
-            android:layout_width="@dimen/x220"
-            android:layout_height="@dimen/x220"
-            android:id="@+id/btn_main_page_search"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:text="@string/search"/>
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/et_main_page_search"
-            android:layout_toLeftOf="@+id/btn_main_page_search"
-            android:paddingLeft="@dimen/x180"
-            android:hint="@string/please_input_key"
-            android:cursorVisible="false"/>
-    </RelativeLayout>-->
-
     <include layout="@layout/view_search_view"/>
 
     <RelativeLayout

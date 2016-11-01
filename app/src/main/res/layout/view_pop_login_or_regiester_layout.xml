@@ -79,7 +79,9 @@
         <com.shixia.diudiuma.view.EditLoginInfoView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/eiv_password"
             amos:editTitle="@string/password"
+            amos:inputType="0x00000080"
             android:layout_below="@+id/eiv_user_name"
             android:layout_marginTop="@dimen/y24"
             android:layout_marginLeft="@dimen/x24"
@@ -144,7 +146,8 @@
             android:orientation="horizontal"
             android:id="@+id/ll_register_name"
             android:layout_centerHorizontal="true"
-            android:layout_below="@+id/rl_register_card_tab_btn">
+            android:layout_below="@+id/rl_register_card_tab_btn"
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -164,7 +167,8 @@
             android:orientation="horizontal"
             android:id="@+id/ll_register_password"
             android:layout_centerHorizontal="true"
-            android:layout_below="@+id/ll_register_name">
+            android:layout_below="@+id/ll_register_name"
+            android:visibility="gone">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -183,7 +187,8 @@
             android:orientation="horizontal"
             android:id="@+id/ll_register_re_password"
             android:layout_centerHorizontal="true"
-            android:layout_below="@+id/ll_register_password">
+            android:layout_below="@+id/ll_register_password"
+            android:visibility="gone">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -195,6 +200,38 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/et_register_re_password"/>
         </LinearLayout>
+
+        <com.shixia.diudiuma.view.EditLoginInfoView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            amos:editTitle="@string/user_name"
+            android:id="@+id/eiv_register_name"
+            android:layout_marginLeft="@dimen/x24"
+            android:layout_marginRight="@dimen/x24"
+            android:layout_marginTop="@dimen/y48"
+            android:layout_below="@+id/rl_register_card_tab_btn"/>
+
+        <com.shixia.diudiuma.view.EditLoginInfoView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            amos:editTitle="@string/password"
+            amos:inputType="0x00000080"
+            android:id="@+id/eiv_register_password"
+            android:layout_below="@+id/eiv_register_name"
+            android:layout_marginTop="@dimen/y24"
+            android:layout_marginLeft="@dimen/x24"
+            android:layout_marginRight="@dimen/x24"/>
+
+        <com.shixia.diudiuma.view.EditLoginInfoView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            amos:editTitle="@string/re_password"
+            amos:inputType="0x00000080"
+            android:id="@+id/eiv_register_re_password"
+            android:layout_below="@+id/eiv_register_password"
+            android:layout_marginTop="@dimen/y24"
+            android:layout_marginLeft="@dimen/x24"
+            android:layout_marginRight="@dimen/x24"/>
 
         <Button
             android:id="@+id/btn_register"

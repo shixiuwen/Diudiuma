@@ -2,6 +2,7 @@ package com.shixia.diudiuma.mvp.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 
 import com.shixia.diudiuma.R;
 import com.shixia.diudiuma.common_utils.SystemUtils;
@@ -24,6 +25,7 @@ public class EditInfoPageActivity extends BaseActivity implements EditInfoPageIV
 
     private PresenterEditInfoPage presenter;
 
+    private String defValue;            //传进来的默认值
     private String pageTitle;           //title名
     private boolean isSureBtnVisible;   //是否显示确认按钮
     private String titleRemind;         //提醒头
@@ -38,6 +40,7 @@ public class EditInfoPageActivity extends BaseActivity implements EditInfoPageIV
         epvEditView = (EditPageView) findViewById(R.id.epv_edit_view);
 
         Bundle extras = this.getIntent().getExtras();
+        defValue = extras.getString("defValue");
         pageTitle = extras.getString("pageTitle");
         isSureBtnVisible = extras.getBoolean("isSureBtnVisible");
         titleRemind = extras.getString("titleRemind");
@@ -55,6 +58,10 @@ public class EditInfoPageActivity extends BaseActivity implements EditInfoPageIV
         epvEditView.setTvEditTitleRemind(titleRemind);
         epvEditView.setTvEditContentRemind(contentRemind);
         epvEditView.setImgEditIcon(iconResourceId);
+
+        if (!TextUtils.equals(defValue, "点击设置") && !TextUtils.equals(defValue, "点击添加")) {
+            epvEditView.setTvEditContent(defValue);
+        }
     }
 
     @Override

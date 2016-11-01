@@ -27,6 +27,7 @@
     <!--登录注册信息编辑条目-->
     <declare-styleable name="EditLoginInfoView">
         <attr name="editTitle" format="string"/>
+        <attr name="inputType" format="integer"/>
     </declare-styleable>
 
 </resources>

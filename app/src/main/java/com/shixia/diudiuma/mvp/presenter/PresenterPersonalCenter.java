@@ -5,13 +5,14 @@ import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.shixia.diudiuma.bmob.bean.DDMUser;
-import com.shixia.diudiuma.common_utils.SpUtil;
+import com.shixia.diudiuma.common_utils.L;
 import com.shixia.diudiuma.mvp.activity.MainActivity_2;
 import com.shixia.diudiuma.mvp.iview.PersonalCenterIView;
 import com.shixia.diudiuma.mvp.iview.base.BaseIView;
 import com.shixia.diudiuma.mvp.presenter.base.BasePresenter;
 import com.shixia.diudiuma.view.CToast;
 
+import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
 
@@ -36,11 +37,11 @@ public class PresenterPersonalCenter extends BasePresenter {
      */
     public void loginOrExitBtnClick() {
         //1.从本地读取数据判断是否登录，如果登录，点击退出登录，否则显示登录的Dialog
-        if (SpUtil.getBoolean(activity, "isLogin", false)) {
-            // TODO: 2016/10/24 退出登录
-
-        } else {
-            // TODO: 2016/10/24 显示登录的dialog
+        BmobUser currentUser = BmobUser.getCurrentUser();
+        if (currentUser != null) {    //已登录，点击退出登录
+            BmobUser.logOut();
+            iView.onChangeLoginStatus(false);
+        } else {                     //未登录，点击登录
             iView.onShowLoginDialog();
         }
     }
@@ -48,12 +49,17 @@ public class PresenterPersonalCenter extends BasePresenter {
     /**
      * 注册新用户
      *
-     * @param username  用户名
-     * @param password  密码
-     * @param email     邮箱
+     * @param username 用户名
+     * @param password 密码
+     * @param email    邮箱
      */
-    public void register(String username, String password, String email) {
-        if (TextUtils.isEmpty(username) || TextUtils.isEmpty(password)) {
+    public void register(String username, String password, String rePassword, String email) {
+        if (TextUtils.isEmpty(username) || TextUtils.isEmpty(password) || TextUtils.isEmpty(rePassword)) {
+            iView.onShowRemind("您输入的信息不完整，请重新输入");
+            return;
+        }
+        if (!TextUtils.equals(password, rePassword)) {
+            iView.onShowRemind("两次输入的密码不一致，请重新输入");
             return;
         }
         DDMUser ddmUser = new DDMUser();
@@ -67,11 +73,11 @@ public class PresenterPersonalCenter extends BasePresenter {
         ddmUser.signUp(new SaveListener<DDMUser>() {
             @Override
             public void done(DDMUser ddmUser, BmobException e) {
-                if(e == null){
+                if (e == null) {
                     //注册成功
-                    CToast.makeCText(activity,"注册成功", Toast.LENGTH_SHORT).show();
+                    CToast.makeCText(activity, "注册成功", Toast.LENGTH_SHORT).show();
                     iView.onDismissDialog();
-                }else {
+                } else {
                     //注册失败
                     e.getMessage();
                 }
@@ -81,11 +87,12 @@ public class PresenterPersonalCenter extends BasePresenter {
 
     /**
      * 老用户登录
-     * @param userName  用户名
-     * @param password  密码
+     *
+     * @param userName 用户名
+     * @param password 密码
      */
-    public void login(String userName,String password) {
-        if(TextUtils.isEmpty(userName)||TextUtils.isEmpty(password)){
+    public void login(String userName, String password) {
+        if (TextUtils.isEmpty(userName) || TextUtils.isEmpty(password)) {
             iView.onShowRemind("用户名或密码不能为空！");
             return;
         }
@@ -95,13 +102,13 @@ public class PresenterPersonalCenter extends BasePresenter {
         ddmUser.login(new SaveListener<DDMUser>() {
             @Override
             public void done(DDMUser ddmUser, BmobException e) {
-                if(e==null){
+                if (e == null) {
                     iView.onShowRemind("登录成功" + ddmUser.getUsername());
                     iView.onDismissDialog();
                     iView.onLoginSuccessful();
-                    SpUtil.put(activity,"isLogin",true);    //本地储存已登录标志
-                }else{
-                    iView.onShowRemind("登录失败");
+                } else {
+                    L.i("login", e.getMessage());
+                    iView.onShowRemind("登录失败," + e.getMessage());
                 }
             }
         });

@@ -21,6 +21,8 @@ import com.shixia.diudiuma.mvp.presenter.base.BasePresenter;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.bmob.v3.BmobUser;
+
 /**
  * Created by AmosShi on 2016/10/24.
  * Description:
@@ -128,7 +130,16 @@ public class MainActivity_2 extends BaseActivity implements MainActivity_2IView 
     @Override
     protected void afterActivityOnCreate() {
         super.afterActivityOnCreate();
+        initPage();
+    }
 
+    /**
+     * 初始化初始界面
+     */
+    private void initPage() {
+        if(BmobUser.getCurrentUser() == null){      //如果用户未登录,默认显示第二页大厅
+            presenter.changeFragment(1);
+        }
     }
 
     @Override

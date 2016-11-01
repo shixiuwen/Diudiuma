@@ -2,6 +2,7 @@ package com.shixia.diudiuma.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.text.InputType;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.EditText;
@@ -13,7 +14,8 @@ import com.shixia.diudiuma.R;
 
 /**
  * Created by AmosShi on 2016/10/31.
- * Description:
+ *
+ * Description:输入账户密码信息的自定义控件，登录或者注册的时候可用
  */
 
 public class EditLoginInfoView extends RelativeLayout {
@@ -33,6 +35,8 @@ public class EditLoginInfoView extends RelativeLayout {
 
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.EditLoginInfoView);
         CharSequence text = typedArray.getText(R.styleable.EditLoginInfoView_editTitle);
+        int integer = typedArray.getInteger(R.styleable.EditLoginInfoView_inputType, InputType.TYPE_CLASS_TEXT);
+        etLoginInfo.setInputType(integer);
         tvEditTitle.setText(text.toString());
 
         typedArray.recycle();
@@ -46,5 +50,26 @@ public class EditLoginInfoView extends RelativeLayout {
         imgClearInput = (ImageView) view.findViewById(R.id.img_clear_input);
 
         imgClearInput.setOnClickListener(v -> etLoginInfo.setText(""));
+    }
+
+    public void setTvEditTitle(String s){
+        tvEditTitle.setText(s);
+    }
+
+    public String getTvEditTitle(){
+        return tvEditTitle.getText().toString();
+    }
+
+    public void setEtLoginInfo(String s){
+        etLoginInfo.setText(s);
+    }
+
+    /**
+     * 获得输入内容
+     *
+     * @return 输入内容
+     */
+    public String getEtLoginInfo(){
+        return etLoginInfo.getText().toString();
     }
 }

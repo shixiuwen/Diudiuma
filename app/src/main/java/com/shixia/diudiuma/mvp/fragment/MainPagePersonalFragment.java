@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
@@ -16,12 +15,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.shixia.diudiuma.R;
-import com.shixia.diudiuma.common_utils.SpUtil;
 import com.shixia.diudiuma.mvp.fragment.base.BaseFragment;
 import com.shixia.diudiuma.mvp.iview.PersonalCenterIView;
 import com.shixia.diudiuma.mvp.presenter.PresenterPersonalCenter;
 import com.shixia.diudiuma.mvp.presenter.base.BasePresenter;
 import com.shixia.diudiuma.view.CToast;
+import com.shixia.diudiuma.view.EditLoginInfoView;
+
+import cn.bmob.v3.BmobUser;
 
 /**
  * Created by AmosShi on 2016/10/24.
@@ -42,15 +43,16 @@ public class MainPagePersonalFragment extends BaseFragment implements PersonalCe
     private RelativeLayout rlRegisterCardPop;
     private boolean isCardChanged;
     private ImageButton imgBtnCloseDialogLoginPop;
-    private EditText etLoginNamePop;
-    private EditText etLoginPasswordPop;
     private ImageButton imgBtnBackToLoginDialogPop;
     private ImageButton imgBtnCloseDialogRegisterPop;
-    private EditText etRegisterNamePop;
-    private EditText etRegisterPasswordPop;
-    private EditText etRegisterRePasswordPop;
     private Button btnRegisterPop;
     private PopupWindow popupWindow;
+
+    private EditLoginInfoView eivUserName;
+    private EditLoginInfoView eivPassword;
+    private EditLoginInfoView eivRegisterName;
+    private EditLoginInfoView eivRegisterPassword;
+    private EditLoginInfoView eivRegisterRePassword;
 
     @Override
     public View initView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -75,7 +77,7 @@ public class MainPagePersonalFragment extends BaseFragment implements PersonalCe
     @Override
     public void afterFragmentCreated() {
         super.afterFragmentCreated();
-        if (SpUtil.getBoolean(getActivity(), "isLogin", false)) {   //如果已登录，显示退出登录
+        if (BmobUser.getCurrentUser() != null) {   //如果已登录，显示退出登录
             btnLoginOrExit.setText("退出登录");
         } else {                                                    //如果未登录，显示登录
             btnLoginOrExit.setText("登录");
@@ -105,14 +107,15 @@ public class MainPagePersonalFragment extends BaseFragment implements PersonalCe
         rlLoginCardPop = (RelativeLayout) popView.findViewById(R.id.rl_login_card);
         rlRegisterCardPop = (RelativeLayout) popView.findViewById(R.id.rl_register_card);
         imgBtnCloseDialogLoginPop = (ImageButton) popView.findViewById(R.id.imgBtn_close_dialog_login);
-        etLoginNamePop = (EditText) popView.findViewById(R.id.et_login_name);
-        etLoginPasswordPop = (EditText) popView.findViewById(R.id.et_login_password);
         imgBtnBackToLoginDialogPop = (ImageButton) popView.findViewById(R.id.imgBtn_back_to_login_dialog);
         imgBtnCloseDialogRegisterPop = (ImageButton) popView.findViewById(R.id.imgBtn_close_dialog_register);
-        etRegisterNamePop = (EditText) popView.findViewById(R.id.et_register_name);
-        etRegisterPasswordPop = (EditText) popView.findViewById(R.id.et_register_password);
-        etRegisterRePasswordPop = (EditText) popView.findViewById(R.id.et_register_re_password);
         btnRegisterPop = (Button) popView.findViewById(R.id.btn_register);
+
+        eivUserName = (EditLoginInfoView) popView.findViewById(R.id.eiv_user_name);
+        eivPassword = (EditLoginInfoView) popView.findViewById(R.id.eiv_password);
+        eivRegisterName = (EditLoginInfoView) popView.findViewById(R.id.eiv_register_name);
+        eivRegisterPassword = (EditLoginInfoView) popView.findViewById(R.id.eiv_register_password);
+        eivRegisterRePassword = (EditLoginInfoView) popView.findViewById(R.id.eiv_register_re_password);
 
         ObjectAnimator.ofFloat(rlRegisterCardPop, "rotationY", 0.0f, 180.0f).setDuration(500).start();
         return popView;
@@ -124,9 +127,10 @@ public class MainPagePersonalFragment extends BaseFragment implements PersonalCe
         imgBtnCloseDialogLoginPop.setOnClickListener(v -> presenter.dismissDialog());
         imgBtnCloseDialogRegisterPop.setOnClickListener(v -> presenter.dismissDialog());
         //点击注册
-        btnRegisterPop.setOnClickListener(v -> presenter.register(etRegisterNamePop.getText().toString(),etRegisterPasswordPop.getText().toString(),null));
+        btnRegisterPop.setOnClickListener(v -> presenter.register(eivRegisterName.getEtLoginInfo(), eivRegisterPassword.getEtLoginInfo(),
+                eivRegisterRePassword.getEtLoginInfo(), null));
         //点击登录
-        btnLoginPop.setOnClickListener(v -> presenter.login(etLoginNamePop.getText().toString(),etLoginPasswordPop.getText().toString()));
+        btnLoginPop.setOnClickListener(v -> presenter.login(eivUserName.getEtLoginInfo(), eivPassword.getEtLoginInfo()));
     }
 
     @Override
@@ -185,13 +189,22 @@ public class MainPagePersonalFragment extends BaseFragment implements PersonalCe
 
     @Override
     public void onShowRemind(String content) {
-        CToast.makeCText(getActivity(),content, Toast.LENGTH_SHORT).show();
+        CToast.makeCText(getActivity(), content, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onDismissDialog() {
         if (popupWindow != null) {
             popupWindow.dismiss();
+        }
+    }
+
+    @Override
+    public void onChangeLoginStatus(boolean isLogin) {
+        if(isLogin){
+            btnLoginOrExit.setText("退出登录");
+        }else {
+            btnLoginOrExit.setText("登录");
         }
     }
 }

@@ -37,4 +37,16 @@
     <string name="goods_describe">描述</string>
     <string name="user_name">用户名</string>
     <string name="password">密码</string>
+    <string name="re_password">确认密码</string>
+    <string name="no_data">暂无数据</string>
+    <string name="load_failure">加载失败，点击重试</string>
+    <string name="find_loser">寻物启事</string>
+    <string name="register_goods">注册物品</string>
+    <string name="scan_ddm">扫描DDM</string>
+    <string name="find_people">寻人启示</string>
+    <string name="find_card">卡类</string>
+    <string name="certification">证件类</string>
+    <string name="high_reward">高额悬赏</string>
+    <string name="loser_date">丢失地点</string>
+    <string name="unknown">未知</string>
 </resources>

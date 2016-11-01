@@ -34,9 +34,10 @@ public class PresenterQuick extends BasePresenter {
      * @param iconResourceId    编辑页面的输入框icon
      *
      */
-    public void toEditInfoPage(int requestCode,String pageTitle,boolean isSureBtnVisible,String titleRemind,String contentRemind,int iconResourceId){
+    public void toEditInfoPage(int requestCode,String defValue,String pageTitle,boolean isSureBtnVisible,String titleRemind,String contentRemind,int iconResourceId){
         Bundle bundle = new Bundle();
         bundle.putString("pageTitle",pageTitle);
+        bundle.putString("defValue",defValue);
         bundle.putBoolean("isSureBtnVisible",isSureBtnVisible);
         bundle.putString("titleRemind",titleRemind);
         bundle.putString("contentRemind",contentRemind);

@@ -87,6 +87,9 @@ public class EditPageView extends RelativeLayout {
         return etEditContent.getText().toString();
     }
 
+    public void setTvEditContent(String s){
+        etEditContent.setText(s);
+    }
     /**
      * ######################### 回调接口 ########################
      */

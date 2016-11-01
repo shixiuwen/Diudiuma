@@ -26,4 +26,6 @@ public interface PersonalCenterIView extends BaseIView{
     void onShowRemind(String content);
 
     void onDismissDialog();
+
+    void onChangeLoginStatus(boolean isLogin);
 }

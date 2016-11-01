@@ -66,15 +66,13 @@
 
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/y50"
-                android:background="#123"/>
-
-            <LinearLayout
+            <!--<LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:background="@color/color_grey_a"
+                android:paddingTop="@dimen/y50"
+                android:paddingBottom="@dimen/y50">
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -85,7 +83,8 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="1">
+                        android:layout_weight="1"
+                        android:id="@+id/rl_find_loser">
 
                         <LinearLayout
                             android:id="@+id/ll_hall_01"
@@ -103,7 +102,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/goods_name"
+                                android:text="@string/goods_find_master"
                                 android:layout_marginTop="@dimen/y24"/>
 
                         </LinearLayout>
@@ -113,7 +112,8 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="1">
+                        android:layout_weight="1"
+                        android:id="@+id/rl_find_card">
 
                         <LinearLayout
                             android:id="@+id/ll_hall_04"
@@ -131,7 +131,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/goods_name"
+                                android:text="@string/find_card"
                                 android:layout_marginTop="@dimen/y24"/>
 
                         </LinearLayout>
@@ -148,7 +148,8 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="1">
+                        android:layout_weight="1"
+                        android:id="@+id/rl_find_goods">
 
                         <LinearLayout
                             android:id="@+id/ll_hall_02"
@@ -166,7 +167,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/goods_name"
+                                android:text="@string/find_loser"
                                 android:layout_marginTop="@dimen/y24"/>
 
                         </LinearLayout>
@@ -175,7 +176,8 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="1">
+                        android:layout_weight="1"
+                        android:id="@+id/rl_find_certification">
 
                         <LinearLayout
                             android:id="@+id/ll_hall_05"
@@ -193,7 +195,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/goods_name"
+                                android:text="@string/certification"
                                 android:layout_marginTop="@dimen/y24"/>
 
                         </LinearLayout>
@@ -210,7 +212,8 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="1">
+                        android:layout_weight="1"
+                        android:id="@+id/rl_find_people">
 
                         <LinearLayout
                             android:id="@+id/ll_hall_03"
@@ -229,7 +232,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/goods_name"
+                                android:text="@string/find_people"
                                 android:layout_marginTop="@dimen/y24"/>
 
                         </LinearLayout>
@@ -238,7 +241,8 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="1">
+                        android:layout_weight="1"
+                        android:id="@+id/rl_high_reward">
 
                         <LinearLayout
                             android:id="@+id/ll_hall_06"
@@ -256,7 +260,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/goods_name"
+                                android:text="@string/high_reward"
                                 android:layout_marginTop="@dimen/y24"/>
 
                         </LinearLayout>
@@ -264,11 +268,7 @@
 
                 </LinearLayout>
 
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/y50"/>
+            </LinearLayout>-->
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_hall"
