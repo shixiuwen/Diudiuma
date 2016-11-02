@@ -4,7 +4,6 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Environment;
 import android.text.TextUtils;
 import android.widget.Toast;
@@ -15,12 +14,11 @@ import com.shixia.diudiuma.bmob.bean.LoserGoodsInfo;
 import com.shixia.diudiuma.common_utils.ImageFactory;
 import com.shixia.diudiuma.common_utils.L;
 import com.shixia.diudiuma.common_utils.PermissionUtils;
-import com.shixia.diudiuma.mvp.activity.QuickAddGoodsActivity;
-import com.shixia.diudiuma.mvp.iview.QuickAddGoodsIView;
+import com.shixia.diudiuma.mvp.activity.QuickFindLoserActivity;
+import com.shixia.diudiuma.mvp.iview.QuickFindLoserIView;
 import com.shixia.diudiuma.mvp.iview.base.BaseIView;
 import com.shixia.diudiuma.view.CToast;
 import com.shixia.diudiuma.view.LoadingDialog;
-import com.xys.libzxing.zxing.encoding.EncodingUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -39,19 +37,18 @@ import rx.schedulers.Schedulers;
 
 /**
  * Created by AmosShi on 2016/10/27.
- * <p>
- * Description:寻物启事
+ * Description:失物招领
  */
 
-public class PresenterQuickAddGoods extends PresenterQuick {
+public class PresenterQuickFindLoser extends PresenterQuick {
 
-    private QuickAddGoodsActivity activity;
-    private QuickAddGoodsIView iView;
+    private QuickFindLoserActivity activity;
+    private QuickFindLoserIView iView;
 
-    public PresenterQuickAddGoods(Context context, BaseIView iView) {
+    public PresenterQuickFindLoser(Context context, BaseIView iView) {
         super(context, iView);
-        this.activity = (QuickAddGoodsActivity) context;
-        this.iView = (QuickAddGoodsIView) iView;
+        this.activity = (QuickFindLoserActivity) context;
+        this.iView = (QuickFindLoserIView) iView;
     }
 
     @Override
@@ -67,7 +64,7 @@ public class PresenterQuickAddGoods extends PresenterQuick {
         }
 
         /*if(TextUtils.isEmpty(loserGoodsInfo.getLoseAddress())||isDefValue(loserGoodsInfo.getLoseAddress())){
-            iView.onShowRemind("丢失地点不可为空");
+            iView.onShowRemind("拾到地点不可为空");
             return;
         }*/
 
@@ -262,27 +259,5 @@ public class PresenterQuickAddGoods extends PresenterQuick {
         }
         bufis.close();
         bufos.close();*/
-    }
-
-    public void showRemind(String s) {
-        iView.onShowRemind(s);
-    }
-
-    /**
-     * 将字符串decode为二维码图片
-     */
-    public void decodeDDM(String strDDM) {
-
-        if (TextUtils.isEmpty(strDDM)) {
-            iView.onShowRemind("您还没有输入任何信息");
-            return;
-        }
-        //通过文本生成二维码图片
-        Bitmap image = EncodingUtils.createQRCode(strDDM, 350, 350, null);
-//        是否生成带logo的二维码？
-//        mCheckBox.isChecked() ?
-//        BitmapFactory.decodeResource(activity.getResources(), R.mipmap.ic_launcher) :
-        iView.onShowDecodeResult(image);
-
     }
 }

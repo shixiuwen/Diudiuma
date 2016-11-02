@@ -94,6 +94,10 @@ public class PresenterMainPage extends BasePresenter {
                     c = QuickFindLoserActivity.class;
                     break;
                 case 2:
+                    if(BmobUser.getCurrentUser() == null){
+                        iView.onShowRemind("请先登录才能注册添加物品");
+                        break;
+                    }
                     c = QuickAddGoodsActivity.class;
                     break;
                 case 3:

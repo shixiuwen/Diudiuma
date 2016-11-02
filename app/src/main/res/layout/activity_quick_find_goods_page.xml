@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         amos:btnSureText="@string/sure"
-        amos:titleName="@string/add_goods" />
+        amos:titleName="@string/find_goods" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -37,16 +37,17 @@
                         android:id="@+id/img_lose_goods_pic"
                         android:layout_width="@dimen/x260"
                         android:layout_height="@dimen/y260"
-                        android:background="@drawable/img_no_data" />
+                        android:background="@drawable/img_no_data"
+                        android:layout_gravity="center_horizontal"/>
 
                     <Button
                         android:id="@+id/btn_change_pic"
-                        android:layout_width="@dimen/x180"
+                        android:layout_width="@dimen/x360"
                         android:layout_height="@dimen/y80"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="@dimen/y24"
                         android:background="@drawable/btn_search_bg"
-                        android:text="点击修改" />
+                        android:text="修改丢失物品图片" />
 
                 </LinearLayout>
 
@@ -90,7 +91,6 @@
                 android:id="@+id/etv_is_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                amos:bottomSplitVisible="false"
                 amos:editItemIcon="@drawable/img_hall_03"
                 amos:keyText="@string/is_card"
                 amos:valueText="点击设置"

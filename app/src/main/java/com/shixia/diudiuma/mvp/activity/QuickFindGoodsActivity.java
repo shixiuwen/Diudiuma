@@ -24,6 +24,7 @@ import com.shixia.diudiuma.view.EditItemView;
 import java.io.File;
 import java.util.List;
 
+import cn.bmob.v3.BmobUser;
 import me.iwf.photopicker.PhotoPicker;
 import me.iwf.photopicker.PhotoPreview;
 
@@ -84,8 +85,13 @@ public class QuickFindGoodsActivity extends BaseActivity implements QuickFindGoo
         etDescribe = (EditText) findViewById(R.id.et_describe);
         btnSubmit = (Button) findViewById(R.id.btn_submit);
 
-        // TODO: 2016/10/28 照片未设置
+        // TODO: 2016/10/28 点击加号先判断是否登录（判断是否需要，如果无需登录可以不登录）
         loserGoodsInfo = new LoserGoodsInfo();
+        //如果已经登录过了，添加查询条件用户名，以后可以通过用户名查询发布信息
+        if (BmobUser.getCurrentUser() != null) {
+            loserGoodsInfo.setPublisherName(BmobUser.getCurrentUser().getUsername());   //未登录的时候不可设置
+        }
+        loserGoodsInfo.setType(1);      //该界面发布的为寻物启事
         loserGoodsInfo.setGoodsTag("黑色#两根#宝马");
         loserGoodsInfo.setDiscribe("该物品对本人非常重要，请务必归还，非常感谢 ^_^ ");
 
@@ -217,6 +223,6 @@ public class QuickFindGoodsActivity extends BaseActivity implements QuickFindGoo
         popupWindow.setAnimationStyle(R.style.login_pop_anim);
         popupWindow.setFocusable(true);
         popupWindow.setOutsideTouchable(true);
-        popupWindow.showAtLocation(imgLoseGoodsPic.getRootView(), Gravity.CENTER,0,0);
+        popupWindow.showAtLocation(imgLoseGoodsPic.getRootView(), Gravity.CENTER, 0, 0);
     }
 }

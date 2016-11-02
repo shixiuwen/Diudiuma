@@ -141,14 +141,15 @@
             <Button
                 android:id="@+id/btn_login_or_exit"
                 android:layout_width="@dimen/x600"
-                android:layout_height="@dimen/y130"
-                android:background="@drawable/btn_exit_selector"
+                android:layout_height="@dimen/y120"
+                android:background="@drawable/btn_submit_bg"
                 android:text="登录"
                 android:textColor="#fff"
                 android:textSize="@dimen/x54"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="@dimen/y100"/>
+
         </RelativeLayout>
 
     </LinearLayout>

@@ -38,7 +38,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/goods_find_master"
+                        android:text="@string/find_loser"
                         android:layout_marginTop="@dimen/y24"/>
 
                 </LinearLayout>
@@ -103,7 +103,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/find_loser"
+                        android:text="@string/find_goods"
                         android:layout_marginTop="@dimen/y24"/>
 
                 </LinearLayout>

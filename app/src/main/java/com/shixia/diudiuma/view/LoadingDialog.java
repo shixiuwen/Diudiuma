@@ -32,6 +32,7 @@ public class LoadingDialog extends Dialog {
     }
 
     public static LoadingDialog getInstance(Context context,String message){
+
         if(loadingDialog == null){
             loadingDialog = new LoadingDialog(context,R.style.loading_dialog);
             loadingDialog.setCanceledOnTouchOutside(false);
@@ -57,5 +58,11 @@ public class LoadingDialog extends Dialog {
         animator.setInterpolator(new LinearInterpolator());
         animator.start();
         loadingDialog.setContentView(view);
+    }
+
+    @Override
+    public void dismiss() {
+        super.dismiss();
+        loadingDialog = null;   //dismiss之后销毁dialog实例
     }
 }

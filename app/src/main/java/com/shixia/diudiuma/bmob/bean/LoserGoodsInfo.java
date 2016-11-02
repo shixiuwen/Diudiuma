@@ -18,10 +18,14 @@ public class LoserGoodsInfo extends BmobObject {
     private Float reward;       //赏金
     private String discribe;    //描述（200字以内）
     private String goodsTag;    //标签
-    private String goodsIcon; //照片
+    private String goodsIcon;   //照片
     private String tel;         //手机号
     private String wechat;      //微信
     private String qq;          //QQ
+
+    private Integer type;       //1为寻物启事，2为失物招领
+
+    private String publisherName;   //发布者名称，默认无需设置，不显示在界面上，用于查询
 
     public String getGoodsName() {
         return goodsName;
@@ -117,6 +121,22 @@ public class LoserGoodsInfo extends BmobObject {
 
     public void setQq(String qq) {
         this.qq = qq;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public String getPublisherName() {
+        return publisherName;
+    }
+
+    public void setPublisherName(String publisherName) {
+        this.publisherName = publisherName;
     }
 
 }

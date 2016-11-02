@@ -37,7 +37,8 @@ import rx.schedulers.Schedulers;
 
 /**
  * Created by AmosShi on 2016/10/27.
- * Description:
+ *
+ * Description:寻物启事
  */
 
 public class PresenterQuickFindGoods extends PresenterQuick {
