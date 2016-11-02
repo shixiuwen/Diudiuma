@@ -42,8 +42,6 @@ public class MainPageHallFragment extends BaseFragment implements HallIView, Swi
 
     private HallGoodsAdapter hallGoodsAdapter;
 
-    private boolean isNotInitData = true;
-
     private ArrayList<LoserGoodsInfo> goodsList = new ArrayList<>();
 
     @Override
@@ -70,10 +68,8 @@ public class MainPageHallFragment extends BaseFragment implements HallIView, Swi
     @Override
     public void afterFragmentCreated() {
         super.afterFragmentCreated();
-        if (isNotInitData) {
-            swipeRefreshLayout.setRefreshing(true);
-            presenter.initData();
-        }
+        swipeRefreshLayout.setRefreshing(true);
+        presenter.initData();
     }
 
     private void initAdapter() {
@@ -121,7 +117,6 @@ public class MainPageHallFragment extends BaseFragment implements HallIView, Swi
         goodsList.clear();
         this.goodsList.addAll(loserGoodsInfosList);
         hallGoodsAdapter.notifyDataSetChanged();
-        isNotInitData = false;  //表示数据已经更新，防止ViewPager预加载的时候刷新数据，导致重复数据增加
     }
 
     @Override

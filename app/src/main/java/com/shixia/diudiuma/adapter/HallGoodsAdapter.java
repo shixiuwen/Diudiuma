@@ -51,8 +51,7 @@ public class HallGoodsAdapter extends BaseQuickAdapter<LoserGoodsInfo> {
     protected void convert(BaseViewHolder helper, LoserGoodsInfo item) {
         String goodsIcon = item.getGoodsIcon();
 
-        Observable
-                .create(new Observable.OnSubscribe<String>() {
+        Observable.create(new Observable.OnSubscribe<String>() {
                     @Override
                     public void call(Subscriber<? super String> subscriber) {
                         if (TextUtils.isEmpty(goodsIcon)) {
@@ -62,8 +61,8 @@ public class HallGoodsAdapter extends BaseQuickAdapter<LoserGoodsInfo> {
                         }
                     }
                 })
-                .map(this::returnBitmap)
                 .subscribeOn(Schedulers.newThread())
+                .map(this::returnBitmap)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(bitmap -> {
                     helper.setImageBitmap(R.id.img_goods_icon, bitmap)

@@ -53,7 +53,6 @@ public class MainPageDefaultFragment extends BaseFragment implements DefaultFrag
     private PopupWindow popupWindow;
     private ExpandableItemAdapter expandableItemAdapter;
 
-    private static boolean isNotInitData = true;
     private View emptyView; //当列表为空的时候显示的控件
 
     @Override
@@ -64,9 +63,7 @@ public class MainPageDefaultFragment extends BaseFragment implements DefaultFrag
 
         imgQuick = (ImageView) contentView.findViewById(R.id.img_btn_quick);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        if (isNotInitData) {
-            swipeRefreshLayout.setRefreshing(true);
-        }
+        swipeRefreshLayout.setRefreshing(true);
         return contentView;
     }
 
@@ -81,9 +78,7 @@ public class MainPageDefaultFragment extends BaseFragment implements DefaultFrag
         super.afterFragmentCreated();
         initAdapter();
         addHeaderView();
-        if (isNotInitData) {
-            presenter.isShowEmptyView();
-        }
+        presenter.isShowEmptyView();
     }
 
     @Override
@@ -129,7 +124,6 @@ public class MainPageDefaultFragment extends BaseFragment implements DefaultFrag
             emptyView = LayoutInflater.from(getActivity()).inflate(R.layout.view_no_data_view, null);
         }
         lever01List.clear();
-        lever01List.addAll(null);
         expandableItemAdapter.setEmptyView(emptyView);
         expandableItemAdapter.notifyDataSetChanged();
     }
@@ -142,7 +136,6 @@ public class MainPageDefaultFragment extends BaseFragment implements DefaultFrag
     @Override
     public void onRefreshEnd() {
         swipeRefreshLayout.setRefreshing(false);
-        isNotInitData = false;
     }
 
     @Override

@@ -79,6 +79,7 @@ public class MainActivity_2 extends BaseActivity implements MainActivity_2IView 
         fragmentList.add(new MainPagePersonalFragment());
         MainPageAdapter pageAdapter = new MainPageAdapter(getSupportFragmentManager(),fragmentList);
         vpMain.setAdapter(pageAdapter);
+        vpMain.setOffscreenPageLimit(2);    //防止预加载
         imgTabMain.setSelected(true);
     }
 

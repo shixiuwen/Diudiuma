@@ -66,8 +66,8 @@ public class ExpandableItemAdapter extends BaseMultiItemQuickAdapter<MultiItemEn
                                 }
                             }
                         })
-                        .map(this::returnBitmap)
                         .subscribeOn(Schedulers.newThread())
+                        .map(this::returnBitmap)
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(bitmap -> {
                             holder.setText(R.id.tv_goods_name, lv0.getDdmGoodsName())

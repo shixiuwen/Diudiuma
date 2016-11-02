@@ -37,6 +37,7 @@ public class PresenterHall extends BasePresenter {
     public void initData(){
         dataList.clear();
         BmobQuery<LoserGoodsInfo> query = new BmobQuery<>();
+        query.order("-createdAt");   //按照创建时间查询（负号表示反向），保证最新发布的在最前面
         query.findObjects(new FindListener<LoserGoodsInfo>() {
             @Override
             public void done(List<LoserGoodsInfo> list, BmobException e) {

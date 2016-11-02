@@ -184,6 +184,8 @@ public class QuickFindGoodsActivity extends BaseActivity implements QuickFindGoo
 
             uri = Uri.fromFile(new File(photos.get(0)));
 
+            loserGoodsInfo.setGoodsIcon(photos.get(0));
+
             Glide.with(this)
                     .load(uri)
                     .centerCrop()
