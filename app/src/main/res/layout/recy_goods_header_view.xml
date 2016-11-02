@@ -3,9 +3,16 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <ViewFlipper
+    <!--<ViewFlipper
         android:layout_width="match_parent"
         android:layout_height="@dimen/y400"
-        android:background="#123"></ViewFlipper>
+        android:background="#123"
+        ></ViewFlipper>-->
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y500"
+        android:src="@drawable/lost_pic_default_01"
+        android:scaleType="fitXY"/>
 
 </LinearLayout>

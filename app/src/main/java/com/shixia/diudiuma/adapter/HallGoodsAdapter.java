@@ -32,16 +32,6 @@ public class HallGoodsAdapter extends BaseQuickAdapter<LoserGoodsInfo> {
     //默认图片地址
     private String fileUrl = Constants.defPic;
 
-    /*private ImageView imgGoodsIcon;
-    private TextView tvGoodsName;
-    private TextView tvGoodsLoseAddress;
-    private TextView tvGoodsTag;
-
-    imgGoodsIcon = (ImageView) findViewById(R.id.img_goods_icon);
-    tvGoodsName = (TextView) findViewById(R.id.tv_goods_name);
-    tvGoodsLoseAddress = (TextView) findViewById(R.id.tv_goods_lose_address);
-    tvGoodsTag = (TextView) findViewById(R.id.tv_goods_tag);*/
-
 
     public HallGoodsAdapter(int layoutResId, List<LoserGoodsInfo> data) {
         super(layoutResId, data);
