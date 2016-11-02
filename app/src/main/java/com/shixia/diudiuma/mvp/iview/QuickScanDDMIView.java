@@ -1,5 +1,8 @@
 package com.shixia.diudiuma.mvp.iview;
 
+import android.graphics.Bitmap;
+
+import com.shixia.diudiuma.bmob.bean.LoserGoodsInfo;
 import com.shixia.diudiuma.mvp.iview.base.BaseIView;
 
 /**
@@ -21,4 +24,22 @@ public interface QuickScanDDMIView extends BaseIView {
      */
     void onShowScanResult(String s);
 
+    /**
+     * 查找成功之后显示详细界面信息爱
+     * @param loserGoodsInfo 详细物品信息
+     */
+    void onShowDetailLoserPage(LoserGoodsInfo loserGoodsInfo);
+
+    /**
+     * 显示二维码图片
+     * @param qrCode pic
+     */
+    void onShowDDMImg(Bitmap qrCode);
+
+    /**
+     * 显示物品图片的url
+     *
+     * @param url url
+     */
+    void onShowGoodsPic(String url);
 }

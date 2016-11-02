@@ -3,9 +3,9 @@ package com.shixia.diudiuma.mvp.presenter;
 import android.content.Context;
 
 import com.shixia.diudiuma.bean.MultiItemEntity;
-import com.shixia.diudiuma.bmob.bean.DDMGoods;
 import com.shixia.diudiuma.bmob.bean.DDMGoodsLever0Item;
 import com.shixia.diudiuma.bmob.bean.DDMGoodsLever1Item;
+import com.shixia.diudiuma.bmob.bean.LoserGoodsInfo;
 import com.shixia.diudiuma.common_utils.L;
 import com.shixia.diudiuma.mvp.activity.QuickAddGoodsActivity;
 import com.shixia.diudiuma.mvp.activity.QuickFindGoodsActivity;
@@ -51,20 +51,22 @@ public class PresenterMainPage extends BasePresenter {
 
     public void initData() {
         lever01List.clear();    //每次初始化数据都需要将缓存的数据清空
-        BmobQuery<DDMGoods> query = new BmobQuery<DDMGoods>();
-        query.findObjects(new FindListener<DDMGoods>() {
+        BmobQuery<LoserGoodsInfo> query = new BmobQuery<LoserGoodsInfo>();
+        query.addWhereEqualTo("type",3);    //type为3表示是注册的物品
+        query.addWhereEqualTo("publisherName",BmobUser.getCurrentUser().getUsername()); //publisherName表示只显示自己注册的物品
+        query.findObjects(new FindListener<LoserGoodsInfo>() {
             @Override
-            public void done(List<DDMGoods> list, BmobException e) {
+            public void done(List<LoserGoodsInfo> list, BmobException e) {
                 if (e == null) {
                     iView.onShowRemind("查询成功");
                     //查询成功
                     for (int i = 0; i < list.size(); i++) {
-                        DDMGoods ddmGoods = list.get(i);
-                        DDMGoodsLever0Item ddmGoodsLever0Item = new DDMGoodsLever0Item(ddmGoods.getDdmGoodsName(), ddmGoods.getUpdatedAt().toString(), ddmGoods.getDdmGoodsReward(), ddmGoods.getDdmGoodsTag(), ddmGoods.getPic());
-                        DDMGoodsLever1Item ddmGoodsLever1Item = new DDMGoodsLever1Item(ddmGoods.getDdmGoodsAddress(), ddmGoods.getDdmCode(),
-                                ddmGoods.getCard(), ddmGoods.getCertificate(),
+                        LoserGoodsInfo ddmGoods = list.get(i);
+                        DDMGoodsLever0Item ddmGoodsLever0Item = new DDMGoodsLever0Item(ddmGoods.getGoodsName(), ddmGoods.getUpdatedAt(), ddmGoods.getReward(), ddmGoods.getGoodsTag(), ddmGoods.getGoodsIcon());
+                        DDMGoodsLever1Item ddmGoodsLever1Item = new DDMGoodsLever1Item(ddmGoods.getLoseAddress(), ddmGoods.getDdm(),
+                                ddmGoods.getCard(), ddmGoods.getCard(),
                                 ddmGoods.getTel(), ddmGoods.getWechat(),
-                                ddmGoods.getQq(), ddmGoods.getDescribe());
+                                ddmGoods.getQq(), ddmGoods.getDiscribe());
                         ddmGoodsLever0Item.addSubItem(ddmGoodsLever1Item);
                         lever01List.add(ddmGoodsLever0Item);
                     }

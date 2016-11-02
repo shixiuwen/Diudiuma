@@ -37,6 +37,7 @@ public class PresenterHall extends BasePresenter {
     public void initData(){
         dataList.clear();
         BmobQuery<LoserGoodsInfo> query = new BmobQuery<>();
+        query.addWhereNotEqualTo("type",3);     //主动注册物品是防止丢失的，不显示在失物大厅，只在扫描丢丢码查询的时候能够查询到
         query.order("-createdAt");   //按照创建时间查询（负号表示反向），保证最新发布的在最前面
         query.findObjects(new FindListener<LoserGoodsInfo>() {
             @Override

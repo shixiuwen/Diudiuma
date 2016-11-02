@@ -10,38 +10,216 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         amos:btnSureText="@string/sure"
-        amos:titleName="@string/add_goods" />
+        amos:titleName="@string/find_goods" />
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y400"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content">
 
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="@dimen/y400"
-            android:layout_weight="1">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/img_goods_pic"
-                android:layout_width="@dimen/x250"
-                android:layout_height="@dimen/y250"
-                android:layout_centerInParent="true" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/y460"
+                android:background="@color/color_green_boss"
+                android:orientation="horizontal">
 
-        </RelativeLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_centerInParent="true">
 
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="@dimen/y400"
-            android:layout_weight="1">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/img_goods_ddm"
-                android:layout_width="@dimen/x250"
-                android:layout_height="@dimen/y250"
-                android:layout_centerInParent="true" />
+                        <ImageView
+                            android:id="@+id/img_lose_goods_pic"
+                            android:layout_width="@dimen/x260"
+                            android:layout_height="@dimen/y260"
+                            android:background="@drawable/img_no_data"
+                            android:layout_gravity="center_horizontal"/>
 
-        </RelativeLayout>
+                    </LinearLayout>
 
-    </LinearLayout>
+                    <View
+                        android:layout_width="@dimen/x48"
+                        android:layout_height="wrap_content"/>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/img_my_goods_ddm"
+                            android:layout_width="@dimen/x260"
+                            android:layout_height="@dimen/y260"
+                            android:background="@drawable/default_ddm"
+                            android:layout_gravity="center_horizontal"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <com.shixia.diudiuma.view.EditItemView
+                android:id="@+id/etv_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/y50"
+                amos:editItemIcon="@drawable/img_hall_01"
+                amos:keyText="@string/goods_name"
+                amos:valueText="****" />
+
+            <com.shixia.diudiuma.view.EditItemView
+                android:id="@+id/etv_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                amos:editItemIcon="@drawable/img_hall_02"
+                amos:keyText="@string/register_date"
+                amos:valueText="****" />
+
+            <com.shixia.diudiuma.view.EditItemView
+                android:id="@+id/etv_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                amos:editItemIcon="@drawable/img_hall_02"
+                amos:keyText="@string/register_address"
+                amos:valueText="@string/default_address" />
+
+            <com.shixia.diudiuma.view.EditItemView
+                android:id="@+id/etv_money"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                amos:bottomSplitVisible="false"
+                amos:editItemIcon="@drawable/img_hall_03"
+                amos:keyText="@string/reward"
+                amos:valueText="****" />
+
+            <com.shixia.diudiuma.view.EditItemView
+                android:id="@+id/etv_ddm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                amos:editItemIcon="@drawable/img_hall_02"
+                amos:keyText="@string/ddm"
+                amos:valueText="****"
+                android:layout_marginTop="@dimen/y50"/>
+
+            <com.shixia.diudiuma.view.EditItemView
+                android:id="@+id/etv_is_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                amos:editItemIcon="@drawable/img_hall_03"
+                amos:keyText="@string/is_card"
+                amos:valueText="****"
+                android:layout_marginTop="@dimen/y50"/>
+
+            <com.shixia.diudiuma.view.EditItemView
+                android:id="@+id/etv_is_certificate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                amos:bottomSplitVisible="false"
+                amos:editItemIcon="@drawable/img_hall_03"
+                amos:keyText="@string/is_certificate"
+                amos:valueText="****" />
+
+            <com.shixia.diudiuma.view.EditItemView
+                android:id="@+id/etv_tel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/y50"
+                amos:editItemIcon="@drawable/img_hall_04"
+                amos:keyText="@string/telephone"
+                amos:valueText="****" />
+
+            <com.shixia.diudiuma.view.EditItemView
+                android:id="@+id/etv_wechat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                amos:editItemIcon="@drawable/img_hall_05"
+                amos:keyText="@string/goods_wechat"
+                amos:valueText="****" />
+
+            <com.shixia.diudiuma.view.EditItemView
+                android:id="@+id/etv_qq"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                amos:bottomSplitVisible="false"
+                amos:editItemIcon="@drawable/img_hall_06"
+                amos:keyText="QQ"
+                amos:valueText="****" />
+
+            <!--添加物品标签-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/y50">
+
+                <ImageView
+                    android:layout_width="@dimen/x50"
+                    android:layout_height="@dimen/y50"
+                    android:layout_marginLeft="@dimen/x24"
+                    android:id="@+id/img_goods_tag"
+                    android:background="@drawable/img_hall_01"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_goods_tag"
+                    android:text="@string/goods_tag"
+                    android:textSize="@dimen/x36"
+                    android:layout_alignBottom="@+id/img_goods_tag"
+                    android:layout_toRightOf="@+id/img_goods_tag"
+                    android:layout_marginLeft="@dimen/x24"/>
+
+            </RelativeLayout>
+
+            <!--添加物品描述信息-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/y300"
+                android:background="@drawable/edit_big_bg"
+                android:layout_marginTop="@dimen/y50"
+                android:layout_marginLeft="@dimen/x24"
+                android:layout_marginRight="@dimen/x24"
+                android:padding="@dimen/x12">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="暂无描述信息"
+                    android:id="@+id/et_describe"
+                    android:gravity="left|top"
+                    android:textSize="@dimen/x36"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/y300">
+
+                <Button
+                    android:layout_width="@dimen/x500"
+                    android:layout_height="@dimen/y120"
+                    android:id="@+id/btn_connect_loser"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="@dimen/y100"
+                    android:background="@drawable/btn_submit_bg"
+                    android:text="@string/connect_loser" />
+
+            </RelativeLayout>
+        </LinearLayout>
+
+    </ScrollView>
+
 </LinearLayout>

@@ -62,4 +62,5 @@
     <string name="be_sure_to_register">确认注册</string>
     <string name="click_to_decode_ddm">点击生成丢丢码</string>
     <string name="ddm">丢丢码</string>
+    <string name="connect_loser">联系失主</string>
 </resources>

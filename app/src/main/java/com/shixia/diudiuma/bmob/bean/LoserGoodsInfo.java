@@ -23,7 +23,8 @@ public class LoserGoodsInfo extends BmobObject {
     private String wechat;      //微信
     private String qq;          //QQ
 
-    private Integer type;       //1为寻物启事，2为失物招领
+    private Integer type;       //1为寻物启事，2为失物招领，3为注册物品（注册物品一定会有丢丢码）
+    private String ddm;         //该选项为注册物品才有，其他类型（非3）该选项为空
 
     private String publisherName;   //发布者名称，默认无需设置，不显示在界面上，用于查询
 
@@ -137,6 +138,14 @@ public class LoserGoodsInfo extends BmobObject {
 
     public void setPublisherName(String publisherName) {
         this.publisherName = publisherName;
+    }
+
+    public String getDdm() {
+        return ddm;
+    }
+
+    public void setDdm(String ddm) {
+        this.ddm = ddm;
     }
 
 }
