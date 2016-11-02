@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.shixia.diudiuma.MyApplication;
 import com.shixia.diudiuma.R;
 import com.shixia.diudiuma.adapter.HallGoodsAdapter;
 import com.shixia.diudiuma.bmob.bean.LoserGoodsInfo;
@@ -19,8 +20,10 @@ import com.shixia.diudiuma.mvp.iview.HallIView;
 import com.shixia.diudiuma.mvp.presenter.PresenterHall;
 import com.shixia.diudiuma.mvp.presenter.base.BasePresenter;
 import com.shixia.diudiuma.view.CToast;
+import com.shixia.diudiuma.view.LoadingDialog;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by AmosShi on 2016/10/24.
@@ -104,7 +107,6 @@ public class MainPageHallFragment extends BaseFragment implements HallIView, Swi
         rlFindCertification.setOnClickListener(v -> presenter.searchByCondition(3));
         rlFindPeople.setOnClickListener(v -> presenter.searchByCondition(4));
         rlHighReward.setOnClickListener(v -> presenter.searchByCondition(5));
-        rlFindCard.setOnClickListener(v -> presenter.searchByCondition(6));
     }
 
     @Override
@@ -113,7 +115,17 @@ public class MainPageHallFragment extends BaseFragment implements HallIView, Swi
     }
 
     @Override
-    public void onNotifyDataSetChange(ArrayList<LoserGoodsInfo> loserGoodsInfosList) {
+    public void onSearchBegin() {
+        MyApplication.UIHandler.post(() -> LoadingDialog.getInstance(getActivity(), "查询中，请稍后……").show());
+    }
+
+    @Override
+    public void onSearchEnd() {
+        MyApplication.UIHandler.post(() -> LoadingDialog.getInstance(getActivity(), "查询中，请稍后……").dismiss());
+    }
+
+    @Override
+    public void onNotifyDataSetChange(List<LoserGoodsInfo> loserGoodsInfosList) {
         goodsList.clear();
         this.goodsList.addAll(loserGoodsInfosList);
         hallGoodsAdapter.notifyDataSetChanged();

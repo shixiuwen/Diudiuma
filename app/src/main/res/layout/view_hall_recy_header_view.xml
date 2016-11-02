@@ -20,7 +20,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:id="@+id/rl_find_loser">
+                android:id="@+id/rl_find_goods"
+                android:background="@drawable/btn_hall_type_click_selector">
 
                 <LinearLayout
                     android:id="@+id/ll_hall_01"
@@ -33,12 +34,12 @@
                     <ImageView
                         android:layout_width="@dimen/x160"
                         android:layout_height="@dimen/y160"
-                        android:background="@drawable/img_hall_01" />
+                        android:background="@drawable/img_hall_02" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/find_loser"
+                        android:text="@string/find_goods"
                         android:layout_marginTop="@dimen/y24"/>
 
                 </LinearLayout>
@@ -49,7 +50,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:id="@+id/rl_find_card">
+                android:id="@+id/rl_find_card"
+                android:background="@drawable/btn_hall_type_click_selector">
 
                 <LinearLayout
                     android:id="@+id/ll_hall_04"
@@ -85,7 +87,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:id="@+id/rl_find_goods">
+                android:id="@+id/rl_find_loser"
+                android:background="@drawable/btn_hall_type_click_selector">
 
                 <LinearLayout
                     android:id="@+id/ll_hall_02"
@@ -98,12 +101,12 @@
                     <ImageView
                         android:layout_width="@dimen/x160"
                         android:layout_height="@dimen/y160"
-                        android:background="@drawable/img_hall_02" />
+                        android:background="@drawable/img_hall_01" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/find_goods"
+                        android:text="@string/find_loser"
                         android:layout_marginTop="@dimen/y24"/>
 
                 </LinearLayout>
@@ -113,7 +116,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:id="@+id/rl_find_certification">
+                android:id="@+id/rl_find_certification"
+                android:background="@drawable/btn_hall_type_click_selector">
 
                 <LinearLayout
                     android:id="@+id/ll_hall_05"
@@ -149,7 +153,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:id="@+id/rl_find_people">
+                android:id="@+id/rl_find_people"
+                android:background="@drawable/btn_hall_type_click_selector">
 
                 <LinearLayout
                     android:id="@+id/ll_hall_03"
@@ -178,7 +183,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:id="@+id/rl_high_reward">
+                android:id="@+id/rl_high_reward"
+                android:background="@drawable/btn_hall_type_click_selector">
 
                 <LinearLayout
                     android:id="@+id/ll_hall_06"
