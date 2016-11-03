@@ -95,7 +95,7 @@
             amos:bottomSplitVisible="false"
             amos:editItemIcon="@drawable/img_hall_01"
             amos:keyText="@string/personal_info"
-            amos:valueText="amos" />
+            amos:valueText="" />
 
         <View
             android:layout_width="match_parent"

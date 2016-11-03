@@ -12,7 +12,6 @@ import com.shixia.diudiuma.adapter.MainPageAdapter;
 import com.shixia.diudiuma.mvp.activity.base.BaseActivity;
 import com.shixia.diudiuma.mvp.fragment.MainPageDefaultFragment;
 import com.shixia.diudiuma.mvp.fragment.MainPageHallFragment;
-import com.shixia.diudiuma.mvp.fragment.MainPageMsgFragment;
 import com.shixia.diudiuma.mvp.fragment.MainPagePersonalFragment;
 import com.shixia.diudiuma.mvp.iview.MainActivity_2IView;
 import com.shixia.diudiuma.mvp.presenter.PresenterMain_2;
@@ -75,7 +74,7 @@ public class MainActivity_2 extends BaseActivity implements MainActivity_2IView 
 
         fragmentList.add(new MainPageDefaultFragment());
         fragmentList.add(new MainPageHallFragment());
-        fragmentList.add(new MainPageMsgFragment());
+//        fragmentList.add(new MainPageMsgFragment());
         fragmentList.add(new MainPagePersonalFragment());
         MainPageAdapter pageAdapter = new MainPageAdapter(getSupportFragmentManager(),fragmentList);
         vpMain.setAdapter(pageAdapter);
@@ -159,10 +158,15 @@ public class MainActivity_2 extends BaseActivity implements MainActivity_2IView 
                 imgTabCenter.setSelected(false);
                 break;
             case 2:
-                imgTabMain.setSelected(false);
+                /*imgTabMain.setSelected(false);
                 imgTabHall.setSelected(false);
                 imgTabMsg.setSelected(true);
-                imgTabCenter.setSelected(false);
+                imgTabCenter.setSelected(false);*/
+
+                imgTabMain.setSelected(false);
+                imgTabHall.setSelected(false);
+                imgTabMsg.setSelected(false);
+                imgTabCenter.setSelected(true);
                 break;
             case 3:
                 imgTabMain.setSelected(false);

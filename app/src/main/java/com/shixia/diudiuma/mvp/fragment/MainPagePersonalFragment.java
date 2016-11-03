@@ -1,6 +1,7 @@
 package com.shixia.diudiuma.mvp.fragment;
 
 import android.animation.ObjectAnimator;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.Gravity;
@@ -15,15 +16,22 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.shixia.diudiuma.R;
+import com.shixia.diudiuma.bmob.bean.DDMUser;
+import com.shixia.diudiuma.common_utils.ImageFactory;
 import com.shixia.diudiuma.mvp.fragment.base.BaseFragment;
 import com.shixia.diudiuma.mvp.iview.PersonalCenterIView;
 import com.shixia.diudiuma.mvp.presenter.PresenterPersonalCenter;
 import com.shixia.diudiuma.mvp.presenter.base.BasePresenter;
 import com.shixia.diudiuma.view.CToast;
+import com.shixia.diudiuma.view.CircleImageView;
 import com.shixia.diudiuma.view.EditItemView;
 import com.shixia.diudiuma.view.EditLoginInfoView;
 
 import cn.bmob.v3.BmobUser;
+import rx.Observable;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by AmosShi on 2016/10/24.
@@ -60,6 +68,8 @@ public class MainPagePersonalFragment extends BaseFragment implements PersonalCe
     private EditLoginInfoView eivRegisterName;
     private EditLoginInfoView eivRegisterPassword;
     private EditLoginInfoView eivRegisterRePassword;
+    private CircleImageView imgCircle;
+    private TextView tvNickName;
 
     @Override
     public View initView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -67,11 +77,34 @@ public class MainPagePersonalFragment extends BaseFragment implements PersonalCe
         //设置沉浸式状态栏颜色
         btnLoginOrExit = (Button) view.findViewById(R.id.btn_login_or_exit);
 
+        imgCircle = (CircleImageView) view.findViewById(R.id.civ_avatar);
+
+        tvNickName = (TextView) view.findViewById(R.id.tv_nick_name);
+
         eivPersonalInfo = (EditItemView) view.findViewById(R.id.eiv_personal_info);
         eivSetting = (EditItemView) view.findViewById(R.id.eiv_setting);
         eivVersionCheck = (EditItemView) view.findViewById(R.id.eiv_version_check);
         eivFeedback = (EditItemView) view.findViewById(R.id.eiv_feedback);
         eivAboutUs = (EditItemView) view.findViewById(R.id.eiv_about_us);
+
+        if (BmobUser.getCurrentUser() != null) {
+            DDMUser currentUser = BmobUser.getCurrentUser(DDMUser.class);
+            tvNickName.setText(currentUser.getUsername());
+            String avatar = currentUser.getAvatar();
+            if (avatar != null) {
+                Observable.create(new Observable.OnSubscribe<Bitmap>() {
+                    @Override
+                    public void call(Subscriber<? super Bitmap> subscriber) {
+                        subscriber.onNext(ImageFactory.returnBitmap(avatar));
+                    }
+                })
+                        .subscribeOn(Schedulers.newThread())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(bitmap -> {
+                            imgCircle.setAvatar(bitmap);
+                        });
+            }
+        }
 
         return view;
     }
@@ -222,9 +255,9 @@ public class MainPagePersonalFragment extends BaseFragment implements PersonalCe
 
     @Override
     public void onChangeLoginStatus(boolean isLogin) {
-        if(isLogin){
+        if (isLogin) {
             btnLoginOrExit.setText("退出登录");
-        }else {
+        } else {
             btnLoginOrExit.setText("登录");
         }
     }

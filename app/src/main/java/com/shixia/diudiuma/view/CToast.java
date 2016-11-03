@@ -22,7 +22,7 @@ public class CToast extends Toast {
     /**
      * 如果需要使用自定义的Toast，设置该值为true,在makeCText中自定义Toast外观属性
      */
-    private static boolean isToastCustom = true;
+    private static boolean isToastCustom = false;
 
     /**
      * Construct an empty Toast object.  You must call {@link #setView} before you

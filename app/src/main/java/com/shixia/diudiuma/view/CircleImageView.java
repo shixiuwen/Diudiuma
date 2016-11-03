@@ -10,7 +10,7 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.AttributeSet;
-import android.view.View;
+import android.widget.ImageView;
 
 import com.shixia.diudiuma.R;
 
@@ -20,7 +20,7 @@ import com.shixia.diudiuma.R;
  * Description:得到圆形图片设置头像
  */
 
-public class CircleImageView extends View {
+public class CircleImageView extends ImageView {
 
     private int bitmapWidth;
     private int bitmapHeight;

@@ -46,7 +46,7 @@ public class PresenterMain_2 extends BasePresenter {
                 vpMain.setCurrentItem(2,false);
                 break;
             case 3:
-                vpMain.setCurrentItem(3,false);
+                vpMain.setCurrentItem(2,false);
                 break;
             default:
                 break;
