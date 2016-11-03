@@ -18,4 +18,9 @@ public interface QuickAddGoodsIView extends QuickIView {
      * @param image
      */
     void onShowDecodeResult(Bitmap image);
+
+    /**
+     * 提交数据成功之后关闭当前页面，防止重复提交
+     */
+    void onFinish();
 }

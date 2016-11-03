@@ -63,4 +63,17 @@
     <string name="click_to_decode_ddm">点击生成丢丢码</string>
     <string name="ddm">丢丢码</string>
     <string name="connect_loser">联系失主</string>
+    <string name="feedback_content">请写下您的宝贵意见</string>
+    <string name="qq_wechat_tel">请留下您的联系方式（QQ/WeChat/Tel）</string>
+    <string name="content_empty">您输入的内容为空</string>
+    <string name="submit_successful">提交成功</string>
+    <string name="submit_failure">提交失败</string>
+    <string name="on_submitting_data">提交数据中……</string>
+    <string name="my_personal_card">我的名片</string>
+    <string name="edit">编辑</string>
+    <string name="my_publish">我发布的</string>
+    <string name="my_find_goods">我的寻物启事</string>
+    <string name="my_find_loser">我的失物招领</string>
+    <string name="english_name">英文名</string>
+    <string name="email">邮箱</string>
 </resources>

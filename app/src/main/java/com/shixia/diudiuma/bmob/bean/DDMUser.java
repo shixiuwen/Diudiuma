@@ -1,7 +1,6 @@
 package com.shixia.diudiuma.bmob.bean;
 
 import cn.bmob.v3.BmobUser;
-import cn.bmob.v3.datatype.BmobFile;
 
 /**
  * Created by AmosShi on 2016/10/26.
@@ -25,15 +24,19 @@ public class DDMUser extends BmobUser {
 
     }
 
+    private String englishName; //英文名
+
     private Integer sex;    //性别
 
     private Integer age;    //年龄
+
+    private String tele;    //手机号
 
     private String weChat;  //微信号
 
     private String QQ;      //QQ号
 
-    private BmobFile avatar;    //用户头像
+    private String avatar;    //用户头像
 
     public Integer getSex() {
         return sex;
@@ -67,11 +70,28 @@ public class DDMUser extends BmobUser {
         this.QQ = QQ;
     }
 
-    public BmobFile getAvatar() {
+    public String getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(BmobFile avatar) {
+    public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public String getEnglishName() {
+
+        return englishName;
+    }
+
+    public void setEnglishName(String englishName) {
+        this.englishName = englishName;
+    }
+
+    public String getTele() {
+        return tele;
+    }
+
+    public void setTele(String tele) {
+        this.tele = tele;
     }
 }

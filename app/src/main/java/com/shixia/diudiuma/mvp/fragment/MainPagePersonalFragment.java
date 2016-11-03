@@ -20,6 +20,7 @@ import com.shixia.diudiuma.mvp.iview.PersonalCenterIView;
 import com.shixia.diudiuma.mvp.presenter.PresenterPersonalCenter;
 import com.shixia.diudiuma.mvp.presenter.base.BasePresenter;
 import com.shixia.diudiuma.view.CToast;
+import com.shixia.diudiuma.view.EditItemView;
 import com.shixia.diudiuma.view.EditLoginInfoView;
 
 import cn.bmob.v3.BmobUser;
@@ -34,6 +35,12 @@ public class MainPagePersonalFragment extends BaseFragment implements PersonalCe
     private Button btnLoginOrExit;  //登录或者退出按钮
     private PresenterPersonalCenter presenter;
     private View view;
+
+    private EditItemView eivPersonalInfo;
+    private EditItemView eivSetting;
+    private EditItemView eivVersionCheck;
+    private EditItemView eivFeedback;
+    private EditItemView eivAboutUs;
 
     //popWindow
     private View popView;
@@ -59,12 +66,26 @@ public class MainPagePersonalFragment extends BaseFragment implements PersonalCe
         view = inflater.inflate(R.layout.fragment_main_page_personal_center_layout, container, false);
         //设置沉浸式状态栏颜色
         btnLoginOrExit = (Button) view.findViewById(R.id.btn_login_or_exit);
+
+        eivPersonalInfo = (EditItemView) view.findViewById(R.id.eiv_personal_info);
+        eivSetting = (EditItemView) view.findViewById(R.id.eiv_setting);
+        eivVersionCheck = (EditItemView) view.findViewById(R.id.eiv_version_check);
+        eivFeedback = (EditItemView) view.findViewById(R.id.eiv_feedback);
+        eivAboutUs = (EditItemView) view.findViewById(R.id.eiv_about_us);
+
         return view;
     }
 
     @Override
     public BasePresenter initPresenter() {
         presenter = new PresenterPersonalCenter(getActivity(), this);
+
+        eivPersonalInfo.setOnEditItemClickListener(() -> presenter.showPersonalInfo());
+        eivSetting.setOnEditItemClickListener(() -> presenter.showSetting());
+        eivVersionCheck.setOnEditItemClickListener(() -> presenter.versionCheck());
+        eivFeedback.setOnEditItemClickListener(() -> presenter.toFeedback());
+        eivAboutUs.setOnEditItemClickListener(() -> presenter.showAboutUs());
+
         return presenter;
     }
 

@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:amos="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.shixia.diudiuma.view.CommonTitleView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ctv_title_view"
+        amos:btnSureText="@string/edit"
+        amos:titleName="@string/personal_info"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/y24"
+        android:layout_marginLeft="@dimen/x24"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="@dimen/x50"
+            android:layout_height="@dimen/y50"
+            android:background="@drawable/img_pop_quick_020"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/my_personal_card"
+            android:textSize="@dimen/x34"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/x24" />
+    </LinearLayout>
+
+    <!--以下显示一张黑色名片样式-->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y500"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/y24"
+        android:layout_marginLeft="@dimen/x24"
+        android:layout_marginRight="@dimen/x24"
+        android:background="@drawable/personal_info_card_bg">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/y60"
+            android:layout_marginLeft="@dimen/x100"
+            android:id="@+id/ll_name">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_name"
+                android:textSize="@dimen/x54"
+                android:text="石秀文"
+                android:textColor="@color/color_grey_a"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_english_name"
+                android:textSize="@dimen/x54"
+                android:text="AmosShi"
+                android:layout_marginLeft="@dimen/x54"
+                android:textColor="@color/color_grey_a"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="@dimen/x500"
+            android:layout_height="@dimen/y6"
+            android:background="@color/color_grey_a"
+            android:layout_below="@+id/ll_name"
+            android:layout_alignLeft="@+id/ll_name"
+            android:layout_marginTop="@dimen/y14"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="@dimen/y80"
+            android:layout_marginRight="@dimen/x80"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_tel_title"
+                    android:textSize="@dimen/x34"
+                    android:textColor="@color/text_color_grey_b"
+                    android:text="手机号："/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_tel"
+                    android:textSize="@dimen/x34"
+                    android:textColor="@color/text_color_grey_b"
+                    android:text="15620633843"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_wechat_title"
+                    android:textSize="@dimen/x34"
+                    android:textColor="@color/text_color_grey_b"
+                    android:text="微信号："/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_wechat"
+                    android:textSize="@dimen/x34"
+                    android:textColor="@color/text_color_grey_b"
+                    android:text="sxw-1991"/>
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_qq_title"
+                    android:textSize="@dimen/x34"
+                    android:textColor="@color/text_color_grey_b"
+                    android:text="QQ："/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_qq"
+                    android:textSize="@dimen/x34"
+                    android:textColor="@color/text_color_grey_b"
+                    android:text="198737059"/>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_email_title"
+                    android:textSize="@dimen/x34"
+                    android:textColor="@color/text_color_grey_b"
+                    android:text="Email："/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_email"
+                    android:textSize="@dimen/x34"
+                    android:textColor="@color/text_color_grey_b"
+                    android:text="shixiuwen1991@yeah.net"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="@dimen/x100"
+            android:layout_height="@dimen/y100"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:id="@+id/img_personal_icon"
+            android:layout_marginBottom="@dimen/y80"
+            android:layout_marginLeft="@dimen/x100"
+            android:background="@drawable/img_hall_05"/>
+
+    </RelativeLayout>
+
+    <!--keyText
+    valueText
+    editItemIcon
+    topSplitVisible
+    bottomSplitVisible-->
+
+    <!--我的寻物启事-->
+    <com.shixia.diudiuma.view.EditItemView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/eiv_my_find_goods"
+        amos:keyText="@string/my_find_goods"
+        amos:valueText=" "
+        amos:topSplitVisible="false"
+        amos:bottomSplitVisible="true"
+        android:layout_marginTop="@dimen/y48"/>
+
+    <!--我的失物招领-->
+    <com.shixia.diudiuma.view.EditItemView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/eiv_my_find_loser"
+        amos:keyText="@string/my_find_loser"
+        amos:valueText=" "
+        amos:topSplitVisible="false"
+        amos:bottomSplitVisible="false"/>
+
+</LinearLayout>

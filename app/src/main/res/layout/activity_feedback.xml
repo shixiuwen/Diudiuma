@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:amos="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.shixia.diudiuma.view.CommonTitleView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ctv_title_view"
+        amos:titleName="@string/feedback"
+        amos:btnSureText="@string/submit"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:id="@+id/et_feedback_content"
+        android:background="@null"
+        android:hint="@string/feedback_content"
+        android:gravity="top"
+        android:padding="@dimen/x24"
+        android:textSize="@dimen/x34"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x2"
+        android:layout_marginLeft="@dimen/x24"
+        android:layout_marginRight="@dimen/x24"
+        android:background="@color/color_split_gray"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y140"
+        android:id="@+id/et_feedback_contact"
+        android:textSize="@dimen/x34"
+        android:paddingLeft="@dimen/x24"
+        android:paddingRight="@dimen/x24"
+        android:hint="@string/qq_wechat_tel"
+        android:gravity="center_vertical"
+        android:background="@null"/>
+
+</LinearLayout>

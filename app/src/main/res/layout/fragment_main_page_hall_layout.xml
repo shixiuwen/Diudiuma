@@ -11,70 +11,81 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/y100"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <TextView
-                    android:layout_width="0px"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="类别1"
-                    android:gravity="center"/>
-
-                <TextView
-                    android:layout_width="0px"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="类别2"
-                    android:gravity="center"/>
-
-                <TextView
-                    android:layout_width="0px"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="类别3"
-                    android:gravity="center"/>
-
-                <TextView
-                    android:layout_width="0px"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="类别4"
-                    android:gravity="center"/>
-
-                <TextView
-                    android:layout_width="0px"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="类别5"
-                    android:gravity="center"/>
-
-                <TextView
-                    android:layout_width="0px"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="类别6"
-                    android:gravity="center"/>
-
-            </LinearLayout>
+            android:layout_height="match_parent">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_hall"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="#28112233">
-
             </android.support.v7.widget.RecyclerView>
 
-        </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/y100"
+                android:id="@+id/ll_select_title"
+                android:orientation="horizontal"
+                android:background="#0123">
+
+                <TextView
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="找物品"
+                    android:gravity="center"
+                    android:textColor="#0fff"
+                    android:id="@+id/tv_find_goods"/>
+
+                <TextView
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="找失主"
+                    android:gravity="center"
+                    android:textColor="#0fff"
+                    android:id="@+id/tv_find_loser"/>
+
+                <TextView
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="走失者"
+                    android:gravity="center"
+                    android:textColor="#0fff"
+                    android:id="@+id/tv_find_people"/>
+
+                <TextView
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="找卡片"
+                    android:gravity="center"
+                    android:textColor="#0fff"
+                    android:id="@+id/tv_find_card"/>
+
+                <TextView
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="找证件"
+                    android:gravity="center"
+                    android:textColor="#0fff"
+                    android:id="@+id/tv_find_certification"/>
+
+                <TextView
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="高悬赏"
+                    android:gravity="center"
+                    android:textColor="#0fff"
+                    android:id="@+id/tv_find_high_reward"/>
+
+            </LinearLayout>
+
+        </RelativeLayout>
 
     </android.support.v4.widget.SwipeRefreshLayout>
 

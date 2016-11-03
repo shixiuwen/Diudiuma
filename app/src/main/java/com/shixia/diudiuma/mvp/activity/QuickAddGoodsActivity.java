@@ -256,4 +256,9 @@ public class QuickAddGoodsActivity extends BaseActivity implements QuickAddGoods
     public void onShowDecodeResult(Bitmap image) {
         imgDDM.setImageBitmap(image);
     }
+
+    @Override
+    public void onFinish() {
+        finish();
+    }
 }

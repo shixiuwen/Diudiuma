@@ -56,15 +56,15 @@
 
             <com.shixia.diudiuma.view.CircleImageView
                 android:id="@+id/civ_avatar"
-                android:layout_width="@dimen/x250"
-                android:layout_height="@dimen/y250"
+                android:layout_width="@dimen/x256"
+                android:layout_height="@dimen/y256"
                 android:layout_centerInParent="true" />
 
-            <ImageView
+            <!--<ImageView
                 android:layout_width="@dimen/x255"
                 android:layout_height="@dimen/x255"
                 android:layout_centerInParent="true"
-                android:background="@drawable/avatar_circle" />
+                android:background="@drawable/avatar_circle" />-->
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -91,6 +91,7 @@
         <com.shixia.diudiuma.view.EditItemView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/eiv_personal_info"
             amos:bottomSplitVisible="false"
             amos:editItemIcon="@drawable/img_hall_01"
             amos:keyText="@string/personal_info"
@@ -104,6 +105,7 @@
         <com.shixia.diudiuma.view.EditItemView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/eiv_setting"
             amos:editItemIcon="@drawable/img_hall_06"
             amos:keyText="@string/setting"
             amos:valueText="" />
@@ -112,6 +114,7 @@
         <com.shixia.diudiuma.view.EditItemView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/eiv_version_check"
             amos:editItemIcon="@drawable/img_hall_05"
             amos:keyText="@string/version_update"
             amos:valueText="v10.021" />
@@ -120,6 +123,7 @@
         <com.shixia.diudiuma.view.EditItemView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/eiv_feedback"
             amos:editItemIcon="@drawable/img_hall_04"
             amos:keyText="@string/feedback"
             amos:valueText="" />
@@ -128,6 +132,7 @@
         <com.shixia.diudiuma.view.EditItemView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/eiv_about_us"
             amos:bottomSplitVisible="false"
             amos:editItemIcon="@drawable/img_hall_06"
             amos:keyText="@string/about_us"

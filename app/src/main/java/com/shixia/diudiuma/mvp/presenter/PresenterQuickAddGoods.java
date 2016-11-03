@@ -100,6 +100,7 @@ public class PresenterQuickAddGoods extends PresenterQuick {
                 .subscribe(new Action1<List<String>>() {
                     @Override
                     public void call(List<String> stringList) {
+                        LoadingDialog.getInstance(activity,"提交数据中……").show();
                         //如果没有选择图片，直接上传数据，如果修改过图片，先上传图片，获取到图片保存地址再上传数据
                         if (stringList == null || stringList.size() == 0) {
                             submitDataWithNoPic(loserGoodsInfo);
@@ -117,10 +118,12 @@ public class PresenterQuickAddGoods extends PresenterQuick {
                 if (e == null) {
                     //提交成功
                     iView.onShowRemind("提交成功");
+                    iView.onFinish();   //提交数据成功之后关闭当前页面，防止重复提交
                 } else {
                     //提交失败
                     e.printStackTrace();
                 }
+                LoadingDialog.getInstance(activity,"提交数据中……").dismiss();
             }
         });
     }
@@ -139,6 +142,7 @@ public class PresenterQuickAddGoods extends PresenterQuick {
                 } else {
                     L.i("error permission", e.getMessage());
                     CToast.makeCText(activity, "上传文件失败：" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    LoadingDialog.getInstance(activity,"提交数据中……").dismiss();
                 }
             }
 

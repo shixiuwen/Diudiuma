@@ -6,7 +6,10 @@ import android.widget.Toast;
 
 import com.shixia.diudiuma.bmob.bean.DDMUser;
 import com.shixia.diudiuma.common_utils.L;
+import com.shixia.diudiuma.mvp.activity.AboutUsActivity;
+import com.shixia.diudiuma.mvp.activity.FeedbackActivity;
 import com.shixia.diudiuma.mvp.activity.MainActivity_2;
+import com.shixia.diudiuma.mvp.activity.PersonalInfoActivity;
 import com.shixia.diudiuma.mvp.iview.PersonalCenterIView;
 import com.shixia.diudiuma.mvp.iview.base.BaseIView;
 import com.shixia.diudiuma.mvp.presenter.base.BasePresenter;
@@ -127,5 +130,40 @@ public class PresenterPersonalCenter extends BasePresenter {
 
     public void dismissDialog() {
         iView.onDismissDialog();
+    }
+
+    /**
+     * 个人信息页面
+     */
+    public void showPersonalInfo() {
+        activity.startActivity(activity, PersonalInfoActivity.class,null,false);
+    }
+
+    /**
+     * 设置界面
+     */
+    public void showSetting() {
+        iView.onShowRemind("该功能暂未开通");
+    }
+
+    /**
+     * 版本检测
+     */
+    public void versionCheck() {
+        iView.onShowRemind("当前是最新版本");
+    }
+
+    /**
+     * 意见反馈界面
+     */
+    public void toFeedback() {
+        activity.startActivity(activity, FeedbackActivity.class,null,false);
+    }
+
+    /**
+     * 关于我们界面
+     */
+    public void showAboutUs() {
+        activity.startActivity(activity, AboutUsActivity.class,null,false);
     }
 }
