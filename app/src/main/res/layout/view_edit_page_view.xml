@@ -19,7 +19,8 @@
         android:background="@drawable/edit_bg"
         android:layout_marginLeft="@dimen/x24"
         android:layout_marginRight="@dimen/x24"
-        android:layout_marginTop="@dimen/y40">
+        android:layout_marginTop="@dimen/y40"
+        android:padding="@dimen/x2">
 
         <ImageView
             android:layout_width="@dimen/x70"
@@ -45,7 +46,7 @@
             android:id="@+id/btn_edit_commit"
             android:background="@drawable/edit_sure_btn_bg"
             android:text="@string/sure"
-            android:textColor="#263441"/>
+            android:textColor="#e6e6e6"/>
 
     </LinearLayout>
 
