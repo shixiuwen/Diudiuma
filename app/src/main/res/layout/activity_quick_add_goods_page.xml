@@ -138,7 +138,7 @@
                 android:layout_height="wrap_content"
                 amos:editItemIcon="@drawable/img_hall_03"
                 amos:keyText="@string/is_card"
-                amos:valueText="@string/click_to_set"
+                amos:valueText="@string/edit_with_no"
                 android:layout_marginTop="@dimen/y50"/>
 
             <com.shixia.diudiuma.view.EditItemView
@@ -148,7 +148,7 @@
                 amos:bottomSplitVisible="false"
                 amos:editItemIcon="@drawable/img_hall_03"
                 amos:keyText="@string/is_certificate"
-                amos:valueText="@string/click_to_set" />
+                amos:valueText="@string/edit_with_no" />
 
             <com.shixia.diudiuma.view.EditItemView
                 android:id="@+id/etv_tel"

@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * Created by AmosShi on 2016/10/24.
- * Description:
+ * Description:PageView的adapter
  */
 
 public class MainPageAdapter extends FragmentPagerAdapter {

@@ -15,9 +15,9 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.shixia.diudiuma.R;
-import com.shixia.diudiuma.bmob.bean.LoserGoodsInfo;
 import com.shixia.diudiuma.mvp.activity.base.BaseActivity;
 import com.shixia.diudiuma.mvp.iview.QuickFindLoserIView;
+import com.shixia.diudiuma.mvp.presenter.PresenterQuick;
 import com.shixia.diudiuma.mvp.presenter.PresenterQuickFindLoser;
 import com.shixia.diudiuma.mvp.presenter.base.BasePresenter;
 import com.shixia.diudiuma.view.CToast;
@@ -26,7 +26,6 @@ import com.shixia.diudiuma.view.EditItemView;
 import java.io.File;
 import java.util.List;
 
-import cn.bmob.v3.BmobUser;
 import me.iwf.photopicker.PhotoPicker;
 import me.iwf.photopicker.PhotoPreview;
 
@@ -38,8 +37,6 @@ import me.iwf.photopicker.PhotoPreview;
 public class QuickFindLoserActivity extends BaseActivity implements QuickFindLoserIView {
 
     private PresenterQuickFindLoser presenter;
-
-    private LoserGoodsInfo loserGoodsInfo;
 
     private ScrollView scrollView;
     private ImageView imgLoseGoodsPic;
@@ -56,22 +53,13 @@ public class QuickFindLoserActivity extends BaseActivity implements QuickFindLos
     private EditText etDescribe;
     private Button btnSubmit;
 
-    public static final int EDIT_GOODS_NAME_REQUEST_CODE = 0x001;
-    public static final int EDIT_GOODS_DATE_REQUEST_CODE = 0x002;
-    public static final int EDIT_GOODS_ADDRESS_REQUEST_CODE = 0x003;
-//    public static final int EDIT_GOODS_REWARD_REQUEST_CODE = 0x004;
-    public static final int EDIT_GOODS_IS_CARD_REQUEST_CODE = 0x005;
-    public static final int EDIT_GOODS_IS_CERTIFICATE_REQUEST_CODE = 0x006;
-    public static final int EDIT_GOODS_TEL_REQUEST_CODE = 0x007;
-    public static final int EDIT_GOODS_WECHAT_REQUEST_CODE = 0x008;
-    public static final int EDIT_GOODS_QQ_REQUEST_CODE = 0x009;
     private Uri uri;
 
     @Override
     protected void initContentView() {
         setContentView(R.layout.activity_quick_find_loser_page);
 
-        scrollView = (ScrollView)findViewById(R.id.sv_scroll_view);
+        scrollView = (ScrollView) findViewById(R.id.sv_scroll_view);
 
         imgLoseGoodsPic = (ImageView) findViewById(R.id.img_lose_goods_pic);
         btnChangePic = (Button) findViewById(R.id.btn_change_pic);
@@ -87,15 +75,6 @@ public class QuickFindLoserActivity extends BaseActivity implements QuickFindLos
         etDescribe = (EditText) findViewById(R.id.et_describe);
         btnSubmit = (Button) findViewById(R.id.btn_submit);
 
-        // TODO: 2016/10/28 点击加号先判断是否登录（判断是否需要，如果无需登录可以不登录）
-        loserGoodsInfo = new LoserGoodsInfo();
-        //如果已经登录过了，添加查询条件用户名，以后可以通过用户名查询发布信息
-        if (BmobUser.getCurrentUser() != null) {
-            loserGoodsInfo.setPublisherName(BmobUser.getCurrentUser().getUsername());   //未登录的时候不可设置
-        }
-        loserGoodsInfo.setType(2);      //该界面发布的为寻物启事
-        loserGoodsInfo.setGoodsTag("这是#物品#标签");
-        loserGoodsInfo.setDiscribe("望失主联系本人 ^_^ ");
     }
 
     @Override
@@ -113,60 +92,64 @@ public class QuickFindLoserActivity extends BaseActivity implements QuickFindLos
         btnChangePic.setOnClickListener(v -> presenter.selectPic());
         imgLoseGoodsPic.setOnClickListener(v -> presenter.toPreviewPic());
 
-        etvName.setOnEditItemClickListener(() -> presenter.toEditInfoPage(EDIT_GOODS_NAME_REQUEST_CODE, etvName.getTvItemValue(),
+        etvName.setOnEditItemClickListener(() -> presenter.toEditInfoPage(PresenterQuick.EDIT_GOODS_NAME_REQUEST_CODE, etvName.getTvItemValue(),
                 "修改品名", false, "您拾到的物品名称", "物品名称请尽量简洁明了，如钱包，钥匙", R.drawable.img_hall_02));
-        etvDate.setOnEditItemClickListener(() -> presenter.toEditInfoPage(EDIT_GOODS_DATE_REQUEST_CODE, etvDate.getTvItemValue(),
+        etvDate.setOnEditItemClickListener(() -> presenter.toEditInfoPage(PresenterQuick.EDIT_GOODS_DATE_REQUEST_CODE, etvDate.getTvItemValue(),
                 "拾到日期", false, "您拾到的物品丢失日期", "不是今天的日期而是您什么时候拾到了物品的日期，请务必注意哦~", R.drawable.img_hall_03));
-        etvAddress.setOnEditItemClickListener(() -> presenter.toEditInfoPage(EDIT_GOODS_ADDRESS_REQUEST_CODE, etvAddress.getTvItemValue(),
+        etvAddress.setOnEditItemClickListener(() -> presenter.toEditInfoPage(PresenterQuick.EDIT_GOODS_ADDRESS_REQUEST_CODE, etvAddress.getTvItemValue(),
                 "拾到地点", false, "您拾到的物品地点", "请输入您拾到物品的地点，如果不知道，请精确到区", R.drawable.img_hall_04));
-        etvIsCard.setOnEditItemClickListener(() -> presenter.toEditInfoPage(EDIT_GOODS_IS_CARD_REQUEST_CODE, etvIsCard.getTvItemValue(),
-                "是否卡类", false, "拾到物品是否属于卡类", "如果选择了是，我们将会要求您输入其他额外选项，帮助您增加找到失主的几率~", R.drawable.img_hall_04));
-        etvIsCertificate.setOnEditItemClickListener(() -> presenter.toEditInfoPage(EDIT_GOODS_IS_CERTIFICATE_REQUEST_CODE, etvIsCertificate.getTvItemValue(),
-                "是否证件", false, "是否证件类", "如果选择了是，我们将会要求您输入其他额外选项，帮助您增加找到失主的几率~", R.drawable.img_hall_03));
-        etvTel.setOnEditItemClickListener(() -> presenter.toEditInfoPage(EDIT_GOODS_TEL_REQUEST_CODE, etvTel.getTvItemValue(),
+//        etvIsCard.setOnEditItemClickListener(() -> presenter.toEditInfoPage(EDIT_GOODS_IS_CARD_REQUEST_CODE, etvIsCard.getTvItemValue(),
+//                "是否卡类", false, "拾到物品是否属于卡类", "如果选择了是，我们将会要求您输入其他额外选项，帮助您增加找到失主的几率~", R.drawable.img_hall_04));
+//        etvIsCertificate.setOnEditItemClickListener(() -> presenter.toEditInfoPage(EDIT_GOODS_IS_CERTIFICATE_REQUEST_CODE, etvIsCertificate.getTvItemValue(),
+//                "是否证件", false, "是否证件类", "如果选择了是，我们将会要求您输入其他额外选项，帮助您增加找到失主的几率~", R.drawable.img_hall_03));
+
+        etvIsCard.setOnEditItemClickListener(() -> {
+            presenter.setLoserGoodsInfo(PresenterQuick.EDIT_GOODS_IS_CARD_REQUEST_CODE, etvIsCard.getTvItemValue());
+            presenter.changeGoodsType(PresenterQuick.EDIT_GOODS_IS_CARD_REQUEST_CODE, etvIsCard.getTvItemValue());
+        });
+        etvIsCertificate.setOnEditItemClickListener(() -> {
+            presenter.setLoserGoodsInfo(PresenterQuick.EDIT_GOODS_IS_CERTIFICATE_REQUEST_CODE, etvIsCertificate.getTvItemValue());
+            presenter.changeGoodsType(PresenterQuick.EDIT_GOODS_IS_CERTIFICATE_REQUEST_CODE, etvIsCertificate.getTvItemValue());
+        });
+
+        etvTel.setOnEditItemClickListener(() -> presenter.toEditInfoPage(PresenterQuick.EDIT_GOODS_TEL_REQUEST_CODE, etvTel.getTvItemValue(),
                 "我的手机号", false, "您的手机号", "输入手机号能够使失主直接联系您", R.drawable.img_hall_03));
-        etvWechat.setOnEditItemClickListener(() -> presenter.toEditInfoPage(EDIT_GOODS_WECHAT_REQUEST_CODE, etvWechat.getTvItemValue(),
+        etvWechat.setOnEditItemClickListener(() -> presenter.toEditInfoPage(PresenterQuick.EDIT_GOODS_WECHAT_REQUEST_CODE, etvWechat.getTvItemValue(),
                 "我的微信号", false, "您的微信号", "微信号可使失主更加方便的联系您，和您沟通~", R.drawable.img_hall_03));
-        etvQq.setOnEditItemClickListener(() -> presenter.toEditInfoPage(EDIT_GOODS_QQ_REQUEST_CODE, etvQq.getTvItemValue(), "QQ号", false, "您的QQ号", "QQ号可使失主更加方便的联系您，和您沟通~", R.drawable.img_hall_03));
+        etvQq.setOnEditItemClickListener(() -> presenter.toEditInfoPage(PresenterQuick.EDIT_GOODS_QQ_REQUEST_CODE, etvQq.getTvItemValue(), "QQ号", false, "您的QQ号", "QQ号可使失主更加方便的联系您，和您沟通~", R.drawable.img_hall_03));
 
         btnSubmit.setOnClickListener(v -> {
-            loserGoodsInfo.setDiscribe(etDescribe.getText().toString());
-            presenter.submitData(loserGoodsInfo);
+            presenter.setLoserGoodsInfo(PresenterQuick.EDIT_GOODS_DESCRIPTION, etDescribe.getText().toString());
+            presenter.submitData();
         });
     }
 
     @Override
     protected BasePresenter initPresenter() {
-        presenter = new PresenterQuickFindLoser(this, this);
+        if (presenter == null) {
+            presenter = new PresenterQuickFindLoser(this, this);
+        }
         return presenter;
     }
 
     @Override
     public void onChangeValueAfterEdit(int requestCode, String value) {
-        if (requestCode == EDIT_GOODS_NAME_REQUEST_CODE) {
+        if (requestCode == PresenterQuick.EDIT_GOODS_NAME_REQUEST_CODE) {
             etvName.setTvItemValue(value);
-            loserGoodsInfo.setGoodsName(value);
-        } else if (requestCode == EDIT_GOODS_DATE_REQUEST_CODE) {
+        } else if (requestCode == PresenterQuick.EDIT_GOODS_DATE_REQUEST_CODE) {
             etvDate.setTvItemValue(value);
-            loserGoodsInfo.setLoseDate(value);
-        } else if (requestCode == EDIT_GOODS_ADDRESS_REQUEST_CODE) {
+        } else if (requestCode == PresenterQuick.EDIT_GOODS_ADDRESS_REQUEST_CODE) {
             etvAddress.setTvItemValue(value);
-            loserGoodsInfo.setLoseAddress(value);
-        } else if (requestCode == EDIT_GOODS_IS_CARD_REQUEST_CODE) {
+        } else if (requestCode == PresenterQuick.EDIT_GOODS_IS_CARD_REQUEST_CODE) {
             etvIsCard.setTvItemValue(value);
-            loserGoodsInfo.setCard(true);
-        } else if (requestCode == EDIT_GOODS_IS_CERTIFICATE_REQUEST_CODE) {
+        } else if (requestCode == PresenterQuick.EDIT_GOODS_IS_CERTIFICATE_REQUEST_CODE) {
             etvIsCertificate.setTvItemValue(value);
-            loserGoodsInfo.setCredit(false);
-        } else if (requestCode == EDIT_GOODS_TEL_REQUEST_CODE) {
+        } else if (requestCode == PresenterQuick.EDIT_GOODS_TEL_REQUEST_CODE) {
             etvTel.setTvItemValue(value);
-            loserGoodsInfo.setTel(value);
-        } else if (requestCode == EDIT_GOODS_WECHAT_REQUEST_CODE) {
+        } else if (requestCode == PresenterQuick.EDIT_GOODS_WECHAT_REQUEST_CODE) {
             etvWechat.setTvItemValue(value);
-            loserGoodsInfo.setWechat(value);
-        } else if (requestCode == EDIT_GOODS_QQ_REQUEST_CODE) {
+        } else if (requestCode == PresenterQuick.EDIT_GOODS_QQ_REQUEST_CODE) {
             etvQq.setTvItemValue(value);
-            loserGoodsInfo.setQq(value);
         }
     }
 
@@ -194,7 +177,7 @@ public class QuickFindLoserActivity extends BaseActivity implements QuickFindLos
 
             uri = Uri.fromFile(new File(photos.get(0)));
 
-            loserGoodsInfo.setGoodsIcon(photos.get(0));
+            presenter.setLoserGoodsInfo(PresenterQuick.EDIT_GOODS_ICON, photos.get(0));
 
             Glide.with(this)
                     .load(uri)
