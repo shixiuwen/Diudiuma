@@ -1,9 +1,12 @@
 package com.shixia.diudiuma.adapter;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.text.TextUtils;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.jlcf.lib_adapter.base.BaseQuickAdapter;
 import com.jlcf.lib_adapter.base.listener.BaseViewHolder;
 import com.shixia.diudiuma.R;
@@ -24,7 +27,7 @@ import rx.schedulers.Schedulers;
 
 /**
  * Created by AmosShi on 2016/11/1.
- * Description:
+ * Description:失物大厅对应的adapter
  */
 
 public class HallGoodsAdapter extends BaseQuickAdapter<LoserGoodsInfo> {
@@ -32,9 +35,11 @@ public class HallGoodsAdapter extends BaseQuickAdapter<LoserGoodsInfo> {
     //默认图片地址
     private String fileUrl = Constants.defPic;
 
+    private Context context;
 
-    public HallGoodsAdapter(int layoutResId, List<LoserGoodsInfo> data) {
+    public HallGoodsAdapter(int layoutResId, List<LoserGoodsInfo> data, Context context) {
         super(layoutResId, data);
+        this.context = context;
     }
 
     @Override
@@ -42,23 +47,29 @@ public class HallGoodsAdapter extends BaseQuickAdapter<LoserGoodsInfo> {
         String goodsIcon = item.getGoodsIcon();
 
         Observable.create(new Observable.OnSubscribe<String>() {
-                    @Override
-                    public void call(Subscriber<? super String> subscriber) {
-                        if (TextUtils.isEmpty(goodsIcon)) {
-                            subscriber.onNext(fileUrl);
-                        }else {
-                            subscriber.onNext(goodsIcon);
-                        }
-                    }
-                })
+            @Override
+            public void call(Subscriber<? super String> subscriber) {
+                if (TextUtils.isEmpty(goodsIcon)) {
+                    subscriber.onNext(fileUrl);
+                } else {
+                    subscriber.onNext(goodsIcon);
+                }
+            }
+        })
                 .subscribeOn(Schedulers.newThread())
-                .map(this::returnBitmap)
+//                .map(this::returnBitmap)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(bitmap -> {
-                    helper.setImageBitmap(R.id.img_goods_icon, bitmap)
-                            .setText(R.id.tv_goods_name, item.getGoodsName())
+                    helper.setText(R.id.tv_goods_name, item.getGoodsName())
+//                            .setImageBitmap(R.id.img_goods_icon, bitmap)
                             .setText(R.id.tv_goods_lose_address, item.getLoseAddress())
                             .setText(R.id.tv_goods_tag, item.getGoodsTag());
+                    ImageView imgGoodsIcon = helper.getView(R.id.img_goods_icon);
+                    Glide.with(context)
+                            .load(bitmap)
+                            .dontAnimate()
+                            .thumbnail(0.1f)
+                            .into(imgGoodsIcon);
                 });
     }
 

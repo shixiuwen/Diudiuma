@@ -123,7 +123,7 @@ public class MainPageHallFragment extends BaseFragment implements HallIView, Swi
     }
 
     private void initAdapter() {
-        hallGoodsAdapter = new HallGoodsAdapter(R.layout.recy_hall_goods_item, goodsList);
+        hallGoodsAdapter = new HallGoodsAdapter(R.layout.recy_hall_goods_item, goodsList, getActivity());
         rvHall.setAdapter(hallGoodsAdapter);
         addHeaderView();
     }
@@ -184,7 +184,7 @@ public class MainPageHallFragment extends BaseFragment implements HallIView, Swi
         this.goodsList.addAll(loserGoodsInfosList);
 //        hallGoodsAdapter.notifyDataSetChanged();
         rvHall.setAdapter(hallGoodsAdapter);
-        rvHall.scrollBy(0,0);   //刷新后回到顶部
+        rvHall.scrollBy(0, 0);   //刷新后回到顶部
         scrollY = 0;
     }
 

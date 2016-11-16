@@ -36,6 +36,8 @@ public class PresenterQuickFindLoser extends PresenterQuick {
     private QuickFindLoserActivity activity;
     private QuickFindLoserIView iView;
 
+    private LoserGoodsInfo loserGoodsInfo;
+
     public PresenterQuickFindLoser(Context context, BaseIView iView) {
         super(context, iView);
         this.activity = (QuickFindLoserActivity) context;
@@ -47,7 +49,9 @@ public class PresenterQuickFindLoser extends PresenterQuick {
         super.toEditInfoPage(requestCode, defValue, pageTitle, isSureBtnVisible, titleRemind, contentRemind, iconResourceId);
     }
 
-    public void submitData(LoserGoodsInfo loserGoodsInfo) {
+    public void submitData() {
+
+        loserGoodsInfo = getLoserGoodsInfo();
 
         if (TextUtils.isEmpty(loserGoodsInfo.getGoodsName()) || isDefValue(loserGoodsInfo.getGoodsName())) {
             iView.onShowRemind("物品名不可为空");
@@ -73,7 +77,7 @@ public class PresenterQuickFindLoser extends PresenterQuick {
         //判断是否有选择了图片，选择了的话先压缩图片再上传数据，未选择的话直接上传数据
         String goodsIcon = loserGoodsInfo.getGoodsIcon();
         if (TextUtils.isEmpty(goodsIcon)) {
-            submitData(loserGoodsInfo);
+            submitData();
         } else {
             Luban.get(activity)
                     .load(new File(goodsIcon))
@@ -155,10 +159,10 @@ public class PresenterQuickFindLoser extends PresenterQuick {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
+            setLoserGoodsInfo(requestCode,data.getStringExtra("value"));
             iView.onChangeValueAfterEdit(requestCode, data.getStringExtra("value"));
         }
     }
-
 
     @Override
     public void doBizWithPermissionRequest(int resultCode, String[] permissions) {
