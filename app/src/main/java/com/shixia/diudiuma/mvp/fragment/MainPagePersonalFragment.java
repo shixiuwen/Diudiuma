@@ -16,8 +16,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.shixia.diudiuma.R;
-import com.shixia.diudiuma.bmob.bean.DDMUser;
-import com.shixia.diudiuma.common_utils.ImageFactory;
 import com.shixia.diudiuma.mvp.fragment.base.BaseFragment;
 import com.shixia.diudiuma.mvp.iview.PersonalCenterIView;
 import com.shixia.diudiuma.mvp.presenter.PresenterPersonalCenter;
@@ -28,10 +26,6 @@ import com.shixia.diudiuma.view.EditItemView;
 import com.shixia.diudiuma.view.EditLoginInfoView;
 
 import cn.bmob.v3.BmobUser;
-import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by AmosShi on 2016/10/24.
@@ -87,25 +81,6 @@ public class MainPagePersonalFragment extends BaseFragment implements PersonalCe
         eivFeedback = (EditItemView) view.findViewById(R.id.eiv_feedback);
         eivAboutUs = (EditItemView) view.findViewById(R.id.eiv_about_us);
 
-        if (BmobUser.getCurrentUser() != null) {
-            DDMUser currentUser = BmobUser.getCurrentUser(DDMUser.class);
-            tvNickName.setText(currentUser.getUsername());
-            String avatar = currentUser.getAvatar();
-            if (avatar != null) {
-                Observable.create(new Observable.OnSubscribe<Bitmap>() {
-                    @Override
-                    public void call(Subscriber<? super Bitmap> subscriber) {
-                        subscriber.onNext(ImageFactory.returnBitmap(avatar));
-                    }
-                })
-                        .subscribeOn(Schedulers.newThread())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(bitmap -> {
-                            imgCircle.setAvatar(bitmap);
-                        });
-            }
-        }
-
         return view;
     }
 
@@ -136,6 +111,7 @@ public class MainPagePersonalFragment extends BaseFragment implements PersonalCe
         } else {                                                    //如果未登录，显示登录
             btnLoginOrExit.setText("登录");
         }
+        presenter.initPersonalData();
     }
 
     @Override
@@ -260,5 +236,15 @@ public class MainPagePersonalFragment extends BaseFragment implements PersonalCe
         } else {
             btnLoginOrExit.setText("登录");
         }
+    }
+
+    @Override
+    public void onShowUserName(String userName) {
+        tvNickName.setText(userName);
+    }
+
+    @Override
+    public void onShowUserAvatar(Bitmap bitmap) {
+        imgCircle.setAvatar(bitmap);
     }
 }

@@ -16,11 +16,11 @@ import java.net.URL;
 
 /**
  * Created by AmosShi on 2016/10/19.
- * Description: 图片压缩工具类
+ * Description: 图片压缩工具类,已被类Luban替代
  *
  * @link http://blog.csdn.net/buaaroid/article/details/50563982
  */
-
+@Deprecated
 public class ImageFactory {
 
     /**

@@ -1,10 +1,13 @@
 package com.shixia.diudiuma.adapter;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.jlcf.lib_adapter.base.listener.BaseViewHolder;
 import com.shixia.diudiuma.R;
 import com.shixia.diudiuma.bean.Constants;
@@ -31,6 +34,7 @@ import rx.schedulers.Schedulers;
 public class ExpandableItemAdapter extends BaseMultiItemQuickAdapter<MultiItemEntity> {
     private static final String TAG = ExpandableItemAdapter.class.getSimpleName();
 
+    private Context context;
     //默认图片地址
     private String fileUrl = Constants.defPic;
 
@@ -43,8 +47,9 @@ public class ExpandableItemAdapter extends BaseMultiItemQuickAdapter<MultiItemEn
      *
      * @param data A new list is created out of this one to avoid mutable list
      */
-    public ExpandableItemAdapter(List<MultiItemEntity> data) {
+    public ExpandableItemAdapter(List<MultiItemEntity> data, Context context) {
         super(data);
+        this.context = context;
         addItemType(TYPE_LEVEL_0, R.layout.recy_goods_item);
         addItemType(TYPE_LEVEL_1, R.layout.view_goods_detail_item);
     }
@@ -67,12 +72,12 @@ public class ExpandableItemAdapter extends BaseMultiItemQuickAdapter<MultiItemEn
                             }
                         })
                         .subscribeOn(Schedulers.newThread())
-                        .map(this::returnBitmap)
+//                        .map(this::returnBitmap)
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(bitmap -> {
                             holder.setText(R.id.tv_goods_name, lv0.getDdmGoodsName())
                                     .setText(R.id.tv_goods_register_data_title, lv0.getRegisterDate().toString())
-                                    .setImageBitmap(R.id.img_goods_icon, bitmap)
+//                                    .setImageBitmap(R.id.img_goods_icon, bitmap)
                                     .setText(R.id.tv_goods_tag, lv0.getDdmGoodsTag());
                             holder.itemView.setOnClickListener(v -> {
                                 int pos = holder.getAdapterPosition();
@@ -83,6 +88,11 @@ public class ExpandableItemAdapter extends BaseMultiItemQuickAdapter<MultiItemEn
                                     expand(pos);
                                 }
                             });
+                            //设置缩略图
+                            Glide.with(context).load(bitmap)
+                                    .dontAnimate()
+                                    .thumbnail(0.1f)
+                                    .into((ImageView) holder.getView(R.id.img_goods_icon));
                         });
                 break;
             case TYPE_LEVEL_1:

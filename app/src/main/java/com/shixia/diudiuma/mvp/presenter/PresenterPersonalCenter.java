@@ -1,10 +1,12 @@
 package com.shixia.diudiuma.mvp.presenter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.shixia.diudiuma.bmob.bean.DDMUser;
+import com.shixia.diudiuma.common_utils.ImageFactory;
 import com.shixia.diudiuma.common_utils.L;
 import com.shixia.diudiuma.mvp.activity.AboutUsActivity;
 import com.shixia.diudiuma.mvp.activity.FeedbackActivity;
@@ -18,6 +20,10 @@ import com.shixia.diudiuma.view.CToast;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
+import rx.Observable;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by AmosShi on 2016/10/24.
@@ -33,6 +39,30 @@ public class PresenterPersonalCenter extends BasePresenter {
         super(context, iView);
         this.activity = (MainActivity_2) context;
         this.iView = (PersonalCenterIView) iView;
+    }
+
+    /**
+     * 进入页面的时候初始化界面信息，用户名，头像等
+     */
+    public void initPersonalData() {
+        if (BmobUser.getCurrentUser() != null) {
+            DDMUser currentUser = BmobUser.getCurrentUser(DDMUser.class);
+            iView.onShowUserName(currentUser.getUsername());
+            String avatar = currentUser.getAvatar();
+            if (avatar != null) {
+                Observable.create(new Observable.OnSubscribe<Bitmap>() {
+                    @Override
+                    public void call(Subscriber<? super Bitmap> subscriber) {
+                        subscriber.onNext(ImageFactory.returnBitmap(avatar));
+                    }
+                })
+                        .subscribeOn(Schedulers.computation())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(bitmap -> {
+                            iView.onShowUserAvatar(bitmap);
+                        });
+            }
+        }
     }
 
     /**

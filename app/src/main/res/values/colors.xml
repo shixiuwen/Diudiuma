@@ -11,6 +11,8 @@
     <color name="color_green_B">#288fb7</color>
     <color name="color_green_A_press">#0b6b5c</color>
 
+    <color name="color_white_A">#ffffff</color>
+
     <color name="color_blue_A">#224364</color>
 
     <color name="color_blue_Z">#123</color>
@@ -25,5 +27,8 @@
 
     <!--t通用灰色分割线-->
     <color name="color_split_gray">#bcbcbc</color>
+
+    <!--页面通用灰色背景-->
+    <color name="color_page_bg">#f5f5f5</color>
 
 </resources>

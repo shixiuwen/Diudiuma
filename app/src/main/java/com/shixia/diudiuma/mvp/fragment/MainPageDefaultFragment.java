@@ -91,7 +91,7 @@ public class MainPageDefaultFragment extends BaseFragment implements DefaultFrag
      * 初始化adapter
      */
     private void initAdapter() {
-        expandableItemAdapter = new ExpandableItemAdapter(lever01List);
+        expandableItemAdapter = new ExpandableItemAdapter(lever01List,getActivity());
         expandableItemAdapter.openLoadMore(5);
         expandableItemAdapter.openLoadAnimation();
         recyclerView.setAdapter(expandableItemAdapter);

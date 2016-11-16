@@ -4,15 +4,14 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Environment;
 import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.shixia.diudiuma.MyApplication;
 import com.shixia.diudiuma.bmob.bean.GoodsIcon;
 import com.shixia.diudiuma.bmob.bean.LoserGoodsInfo;
-import com.shixia.diudiuma.common_utils.ImageFactory;
 import com.shixia.diudiuma.common_utils.L;
+import com.shixia.diudiuma.common_utils.Luban;
 import com.shixia.diudiuma.common_utils.PermissionUtils;
 import com.shixia.diudiuma.mvp.activity.QuickFindLoserActivity;
 import com.shixia.diudiuma.mvp.iview.QuickFindLoserIView;
@@ -21,19 +20,11 @@ import com.shixia.diudiuma.view.CToast;
 import com.shixia.diudiuma.view.LoadingDialog;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UploadFileListener;
 import me.iwf.photopicker.PhotoPicker;
-import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by AmosShi on 2016/10/27.
@@ -79,32 +70,36 @@ public class PresenterQuickFindLoser extends PresenterQuick {
         //2.上传图片
         //3.提交数据
 
-        Observable.create(new Observable.OnSubscribe<List<String>>() {
-            @Override
-            public void call(Subscriber<? super List<String>> subscriber) {
-                String goodsIcon = loserGoodsInfo.getGoodsIcon();
-                if (TextUtils.isEmpty(goodsIcon)) {
-                    subscriber.onNext(null);
-                } else {
-                    ArrayList<String> list = new ArrayList<String>();
-                    list.add(loserGoodsInfo.getGoodsIcon());
-                    subscriber.onNext(getCopyPhotoUriList(list));
-                }
-            }
-        })
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<List<String>>() {
-                    @Override
-                    public void call(List<String> stringList) {
-                        //如果没有选择图片，直接上传数据，如果修改过图片，先上传图片，获取到图片保存地址再上传数据
-                        if (stringList == null || stringList.size() == 0) {
-                            submitDataWithNoPic(loserGoodsInfo);
-                        } else {
-                            submitPic(loserGoodsInfo.getGoodsIcon(), loserGoodsInfo);
+        //判断是否有选择了图片，选择了的话先压缩图片再上传数据，未选择的话直接上传数据
+        String goodsIcon = loserGoodsInfo.getGoodsIcon();
+        if (TextUtils.isEmpty(goodsIcon)) {
+            submitData(loserGoodsInfo);
+        } else {
+            Luban.get(activity)
+                    .load(new File(goodsIcon))
+                    .putGear(Luban.THIRD_GEAR)
+                    .launch(new Luban.OnCompressListener() {
+                        @Override
+                        public void onStart() {
+                            MyApplication.UIHandler.post(() -> LoadingDialog.getInstance(activity, "文件压缩中").show());
                         }
-                    }
-                });
+
+                        @Override
+                        public void onSuccess(File file) {
+                            MyApplication.UIHandler.post(() -> {
+                                LoadingDialog.getInstance(activity, "文件压缩结束").dismiss();
+                                //2.上传图片,上传成功之后
+                                submitPic(file.getAbsolutePath(),loserGoodsInfo);
+                            });
+
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+
+                        }
+                    });
+        }
     }
 
     private void submitDataWithNoPic(LoserGoodsInfo goodsInfo) {
@@ -199,65 +194,5 @@ public class PresenterQuickFindLoser extends PresenterQuick {
      */
     private boolean isDefValue(String s) {
         return TextUtils.equals(s, "未知") || TextUtils.equals(s, "点击添加") || TextUtils.equals(s, "点击设置");
-    }
-
-
-    /**
-     * ################################# 图片操作 ###################################
-     */
-
-    private List<String> getCopyPhotoUriList(List<String> filePath) {
-        MyApplication.UIHandler.post(() -> LoadingDialog.getInstance(activity, "文件压缩中").show());
-        List<String> picUriList = new ArrayList<>();
-        if (filePath == null || filePath.size() == 0) {
-            return null;
-        }
-        for (String s : filePath) {
-            // TODO: 2016/10/19 利用线程池压缩图片
-            try {
-                String picUri = copyBitmap(s);
-                picUriList.add(picUri);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        MyApplication.UIHandler.post(() -> LoadingDialog.getInstance(activity, "文件压缩结束").dismiss());
-        return picUriList;
-    }
-
-    //创建Bitmap副本用于压缩，压缩完成之后删除
-    private String copyBitmap(String filePath) throws IOException {
-        //得到文件后缀
-        L.i("fiel path", filePath);
-        String[] split = filePath.split("\\.");
-        String fileType = split[split.length - 1];
-        if (TextUtils.isEmpty(fileType)) {
-            fileType = "jpg";
-        }
-
-        //copy的文件名及文件路径
-        String copyFileName = String.valueOf(System.currentTimeMillis());
-        String newFilePath = Environment.getExternalStorageDirectory() + "/" + copyFileName + "." + fileType;
-
-        //压缩图片
-        ImageFactory imageFactory = new ImageFactory();
-        imageFactory.compressAndGenImage(filePath, newFilePath, 200, false);
-        //返回新的图片地址List
-        return newFilePath;
-
-        /*FileInputStream fis = new FileInputStream(filePath);
-        BufferedInputStream bufis = new BufferedInputStream(fis);
-        FileOutputStream fos = new FileOutputStream(newFilePath);
-        //复制后的文件全名
-        L.i("copy path",newFilePath);
-
-        BufferedOutputStream bufos = new BufferedOutputStream(fos);
-
-        int len ;
-        while ((len = bufis.read()) != -1) {
-            bufos.write(len);
-        }
-        bufis.close();
-        bufos.close();*/
     }
 }

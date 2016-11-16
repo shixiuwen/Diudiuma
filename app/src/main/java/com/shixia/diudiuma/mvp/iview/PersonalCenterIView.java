@@ -1,5 +1,7 @@
 package com.shixia.diudiuma.mvp.iview;
 
+import android.graphics.Bitmap;
+
 import com.shixia.diudiuma.mvp.iview.base.BaseIView;
 
 /**
@@ -28,4 +30,16 @@ public interface PersonalCenterIView extends BaseIView{
     void onDismissDialog();
 
     void onChangeLoginStatus(boolean isLogin);
+
+    /**
+     * 显示用户昵称
+     * @param userName  用户昵称
+     */
+    void onShowUserName(String userName);
+
+    /**
+     * 显示用户头像
+     * @param bitmap    用户头像
+     */
+    void onShowUserAvatar(Bitmap bitmap);
 }

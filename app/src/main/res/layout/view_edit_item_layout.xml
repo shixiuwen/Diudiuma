@@ -4,7 +4,7 @@
     android:layout_height="@dimen/y112"
     android:orientation="vertical"
     android:gravity="center_vertical"
-    android:background="#d2dedede"
+    android:background="@color/color_white_A"
     android:id="@+id/ll_edit_item">
 
     <View
