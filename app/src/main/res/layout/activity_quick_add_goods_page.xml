@@ -231,26 +231,6 @@
                     android:layout_height="wrap_content"
                     android:text="暂无标签"/>
 
-                <com.shixia.diudiuma.view.TagTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="暂无啥地方合作标签"/>
-
-                <com.shixia.diudiuma.view.TagTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="暂无 地方标签"/>
-
-                <com.shixia.diudiuma.view.TagTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="暂无的标签"/>
-
-                <com.shixia.diudiuma.view.TagTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="暂无标的风格都是签"/>
-
             </com.shixia.diudiuma.view.FlowLayoutTag>
 
             <!--添加物品描述-->

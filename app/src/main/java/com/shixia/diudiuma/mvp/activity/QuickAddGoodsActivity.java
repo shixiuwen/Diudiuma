@@ -67,7 +67,6 @@ public class QuickAddGoodsActivity extends BaseActivity implements QuickAddGoods
 
     private Uri uri;
     private String strDDM;
-    private String tags;    //with "#"
 
     @Override
     protected void initContentView() {
