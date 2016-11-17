@@ -76,6 +76,6 @@
     <string name="my_find_loser">我的失物招领</string>
     <string name="english_name">英文名</string>
     <string name="email">邮箱</string>
-    <string name="edit_with_no">否|点击更改</string>
-    <string name="edit_with_yes">是|点击更改</string>
+    <string name="edit_with_no">否 | 点击更改</string>
+    <string name="edit_with_yes">是 | 点击更改</string>
 </resources>
