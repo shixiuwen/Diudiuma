@@ -41,7 +41,7 @@
     <string name="no_data">暂无数据</string>
     <string name="load_failure">加载失败，点击重试</string>
     <string name="find_loser">失物招领</string>
-    <string name="register_goods">注册物品</string>
+    <string name="register_goods">添加物品</string>
     <string name="scan_ddm">扫描DDM</string>
     <string name="find_people">寻人启示</string>
     <string name="find_card">卡类</string>
@@ -59,7 +59,7 @@
     <string name="default_address">武汉</string>
     <string name="reward">悬赏金额</string>
     <string name="click_to_add">点击添加</string>
-    <string name="be_sure_to_register">确认注册</string>
+    <string name="be_sure_to_register">确认添加</string>
     <string name="click_to_decode_ddm">点击生成丢丢码</string>
     <string name="ddm">丢丢码</string>
     <string name="connect_loser">联系失主</string>
@@ -76,6 +76,8 @@
     <string name="my_find_loser">我的失物招领</string>
     <string name="english_name">英文名</string>
     <string name="email">邮箱</string>
-    <string name="edit_with_no">否|点击更改</string>
-    <string name="edit_with_yes">是|点击更改</string>
+    <string name="edit_with_no">否 | 点击更改</string>
+    <string name="edit_with_yes">是 | 点击更改</string>
+    <string name="click_to_edit">点击修改 | 添加</string>
+    <string name="goods_description">物品描述</string>
 </resources>

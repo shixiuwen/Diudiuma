@@ -229,4 +229,12 @@ public class PresenterQuickAddGoods extends PresenterQuick {
         iView.onShowDecodeResult(image);
 
     }
+
+    /**
+     * 跳转到编辑标签页
+     * @param tags  当前标签
+     */
+    public void toAddTagPage(String tags) {
+        super.toAddTagPage(tags);
+    }
 }

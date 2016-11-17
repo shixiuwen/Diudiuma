@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:amos="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.shixia.diudiuma.view.CommonTitleView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ctv_title_view"/>
+
+    <com.shixia.diudiuma.view.FlowLayoutTag
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/flt_tags"
+        android:background="@color/color_white_A"
+        android:paddingLeft="@dimen/x50"
+        android:paddingRight="@dimen/x50"
+        android:paddingTop="@dimen/y50"
+        android:paddingBottom="@dimen/y50">
+
+    </com.shixia.diudiuma.view.FlowLayoutTag>
+
+</LinearLayout>

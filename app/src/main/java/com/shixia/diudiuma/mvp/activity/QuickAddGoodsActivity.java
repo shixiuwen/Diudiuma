@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -21,6 +22,8 @@ import com.shixia.diudiuma.mvp.presenter.PresenterQuickAddGoods;
 import com.shixia.diudiuma.mvp.presenter.base.BasePresenter;
 import com.shixia.diudiuma.view.CToast;
 import com.shixia.diudiuma.view.EditItemView;
+import com.shixia.diudiuma.view.FlowLayoutTag;
+import com.shixia.diudiuma.view.TagTextView;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -59,9 +62,12 @@ public class QuickAddGoodsActivity extends BaseActivity implements QuickAddGoods
     private ImageView imgGoodsTag;
     private EditText etDescribe;
     private Button btnSubmit;
+    private FlowLayoutTag fltTags;
+    private TextView tvTag;
 
     private Uri uri;
     private String strDDM;
+    private String tags;    //with "#"
 
     @Override
     protected void initContentView() {
@@ -84,6 +90,10 @@ public class QuickAddGoodsActivity extends BaseActivity implements QuickAddGoods
         imgGoodsTag = (ImageView) findViewById(R.id.img_goods_tag);
         etDescribe = (EditText) findViewById(R.id.et_describe);
         btnSubmit = (Button) findViewById(R.id.btn_submit);
+        fltTags = (FlowLayoutTag) findViewById(R.id.flt_tags);
+        fltTags.setHorizontalSpacing(getResources().getDimension(R.dimen.x24));
+        fltTags.setVerticalSpacing(getResources().getDimension(R.dimen.y24));
+        tvTag = (TextView) findViewById(R.id.tv_edit_tags);
 
         //以下为部分默认项：1.注册日期自动生成 2.丢丢码自动生成
         Date date = new Date();
@@ -139,6 +149,8 @@ public class QuickAddGoodsActivity extends BaseActivity implements QuickAddGoods
             presenter.submitData();
         });
 
+        tvTag.setOnClickListener(v -> presenter.toAddTagPage(presenter.getLoserGoodsInfo().getGoodsTag()));
+
     }
 
     @Override
@@ -146,7 +158,7 @@ public class QuickAddGoodsActivity extends BaseActivity implements QuickAddGoods
         if (presenter == null) {
             presenter = new PresenterQuickAddGoods(this, this);
         }
-        presenter.setLoserGoodsInfo(PresenterQuick.EDIT_GOODS_DDM,strDDM);  //设置DDM
+        presenter.setLoserGoodsInfo(PresenterQuick.EDIT_GOODS_DDM, strDDM);  //设置DDM
         return presenter;
     }
 
@@ -171,6 +183,8 @@ public class QuickAddGoodsActivity extends BaseActivity implements QuickAddGoods
             etvWechat.setTvItemValue(value);
         } else if (requestCode == PresenterQuick.EDIT_GOODS_QQ_REQUEST_CODE) {
             etvQq.setTvItemValue(value);
+        } else if(requestCode == PresenterQuick.EDIT_GOODS_TAG){
+            presenter.resetTag(value);
         }
     }
 
@@ -242,5 +256,19 @@ public class QuickAddGoodsActivity extends BaseActivity implements QuickAddGoods
     @Override
     public void onFinish() {
         finish();
+    }
+
+    @Override
+    public void onNewTagsAdded(String tags) {
+        //先移除所有标签再添加更改后的标签
+        fltTags.removeAllViews();
+        if (tags != null) {
+            String[] stringList = tags.split("#");
+            for (String aStringList : stringList) {
+                TagTextView tagTextView = new TagTextView(QuickAddGoodsActivity.this);
+                tagTextView.setText(aStringList);
+                fltTags.addView(tagTextView);
+            }
+        }
     }
 }

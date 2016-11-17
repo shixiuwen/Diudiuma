@@ -123,6 +123,10 @@
         <activity android:name=".mvp.activity.EditPersonalInfoActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"/>
+
+        <activity android:name=".mvp.activity.EditTagsPageActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
