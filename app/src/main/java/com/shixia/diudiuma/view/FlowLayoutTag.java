@@ -1,81 +1,107 @@
 package com.shixia.diudiuma.view;
 
 import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.View;
-
-import java.util.ArrayList;
-import java.util.List;
+import android.view.ViewGroup;
 
 /**
  * Created by AmosShi on 2016/11/16.
- * Description:
+ * Description:流式标签布局
+ *
+ * @link http://www.kymjs.com/code/2015/06/06/01/
  */
 
-public class FlowLayoutTag extends View {
+public class FlowLayoutTag extends ViewGroup {
 
-    private Paint strokePaint;
-    private TextPaint textPaint;
-
-    private List<String> tagList = new ArrayList<String>();
-    private int heightPixels;
-    private int widthPixels;
-
-    private int leftSpace = widthPixels;
-    private int baseLine = 40;  //用户定义绘制的文字底部坐标，随着不断换行，该值不断变大
+    private float mVerticalSpacing; //每个item纵向间距
+    private float mHorizontalSpacing; //每个item横向间距
 
     public FlowLayoutTag(Context context) {
-//        super(context);
-        this(context, null);
+        super(context);
     }
-
     public FlowLayoutTag(Context context, AttributeSet attrs) {
         super(context, attrs);
-        initPaint();
-
-        heightPixels = getResources().getDisplayMetrics().heightPixels;
-        widthPixels = getResources().getDisplayMetrics().widthPixels;
     }
-
-    private void initPaint() {
-        strokePaint = new Paint();
-        strokePaint.setColor(Color.argb(255, 0, 0, 0));
-        strokePaint.setAntiAlias(true);   //抗锯齿
-        strokePaint.setDither(true);      //防抖动
-
-        textPaint = new TextPaint();
-        textPaint.setColor(Color.argb(255, 255, 0, 0));
-        textPaint.setTextSize(36);
-        textPaint.setAntiAlias(true);
-        textPaint.setDither(true);
+    public void setHorizontalSpacing(float pixelSize) {
+        mHorizontalSpacing = pixelSize;
     }
-
-    public void setTagArray(List<String> stringList) {
-        tagList = stringList;   //得到标签内容 e.g.{红色，方形，高大}
-
-        invalidate();
+    public void setVerticalSpacing(float pixelSize) {
+        mVerticalSpacing = pixelSize;
     }
-
-    @Override
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
-        //注意，每绘制一个标签，添加其触控区域到list,用于点击不同标签的时候判断点击的是哪一个标签
-        for (int i = 0; i < tagList.size(); i++) {
-            float tagWidth = textPaint.measureText(tagList.get(i)) + 36; //获得绘制该Tag所需的屏幕宽度
-            if (leftSpace < tagWidth){  //绘制到下一行
-
-            }else {
-
-            }
-        }
-    }
-
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-//        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        int selfWidth = resolveSize(0, widthMeasureSpec);
+
+        int paddingLeft = getPaddingLeft();
+        int paddingTop = getPaddingTop();
+        int paddingRight = getPaddingRight();
+        int paddingBottom = getPaddingBottom();
+
+        int childLeft = paddingLeft;
+        int childTop = paddingTop;
+        int lineHeight = 0;
+
+        //通过计算每一个子控件的高度，得到自己的高度
+        for (int i = 0, childCount = getChildCount(); i < childCount; ++i) {
+            View childView = getChildAt(i);
+            LayoutParams childLayoutParams = childView.getLayoutParams();
+            childView.measure(
+                    getChildMeasureSpec(widthMeasureSpec, paddingLeft + paddingRight,
+                            childLayoutParams.width),
+                    getChildMeasureSpec(heightMeasureSpec, paddingTop + paddingBottom,
+                            childLayoutParams.height));
+            int childWidth = childView.getMeasuredWidth();
+            int childHeight = childView.getMeasuredHeight();
+
+            lineHeight = Math.max(childHeight, lineHeight);
+
+            if (childLeft + childWidth + paddingRight > selfWidth) {
+                childLeft = paddingLeft;
+                childTop += mVerticalSpacing + lineHeight;
+                lineHeight = childHeight;
+            } else {
+                childLeft += childWidth + mHorizontalSpacing;
+            }
+        }
+
+        int wantedHeight = childTop + lineHeight + paddingBottom;
+        setMeasuredDimension(selfWidth, resolveSize(wantedHeight, heightMeasureSpec));
+    }
+
+    @Override
+    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+        int myWidth = r - l;
+
+        int paddingLeft = getPaddingLeft();
+        int paddingTop = getPaddingTop();
+        int paddingRight = getPaddingRight();
+
+        int childLeft = paddingLeft;
+        int childTop = paddingTop;
+
+        int lineHeight = 0;
+
+        //根据子控件的宽高，计算子控件应该出现的位置。
+        for (int i = 0, childCount = getChildCount(); i < childCount; ++i) {
+            View childView = getChildAt(i);
+
+            if (childView.getVisibility() == View.GONE) {
+                continue;
+            }
+
+            int childWidth = childView.getMeasuredWidth();
+            int childHeight = childView.getMeasuredHeight();
+
+            lineHeight = Math.max(childHeight, lineHeight);
+
+            if (childLeft + childWidth + paddingRight > myWidth) {
+                childLeft = paddingLeft;
+                childTop += mVerticalSpacing + lineHeight;
+                lineHeight = childHeight;
+            }
+            childView.layout(childLeft, childTop, childLeft + childWidth, childTop + childHeight);
+            childLeft += childWidth + mHorizontalSpacing;
+        }
     }
 }

@@ -22,4 +22,6 @@ public interface QuickIView extends BaseIView {
      */
     void onShowRemind(String content);
 
+    void onNewTagsAdded(String tags);
+
 }

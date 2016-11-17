@@ -189,6 +189,11 @@ public class QuickFindGoodsActivity extends BaseActivity implements QuickFindGoo
     }
 
     @Override
+    public void onNewTagsAdded(String tags) {
+
+    }
+
+    @Override
     public void onShowPreviewPop() {
         PopupWindow popupWindow = new PopupWindow(this);
         View view = LayoutInflater.from(this).inflate(R.layout.view_pop_pic_preview_view, null);

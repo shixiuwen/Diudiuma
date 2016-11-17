@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <corners android:radius="@dimen/y100"/> <!-- radius 标注特别大可实现全圆角-->
+            <stroke android:color="@color/color_green_A" android:width="@dimen/x2"/>
+            <solid android:color="#29e5e5e6"/>
+        </shape>
+    </item>
+
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:radius="@dimen/y100"/>
+            <stroke android:color="@color/color_green_A" android:width="@dimen/x2"/>
+            <solid android:color="#29e5e5e6"/>
+        </shape>
+    </item>
+
+</selector>
