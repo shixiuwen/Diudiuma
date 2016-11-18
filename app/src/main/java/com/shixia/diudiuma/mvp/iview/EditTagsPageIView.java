@@ -37,4 +37,9 @@ public interface EditTagsPageIView extends BaseIView {
      * @param content 提示内容
      */
     void onShowRemind(String content);
+
+    /**
+     * 添加标签过后收起软键盘
+     */
+    void onAddTagFinish();
 }

@@ -212,14 +212,18 @@ public class QuickFindGoodsActivity extends BaseActivity implements QuickFindGoo
     @Override
     public void onNewTagsAdded(String tags) {
         //先移除所有标签再添加更改后的标签
+        fltTags.removeAllViews();
         if (!TextUtils.isEmpty(tags)) {
-            fltTags.removeAllViews();
             String[] stringList = tags.split("#");
             for (String aStringList : stringList) {
                 TagTextView tagTextView = new TagTextView(QuickFindGoodsActivity.this);
                 tagTextView.setText(aStringList);
                 fltTags.addView(tagTextView);
             }
+        }else {
+            TagTextView tagTextView = new TagTextView(QuickFindGoodsActivity.this);
+            tagTextView.setText("暂无标签");
+            fltTags.addView(tagTextView);
         }
     }
 

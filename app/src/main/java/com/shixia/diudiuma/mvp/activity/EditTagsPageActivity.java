@@ -138,4 +138,10 @@ public class EditTagsPageActivity extends BaseActivity implements EditTagsPageIV
     public void onShowRemind(String content) {
         CToast.makeCText(this, content, Toast.LENGTH_SHORT).show();
     }
+
+    @Override
+    public void onAddTagFinish() {
+        SystemUtils.getInstance(this).hideOrShowSoftInput(etCustomTag);
+        etCustomTag.setText(null);  //清空输入框
+    }
 }
