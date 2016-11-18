@@ -46,7 +46,7 @@ public class PresenterEditTagsPage extends BasePresenter {
      */
     public void initTag(String tag) {
         //初始化当前物品标签数据
-        if (tag != null) {
+        if (!TextUtils.isEmpty(tag)) {
             String[] tagsArr = tag.split("#");
             if (tagsArr.length > 0) {
                 for (String aTagsArr : tagsArr) {
@@ -58,7 +58,7 @@ public class PresenterEditTagsPage extends BasePresenter {
 
         //初始化常用物品标签数据
         String goodsTags = SpUtil.getString(activity, "goods_always_used_tags", null);
-        if (goodsTags == null) {
+        if (TextUtils.isEmpty(goodsTags)) {
             SpUtil.put(activity, "goods_always_used_tags", Constants.defaultTag);
             goodsTags = Constants.defaultTag;   //当前标签为空，初始化默认标签并存储到本地，只有第一次使用该功能的时候会执行该操作
         }
@@ -76,7 +76,7 @@ public class PresenterEditTagsPage extends BasePresenter {
      * @param newTag 新的标签
      */
     public void addTag(String newTag) {
-        if (newTag != null) {
+        if (!TextUtils.isEmpty(newTag)) {
             if(tagsList.contains(newTag)){
                 iView.onShowRemind("您已添加过该标签！");
                 return;
@@ -121,7 +121,7 @@ public class PresenterEditTagsPage extends BasePresenter {
      */
     public void addNewTag(Editable tagText) {
         isAlredyExit = false;
-        if (tagText == null) {
+        if (tagText == null||TextUtils.isEmpty(tagText.toString())) {
             iView.onShowRemind(activity.getString(R.string.tag_canot_null));
             return;
         }

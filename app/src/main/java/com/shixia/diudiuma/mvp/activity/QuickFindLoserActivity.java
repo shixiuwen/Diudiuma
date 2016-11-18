@@ -2,6 +2,7 @@ package com.shixia.diudiuma.mvp.activity;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -22,6 +24,8 @@ import com.shixia.diudiuma.mvp.presenter.PresenterQuickFindLoser;
 import com.shixia.diudiuma.mvp.presenter.base.BasePresenter;
 import com.shixia.diudiuma.view.CToast;
 import com.shixia.diudiuma.view.EditItemView;
+import com.shixia.diudiuma.view.FlowLayoutTag;
+import com.shixia.diudiuma.view.TagTextView;
 
 import java.io.File;
 import java.util.List;
@@ -53,6 +57,9 @@ public class QuickFindLoserActivity extends BaseActivity implements QuickFindLos
     private EditText etDescribe;
     private Button btnSubmit;
 
+    private FlowLayoutTag fltTags;
+    private TextView tvTag;
+
     private Uri uri;
 
     @Override
@@ -74,6 +81,11 @@ public class QuickFindLoserActivity extends BaseActivity implements QuickFindLos
         imgGoodsTag = (ImageView) findViewById(R.id.img_goods_tag);
         etDescribe = (EditText) findViewById(R.id.et_describe);
         btnSubmit = (Button) findViewById(R.id.btn_submit);
+
+        fltTags = (FlowLayoutTag) findViewById(R.id.flt_tags);
+        fltTags.setHorizontalSpacing(getResources().getDimension(R.dimen.x24));
+        fltTags.setVerticalSpacing(getResources().getDimension(R.dimen.y24));
+        tvTag = (TextView) findViewById(R.id.tv_edit_tags);
 
     }
 
@@ -122,6 +134,8 @@ public class QuickFindLoserActivity extends BaseActivity implements QuickFindLos
             presenter.setLoserGoodsInfo(PresenterQuick.EDIT_GOODS_DESCRIPTION, etDescribe.getText().toString());
             presenter.submitData();
         });
+
+        tvTag.setOnClickListener(v -> presenter.toAddTagPage(presenter.getLoserGoodsInfo().getGoodsTag()));
     }
 
     @Override
@@ -150,6 +164,8 @@ public class QuickFindLoserActivity extends BaseActivity implements QuickFindLos
             etvWechat.setTvItemValue(value);
         } else if (requestCode == PresenterQuick.EDIT_GOODS_QQ_REQUEST_CODE) {
             etvQq.setTvItemValue(value);
+        } else if (requestCode == PresenterQuick.EDIT_GOODS_TAG) {
+            presenter.resetTag(value);
         }
     }
 
@@ -195,8 +211,22 @@ public class QuickFindLoserActivity extends BaseActivity implements QuickFindLos
     }
 
     @Override
-    public void onNewTagsAdded(String tags) {
+    public void onFinish() {
+        finish();
+    }
 
+    @Override
+    public void onNewTagsAdded(String tags) {
+        //先移除所有标签再添加更改后的标签
+        if (!TextUtils.isEmpty(tags)) {
+            fltTags.removeAllViews();
+            String[] stringList = tags.split("#");
+            for (String aStringList : stringList) {
+                TagTextView tagTextView = new TagTextView(QuickFindLoserActivity.this);
+                tagTextView.setText(aStringList);
+                fltTags.addView(tagTextView);
+            }
+        }
     }
 
     @Override

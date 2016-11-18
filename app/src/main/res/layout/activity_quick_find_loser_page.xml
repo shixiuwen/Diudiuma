@@ -128,25 +128,56 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/y50">
+                android:layout_marginTop="@dimen/y50"
+                android:background="@color/color_white_A">
 
                 <ImageView
                     android:layout_width="@dimen/x50"
                     android:layout_height="@dimen/y50"
                     android:layout_marginLeft="@dimen/x24"
                     android:id="@+id/img_goods_tag"
-                    android:background="@drawable/img_hall_01"/>
+                    android:background="@drawable/img_hall_01"
+                    android:layout_marginTop="@dimen/y24"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:id="@+id/tv_tag"
                     android:text="@string/goods_tag"
                     android:textSize="@dimen/x36"
                     android:layout_alignBottom="@+id/img_goods_tag"
                     android:layout_toRightOf="@+id/img_goods_tag"
                     android:layout_marginLeft="@dimen/x24"/>
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_edit_tags"
+                    android:text="@string/click_to_edit"
+                    android:textSize="@dimen/x36"
+                    android:textColor="@color/colorAccent"
+                    android:layout_alignBottom="@+id/tv_tag"
+                    android:layout_toRightOf="@+id/tv_tag"
+                    android:layout_marginLeft="@dimen/x24"/>
+
             </RelativeLayout>
+
+            <com.shixia.diudiuma.view.FlowLayoutTag
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/flt_tags"
+                android:background="@color/color_white_A"
+                android:paddingLeft="@dimen/x50"
+                android:paddingRight="@dimen/x50"
+                android:paddingTop="@dimen/y50"
+                android:paddingBottom="@dimen/y50">
+
+                <com.shixia.diudiuma.view.TagTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="暂无标签"/>
+
+            </com.shixia.diudiuma.view.FlowLayoutTag>
 
             <!--添加物品描述信息-->
             <RelativeLayout

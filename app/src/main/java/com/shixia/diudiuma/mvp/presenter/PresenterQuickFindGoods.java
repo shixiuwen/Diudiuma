@@ -114,6 +114,7 @@ public class PresenterQuickFindGoods extends PresenterQuick {
                 if (e == null) {
                     //提交成功
                     iView.onShowRemind("提交成功");
+                    iView.onFinish();   //提交数据成功之后关闭当前页面，防止重复提交
                 } else {
                     //提交失败
                     e.printStackTrace();
@@ -200,5 +201,13 @@ public class PresenterQuickFindGoods extends PresenterQuick {
      */
     private boolean isDefValue(String s) {
         return TextUtils.equals(s, "未知") || TextUtils.equals(s, "点击添加") || TextUtils.equals(s, "点击设置");
+    }
+
+    /**
+     * 跳转到编辑标签页
+     * @param tags  当前标签
+     */
+    public void toAddTagPage(String tags) {
+        super.toAddTagPage(tags);
     }
 }
