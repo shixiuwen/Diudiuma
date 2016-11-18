@@ -71,7 +71,10 @@ public class EditTagsPageActivity extends BaseActivity implements EditTagsPageIV
     private void initTags() {
         TagTextView tagTextView = new TagTextView(this);
         tagTextView.setText("自定义");
-        tagTextView.setOnClickListener(v -> etCustomTag.performClick());
+        tagTextView.setOnClickListener(v -> {
+            etCustomTag.requestFocus();
+            SystemUtils.getInstance(this).hideOrShowSoftInput(etCustomTag);
+        });
         fltTags.addView(tagTextView);
     }
 
@@ -133,6 +136,6 @@ public class EditTagsPageActivity extends BaseActivity implements EditTagsPageIV
 
     @Override
     public void onShowRemind(String content) {
-        CToast.makeCText(this,content, Toast.LENGTH_SHORT).show();
+        CToast.makeCText(this, content, Toast.LENGTH_SHORT).show();
     }
 }

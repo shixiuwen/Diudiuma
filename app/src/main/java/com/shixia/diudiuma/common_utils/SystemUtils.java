@@ -2,6 +2,7 @@ package com.shixia.diudiuma.common_utils;
 
 import android.content.Context;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 
 import com.shixia.diudiuma.mvp.activity.base.BaseActivity;
 
@@ -26,11 +27,29 @@ public class SystemUtils {
         return systemUtils;
     }
 
+    //展开全键盘
+    public void showSoftInput(EditText editText){
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            imm.showSoftInputFromInputMethod(editText.getWindowToken(),0);
+        }
+    }
+
     //收起软键盘
     public void hideSoftInput() {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imm != null) {
             imm.hideSoftInputFromWindow((activity.getWindow().getDecorView().getWindowToken()), 0);
+        }
+    }
+
+    /**
+     * 展开或者隐藏软键盘
+     */
+    public void hideOrShowSoftInput(EditText editText){
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null) {
+        imm.toggleSoftInputFromWindow(editText.getWindowToken(), 0, InputMethodManager.HIDE_NOT_ALWAYS);
         }
     }
 

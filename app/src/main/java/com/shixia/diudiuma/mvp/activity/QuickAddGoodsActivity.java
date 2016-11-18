@@ -3,6 +3,7 @@ package com.shixia.diudiuma.mvp.activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -182,7 +183,7 @@ public class QuickAddGoodsActivity extends BaseActivity implements QuickAddGoods
             etvWechat.setTvItemValue(value);
         } else if (requestCode == PresenterQuick.EDIT_GOODS_QQ_REQUEST_CODE) {
             etvQq.setTvItemValue(value);
-        } else if(requestCode == PresenterQuick.EDIT_GOODS_TAG){
+        } else if (requestCode == PresenterQuick.EDIT_GOODS_TAG) {
             presenter.resetTag(value);
         }
     }
@@ -260,8 +261,8 @@ public class QuickAddGoodsActivity extends BaseActivity implements QuickAddGoods
     @Override
     public void onNewTagsAdded(String tags) {
         //先移除所有标签再添加更改后的标签
-        fltTags.removeAllViews();
-        if (tags != null) {
+        if (!TextUtils.isEmpty(tags)) {
+            fltTags.removeAllViews();
             String[] stringList = tags.split("#");
             for (String aStringList : stringList) {
                 TagTextView tagTextView = new TagTextView(QuickAddGoodsActivity.this);
