@@ -80,4 +80,7 @@
     <string name="edit_with_yes">是 | 点击更改</string>
     <string name="click_to_edit">点击修改 | 添加</string>
     <string name="goods_description">物品描述</string>
+    <string name="sure_queren">确认</string>
+    <string name="please_input_custom_tag">请输入自定义标签名称</string>
+    <string name="tag_canot_null">标签内容不可为空</string>
 </resources>
