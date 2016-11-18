@@ -66,7 +66,6 @@ public class PresenterQuick extends BasePresenter {
         }
         loserGoodsInfo.setCard(false);
         loserGoodsInfo.setCredit(false);
-        loserGoodsInfo.setGoodsTag("这是#物品#标签");
         loserGoodsInfo.setDiscribe("望失主联系本人 ^_^ ");
     }
 

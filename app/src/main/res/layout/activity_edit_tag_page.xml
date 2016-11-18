@@ -22,4 +22,80 @@
 
     </com.shixia.diudiuma.view.FlowLayoutTag>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/x24"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="@dimen/x50"
+            android:layout_height="@dimen/y50"
+            android:background="@drawable/img_hall_05"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_tag"
+            android:text="常用标签"
+            android:textSize="@dimen/x36"
+            android:layout_alignBottom="@+id/img_goods_tag"
+            android:layout_toRightOf="@+id/img_goods_tag"
+            android:layout_marginLeft="@dimen/x24"/>
+
+    </LinearLayout>
+
+    <com.shixia.diudiuma.view.FlowLayoutTag
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/flt_tags_used"
+        android:background="@color/color_white_A"
+        android:paddingLeft="@dimen/x50"
+        android:paddingRight="@dimen/x50"
+        android:paddingTop="@dimen/y50"
+        android:paddingBottom="@dimen/y50">
+
+    </com.shixia.diudiuma.view.FlowLayoutTag>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y140"
+        android:orientation="horizontal">
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="@dimen/y140"
+            android:layout_weight="1"
+            android:id="@+id/et_custom_tag"
+            android:textSize="@dimen/x34"
+            android:paddingLeft="@dimen/x24"
+            android:paddingRight="@dimen/x24"
+            android:hint="@string/please_input_custom_tag"
+            android:gravity="center_vertical"
+            android:background="@null"/>
+
+        <View
+            android:layout_width="@dimen/x2"
+            android:layout_height="@dimen/y60"
+            android:layout_gravity="center_vertical"
+            android:background="@color/color_split_gray"/>
+
+        <TextView
+            android:layout_width="@dimen/x200"
+            android:layout_height="match_parent"
+            android:id="@+id/tv_sure_add_custom_tag"
+            android:text="@string/sure_queren"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/x34"
+            android:gravity="center"/>
+
+    </LinearLayout>
+
+
 </LinearLayout>

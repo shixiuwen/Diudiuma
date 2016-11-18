@@ -14,23 +14,23 @@ import com.shixia.diudiuma.R;
  * Description:
  */
 
-public class TagTextView extends TextView {
+public class TagTextRedView extends TextView {
 
     private int tagType;    //用于设置标签类型，是否可点击以及如何处理点击事件
 
-    public TagTextView(Context context) {
+    public TagTextRedView(Context context) {
 //        super(context);
         this(context,null);
     }
 
-    public TagTextView(Context context, @Nullable AttributeSet attrs) {
+    public TagTextRedView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
 
         setTextColor(Color.argb(255,17,34,51));
 
         setTextSize(TypedValue.COMPLEX_UNIT_PX,getResources().getDimension(R.dimen.y36));
 
-        setBackgroundResource(R.drawable.half_circle_radio_bg);
+        setBackgroundResource(R.drawable.half_circle_radio_red_bg);
 
         setPadding((int) getResources().getDimension(R.dimen.x30), (int) getResources().getDimension(R.dimen.y8)
                 , (int) getResources().getDimension(R.dimen.x30), (int) getResources().getDimension(R.dimen.y8));
