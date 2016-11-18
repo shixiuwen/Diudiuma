@@ -139,6 +139,7 @@ public class PresenterEditTagsPage extends BasePresenter {
             //修改本地常用标签数据
             changeUsedTags(newTag);
         }
+        iView.onAddTagFinish(); //添加标签完成之后收起全键盘，清空输入框
 
     }
 
