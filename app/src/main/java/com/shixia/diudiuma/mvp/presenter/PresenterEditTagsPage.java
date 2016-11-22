@@ -22,7 +22,8 @@ import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by AmosShi on 2016/11/17.
- * Description:
+ *
+ * Description: 标签管理页面，编辑标签
  */
 
 public class PresenterEditTagsPage extends BasePresenter {

@@ -2,7 +2,6 @@ package com.shixia.diudiuma.adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.ImageView;
@@ -16,15 +15,9 @@ import com.shixia.diudiuma.bmob.bean.DDMGoodsLever0Item;
 import com.shixia.diudiuma.bmob.bean.DDMGoodsLever1Item;
 import com.xys.libzxing.zxing.encoding.EncodingUtils;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.List;
 
 import rx.Observable;
-import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -61,23 +54,18 @@ public class ExpandableItemAdapter extends BaseMultiItemQuickAdapter<MultiItemEn
                 final DDMGoodsLever0Item lv0 = (DDMGoodsLever0Item) item;
                 String pic = lv0.getPic();
                 Observable
-                        .create(new Observable.OnSubscribe<String>() {
-                            @Override
-                            public void call(Subscriber<? super String> subscriber) {
-                                if (TextUtils.isEmpty(pic)) {
-                                    subscriber.onNext(fileUrl);
-                                }else {
-                                    subscriber.onNext(pic);
-                                }
+                        .create((Observable.OnSubscribe<String>) subscriber -> {
+                            if (TextUtils.isEmpty(pic)) {
+                                subscriber.onNext(fileUrl);
+                            }else {
+                                subscriber.onNext(pic);
                             }
                         })
                         .subscribeOn(Schedulers.newThread())
-//                        .map(this::returnBitmap)
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(bitmap -> {
                             holder.setText(R.id.tv_goods_name, lv0.getDdmGoodsName())
                                     .setText(R.id.tv_goods_register_data_title, lv0.getRegisterDate().toString())
-//                                    .setImageBitmap(R.id.img_goods_icon, bitmap)
                                     .setText(R.id.tv_goods_tag, lv0.getDdmGoodsTag());
                             holder.itemView.setOnClickListener(v -> {
                                 int pos = holder.getAdapterPosition();
@@ -113,32 +101,6 @@ public class ExpandableItemAdapter extends BaseMultiItemQuickAdapter<MultiItemEn
                 });
                 break;
         }
-    }
-
-
-    private Bitmap returnBitmap(String url) {
-        URL fileUrl = null;
-        Bitmap bitmap = null;
-
-        try {
-            fileUrl = new URL(url);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            HttpURLConnection conn = (HttpURLConnection) fileUrl
-                    .openConnection();
-            conn.setDoInput(true);
-            conn.connect();
-            InputStream is = conn.getInputStream();
-            bitmap = BitmapFactory.decodeStream(is);
-            is.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return bitmap;
-
     }
 
 }

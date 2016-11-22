@@ -1,9 +1,9 @@
 package com.shixia.diudiuma.adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -12,16 +12,11 @@ import com.jlcf.lib_adapter.base.listener.BaseViewHolder;
 import com.shixia.diudiuma.R;
 import com.shixia.diudiuma.bean.Constants;
 import com.shixia.diudiuma.bmob.bean.LoserGoodsInfo;
+import com.shixia.diudiuma.view.ItemTagView;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.List;
 
 import rx.Observable;
-import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -46,24 +41,33 @@ public class HallGoodsAdapter extends BaseQuickAdapter<LoserGoodsInfo> {
     protected void convert(BaseViewHolder helper, LoserGoodsInfo item) {
         String goodsIcon = item.getGoodsIcon();
 
-        Observable.create(new Observable.OnSubscribe<String>() {
-            @Override
-            public void call(Subscriber<? super String> subscriber) {
-                if (TextUtils.isEmpty(goodsIcon)) {
-                    subscriber.onNext(fileUrl);
-                } else {
-                    subscriber.onNext(goodsIcon);
-                }
+        Observable.create((Observable.OnSubscribe<String>) subscriber -> {
+            if (TextUtils.isEmpty(goodsIcon)) {
+                subscriber.onNext(fileUrl);
+            } else {
+                subscriber.onNext(goodsIcon);
             }
         })
                 .subscribeOn(Schedulers.newThread())
-//                .map(this::returnBitmap)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(bitmap -> {
                     helper.setText(R.id.tv_goods_name, item.getGoodsName())
-//                            .setImageBitmap(R.id.img_goods_icon, bitmap)
                             .setText(R.id.tv_goods_lose_address, item.getLoseAddress())
                             .setText(R.id.tv_goods_tag, item.getGoodsTag());
+                    ItemTagView itvTagView = helper.getView(R.id.itv_item_tag);     //设置标签颜色
+                    Integer type = item.getType();
+
+                    if (type != null && type == 1) {    //寻物启示
+                        itvTagView.setVisibility(View.VISIBLE);
+                        itvTagView.setTagColor(Color.argb(255, 78, 99, 212), Color.argb(255, 0, 0, 0))
+                                .setTagString("寻物启事");
+                    } else if (type != null) { //失物招领
+                        itvTagView.setVisibility(View.VISIBLE);
+                        itvTagView.setTagColor(Color.argb(255, 250, 91, 145), Color.argb(255, 0, 0, 0))
+                                .setTagString("失物招领");
+                    } else {
+                        itvTagView.setVisibility(View.GONE);
+                    }
                     ImageView imgGoodsIcon = helper.getView(R.id.img_goods_icon);
                     Glide.with(context)
                             .load(bitmap)
@@ -71,31 +75,5 @@ public class HallGoodsAdapter extends BaseQuickAdapter<LoserGoodsInfo> {
                             .thumbnail(0.1f)
                             .into(imgGoodsIcon);
                 });
-    }
-
-
-    private Bitmap returnBitmap(String url) {
-        URL fileUrl = null;
-        Bitmap bitmap = null;
-
-        try {
-            fileUrl = new URL(url);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            HttpURLConnection conn = (HttpURLConnection) fileUrl
-                    .openConnection();
-            conn.setDoInput(true);
-            conn.connect();
-            InputStream is = conn.getInputStream();
-            bitmap = BitmapFactory.decodeStream(is);
-            is.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return bitmap;
-
     }
 }
