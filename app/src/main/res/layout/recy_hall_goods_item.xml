@@ -7,16 +7,21 @@
     android:paddingRight="@dimen/x24"
     android:paddingLeft="@dimen/x24">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:background="#fff">
 
+        <com.shixia.diudiuma.view.ItemTagView
+            android:layout_width="@dimen/x130"
+            android:layout_height="@dimen/y130"
+            android:layout_alignParentRight="true"
+            android:id="@+id/itv_item_tag"/>
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:padding="@dimen/x24">
 
@@ -95,6 +100,6 @@
             android:layout_height="@dimen/y2"
             android:background="#39112233"/>
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </LinearLayout>

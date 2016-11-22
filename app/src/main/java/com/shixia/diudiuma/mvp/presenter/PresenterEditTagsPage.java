@@ -22,7 +22,8 @@ import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by AmosShi on 2016/11/17.
- * Description:
+ *
+ * Description: 标签管理页面，编辑标签
  */
 
 public class PresenterEditTagsPage extends BasePresenter {
@@ -31,7 +32,8 @@ public class PresenterEditTagsPage extends BasePresenter {
     private EditTagsPageIView iView;
 
     private List<String> tagsList = new ArrayList<String>();
-    private boolean isAlredyExit;
+
+    private boolean isAlreadyExit;
 
     public PresenterEditTagsPage(Context context, BaseIView iView) {
         super(context, iView);
@@ -120,7 +122,7 @@ public class PresenterEditTagsPage extends BasePresenter {
      * @param tagText 自定义标签内容
      */
     public void addNewTag(Editable tagText) {
-        isAlredyExit = false;
+        isAlreadyExit = false;
         if (tagText == null||TextUtils.isEmpty(tagText.toString())) {
             iView.onShowRemind(activity.getString(R.string.tag_canot_null));
             return;
@@ -131,13 +133,14 @@ public class PresenterEditTagsPage extends BasePresenter {
         Observable.from(split)
                 .filter(s -> TextUtils.equals(s, newTag))
                 .subscribe(s -> {
-                    isAlredyExit = true;
+                    isAlreadyExit = true;
                     iView.onShowRemind("该标签已存在");
                 });
-        if (!isAlredyExit) {
+        if (!isAlreadyExit) {
             iView.onAddTag(newTag, true, true);
             //修改本地常用标签数据
             changeUsedTags(newTag);
+            tagsList.add(newTag);
         }
         iView.onAddTagFinish(); //添加标签完成之后收起全键盘，清空输入框
 

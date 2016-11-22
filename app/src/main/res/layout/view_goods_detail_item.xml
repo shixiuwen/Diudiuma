@@ -25,6 +25,13 @@
             android:gravity="center_vertical"
             android:layout_marginLeft="@dimen/x48">
 
+            <ImageView
+                android:layout_width="@dimen/x60"
+                android:layout_height="@dimen/y60"
+                android:id="@+id/img_btn_edit_goods_info"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/btn_edit_bg"/>
+
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
