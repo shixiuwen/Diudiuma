@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.Looper;
 
 import com.shixia.diudiuma.common_utils.L;
+import com.shixia.diudiuma.handler.CrashHandler;
 
 import cn.bmob.v3.Bmob;
 
@@ -25,8 +26,7 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         //Crash信息收集初始化
-//        CrashHandler instance = CrashHandler.getInstance();
-//        instance.init(this);
+        CrashHandler.getInstance().init(this);
 
         //初始化Log信息
         L.getInstance().setDebugMode(true);
