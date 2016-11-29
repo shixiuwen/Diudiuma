@@ -61,9 +61,10 @@ public class ItemTagView extends View {
 
     /**
      * 设置标签内容
+     *
      * @param s 标签内容
      */
-    public void setTagString(String s){
+    public void setTagString(String s) {
         this.tagContent = s;
         invalidate();
     }
@@ -93,10 +94,12 @@ public class ItemTagView extends View {
         canvas.drawPath(strokePath, paint);
 
         canvas.save();
+        float tagWidth = textPaint.measureText(tagContent);
         canvas.translate(resultSpec * 0.5F, resultSpec * 0.5F);
         canvas.rotate(45);
-        float tagWidth = textPaint.measureText(tagContent);
-        canvas.drawText(tagContent, -tagWidth / 2, -(resultSpec * 0.5F / 2 - Math.abs((textPaint.ascent() - textPaint.descent()) / 2)), textPaint);
+        canvas.drawText(tagContent, -tagWidth / 2
+                , -(resultSpec * 0.5F / (float) Math.sqrt(2) / 2 - Math.abs(textPaint.descent() + textPaint.ascent()) / 2)
+                , textPaint);
         canvas.restore();
     }
 
