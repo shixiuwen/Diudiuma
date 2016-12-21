@@ -19,13 +19,9 @@ import com.shixia.diudiuma.R;
 
 public class LoadingDialog extends Dialog {
 
-    private static LoadingDialog loadingDialog;
     private Context context;
+    private static LoadingDialog loadingDialog;
     private static TextView tvLoadingMsg;
-
-    private LoadingDialog(Context context) {
-        super(context);
-    }
 
     private LoadingDialog(Context context, int themeResId) {
         super(context, themeResId);
@@ -41,6 +37,16 @@ public class LoadingDialog extends Dialog {
         }
         tvLoadingMsg.setText(message);
         return loadingDialog;
+    }
+
+    /**
+     * dialog dismiss
+     */
+    public static void dismissDialog() {
+        if (loadingDialog != null) {
+            loadingDialog.dismiss();
+            loadingDialog = null;   //dismiss之后销毁dialog实例
+        }
     }
 
     /**

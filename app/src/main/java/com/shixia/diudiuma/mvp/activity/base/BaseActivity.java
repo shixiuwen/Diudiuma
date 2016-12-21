@@ -17,6 +17,9 @@ import com.shixia.diudiuma.mvp.presenter.base.BasePresenter;
  */
 
 public abstract class BaseActivity extends AppCompatActivity{
+
+    private BasePresenter basePresenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,16 +90,29 @@ public abstract class BaseActivity extends AppCompatActivity{
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
-            initPresenter().getBasePresenter().doBizWithPermissionRequest(requestCode,permissions);
-        }else if(grantResults[0] == PackageManager.PERMISSION_DENIED){
-            initPresenter().getBasePresenter().doBizWithPermissionRequest(PermissionUtils.PERMISSION_DENIED,permissions);
+        if (basePresenter == null) {
+            basePresenter = initPresenter();
+        }
+        if (basePresenter == null) {    //初始化之后依然为空，不处理
+            return;
+        }
+        if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            basePresenter.getBasePresenter().doBizWithPermissionRequest(requestCode, permissions);
+        } else if (grantResults[0] == PackageManager.PERMISSION_DENIED) {
+            basePresenter.getBasePresenter().doBizWithPermissionRequest(PermissionUtils.PERMISSION_DENIED, permissions);
         }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 //        super.onActivityResult(requestCode, resultCode, data);
-        initPresenter().getBasePresenter().onActivityResult(requestCode,resultCode,data);
+        if (basePresenter == null) {
+            basePresenter = initPresenter();
+        }
+        if (basePresenter == null) {
+            super.onActivityResult(requestCode, resultCode, data);
+        } else {
+            basePresenter.getBasePresenter().onActivityResult(requestCode, resultCode, data);
+        }
     }
 }

@@ -5,9 +5,11 @@ import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.shixia.diudiuma.mvp.activity.base.BaseActivity;
 import com.shixia.diudiuma.mvp.presenter.base.BasePresenter;
+
 
 /**
  * Created by AmosShi on 2016/10/14.
@@ -63,18 +65,21 @@ import com.shixia.diudiuma.mvp.presenter.base.BasePresenter;
 
 public class PermissionUtils {
 
+    private static final String TAG = "PermissionUtils";
+
     private static BaseActivity baseActivity;
     private static BasePresenter basePresenter;
 
-    private static final String[] ARR_DO_NOT_NEED_REQUEST_PERMISSION = {"do_not_need_permission"};  //在权限已被授予的回调中使用
-    private static final String DO_NOT_NEED_REQUEST_PERMISSION = "do_not_need_permission";  //在权限已被授予的回调中使用
-
-    public static final int PERMISSION_ALREADY_GRANTED = 0x001;     //已被授予权限
-    public static final int PERMISSION_DENIED = 0x002;  //权限被拒绝
+    //权限申请使用3位16进制，startActivityForResult使用4位16进制
+    public static final int PERMISSION_ALREADY_GRANTED = 0x001;         //已被授予权限
+    public static final int PERMISSION_DENIED = 0x002;                  //权限被拒绝
 
     public static final int WRITE_COARSE_LOCATION_REQUEST_CODE = 0x100; //定位请求码
-    public static final int READ_EXTERNAL_STORAGE = 0x200;  //读写文件请求码
-    public static final int CAMERA = 0x300; //照相机请求码
+    public static final int READ_EXTERNAL_STORAGE = 0x200;              //写文件请求码
+    public static final int CAMERA = 0x300;                             //照相机请求码
+    public static final int CALL_PHONE = 0x400;                         //拨打电话
+    public static final int READ_CONTACTS = 0x500;                      //读取手机联系人
+    public static final int WRITE_EXTERNAL_STORAGE = 0x600;             //写文件
 
     public static PermissionUtils initCurrentActivity(BaseActivity baseActivity, BasePresenter basePresenter) {
         PermissionUtils.baseActivity = baseActivity;
@@ -83,32 +88,28 @@ public class PermissionUtils {
     }
 
     public static void doBizAfterRequestPermission(String permission, int requestCode) {
-        L.i("doBizAfterRequestPermission", "requestCode:" + requestCode);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
                 && ContextCompat.checkSelfPermission(baseActivity, permission) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(baseActivity, new String[]{permission},
                     requestCode);//自定义的code
         } else {
-            basePresenter.doBizWithPermissionRequest(PERMISSION_ALREADY_GRANTED, ARR_DO_NOT_NEED_REQUEST_PERMISSION);
+            basePresenter.doBizWithPermissionRequest(PERMISSION_ALREADY_GRANTED, new String[]{permission});
         }
     }
 
     /**
      * 判断请求的权限是否授予
      *
-     * @param returnResultCode  请求结果返回的请求码
-     * @param yourRequestCode   你的请求码，同于同返回请求码做对比，判断是否是该次请求的返回结果
-     * @param returnPermissions       返回的请求权限列表
-     * @param yourRequestPermission   你请求的权限
-     * @return  本次请求权限是否被授予
+     * @param returnResultCode      请求结果返回的请求码
+     * @param yourRequestCode       你的请求码，用于同返回请求码做对比，判断是否是该次请求的返回结果
+     * @param returnPermissions     返回的请求权限列表
+     * @param yourRequestPermission 你请求的权限
+     * @return 本次请求权限是否被授予
      */
-    public static boolean isPermissionGranted(int returnResultCode,int yourRequestCode,String[] returnPermissions,String yourRequestPermission){
-        return (returnResultCode == PERMISSION_ALREADY_GRANTED && TextUtils.equals(returnPermissions[0],DO_NOT_NEED_REQUEST_PERMISSION))    //该情况表示上一次已经取得了授权
-                //以下情况表示未授予过权限
-                || (returnResultCode == yourRequestCode
-                && !TextUtils.equals(returnPermissions[0],DO_NOT_NEED_REQUEST_PERMISSION)
-                && returnPermissions.length > 0
-                && returnPermissions[0].equals(yourRequestPermission));
+    public static boolean isPermissionGranted(int returnResultCode, int yourRequestCode, String[] returnPermissions, String yourRequestPermission) {
+        Log.e(TAG, "returnResultCode: " + returnResultCode + " " + "yourRequestCode: " + yourRequestCode + " " + "returnPermissions: " + returnPermissions[0] + " " + "yourRequestPermission: " + yourRequestPermission + " ");
+        return (returnResultCode == PERMISSION_ALREADY_GRANTED && TextUtils.equals(returnPermissions[0], yourRequestPermission))        //该情况表示上一次已经取得了授权
+                || (returnResultCode == yourRequestCode) && TextUtils.equals(returnPermissions[0], yourRequestPermission);
     }
 
     /**###################### 以下时不需要权限检查的 Normal Permission #############################*/

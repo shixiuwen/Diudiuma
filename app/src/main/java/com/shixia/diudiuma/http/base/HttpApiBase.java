@@ -117,6 +117,7 @@ public abstract class HttpApiBase<R, T> {
 
         Request request = new Request.Builder()
                 .url(ServletHttpConstants.baseUrl + getApiName())//地址
+//                .header("RANGE", "bytes=" + startPoints + "-")//断点续传要用到的，指示下载的区间
                 .post(requestBody)  //添加请求体
                 .build();
 
