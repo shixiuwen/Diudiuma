@@ -5,6 +5,9 @@ import android.os.Environment;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -41,48 +44,63 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
     }
 
     @Override
-    public void uncaughtException(Thread t, Throwable ex) {
+    public void uncaughtException(Thread t, Throwable e) {
 
         try {
-            File file = new File(getDiskCacheDir(mContext, "crash"), "crash.log");
+            Writer writer = new StringWriter();
+            PrintWriter printWriter = new PrintWriter(writer);
+            e.printStackTrace(printWriter);
+            Throwable cause = e.getCause();
+            while (cause != null) {
+                cause.printStackTrace(printWriter);
+                cause = cause.getCause();
+            }
+            printWriter.close();
+            String result = writer.toString();
 
+            File file = new File(getDiskCacheDir(mContext, "crash"), "crash.log");
             if (file.exists() && file.length() > 5 * 1024 * 1024) {     // <5M
                 boolean delete = file.delete();
-            } else {
-                File folder = new File(getDiskCacheDir(mContext, "crash"));
-                if (folder.exists() && folder.isDirectory()) {
-                    if (!file.exists()) {
-                        boolean newFile = file.createNewFile();
-                    }
-                } else {
-                    boolean mkDir = folder.mkdir();
-                    if (mkDir) {
-                        boolean newFile = file.createNewFile();
+            }
+
+            File folder = new File(getDiskCacheDir(mContext, "crash"));
+            if (folder.exists() && folder.isDirectory()) {
+                if (!file.exists()) {
+                    boolean newFile = file.createNewFile();
+                    if(!newFile){
+                        return;
                     }
                 }
-                FileOutputStream fos = new FileOutputStream(file, true);
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA);
-                String format = sdf.format(new Date());
-                byte[] bytes = (format +        //追加Crash时间
-                        "\n" + ex.toString() +   //Crash内容
-                        "\n" + "----------------------" +
-                        "\n").getBytes();
-                fos.write(bytes);
-                fos.flush();
-                fos.close();
+            } else {
+                boolean mkDir = folder.mkdir();
+                if (mkDir) {
+                    boolean newFile = file.createNewFile();
+                    if(!newFile){
+                        return;
+                    }
+                }
             }
+            FileOutputStream fos = new FileOutputStream(file, true);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA);
+            String format = sdf.format(new Date());
+            byte[] bytes = (format +        //追加Crash时间
+                    "\n" + result +   //Crash内容
+                    "\n" + "######## ~~~ T_T ~~~ ########" +
+                    "\n").getBytes();
+            fos.write(bytes);
+            fos.flush();
+            fos.close();
         } catch (Exception exception) {
             exception.printStackTrace();
         }
 
         //crash后重启
-//        ComponentName componentName = new ComponentName("package name", "default activity");
-//        Intent schemIntent = new Intent();
-//        schemIntent.setComponent(componentName);
-//        schemIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//        mContext.startActivity(schemIntent);
-
-        mDefaultHandler.uncaughtException(t, ex);
+        /*ComponentName componentName = new ComponentName("com.", "com.");
+        Intent schemIntent = new Intent();
+        schemIntent.setComponent(componentName);
+        schemIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        mContext.startActivity(schemIntent);*/
+        mDefaultHandler.uncaughtException(t, e);    //该代码不执行的话程序无法终止
     }
 
     /**
