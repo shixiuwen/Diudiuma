@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.jlcf.lib_adapter.base.BaseQuickAdapter;
@@ -40,6 +41,7 @@ public class MainPageDefaultFragment extends BaseFragment implements DefaultFrag
     private List<MultiItemEntity> lever01List = new ArrayList<MultiItemEntity>();
 
     private SwipeRefreshLayout swipeRefreshLayout;
+    private RelativeLayout viewSearch;
     private RecyclerView recyclerView;
     //    private MainPageGoodsAdapter mainPageGoodsAdapter;
     private ImageView imgQuick; //快速添加按钮
@@ -58,6 +60,7 @@ public class MainPageDefaultFragment extends BaseFragment implements DefaultFrag
     @Override
     public View initView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         contentView = inflater.inflate(R.layout.fragment_main_page_main_layout, container, false);
+        viewSearch = (RelativeLayout)contentView.findViewById(R.id.view_search);
         recyclerView = (RecyclerView) contentView.findViewById(R.id.rv_goods_list_recy);
         swipeRefreshLayout = (SwipeRefreshLayout) contentView.findViewById(R.id.srl_refresh_layout);
 
@@ -83,6 +86,7 @@ public class MainPageDefaultFragment extends BaseFragment implements DefaultFrag
 
     @Override
     public void initListener() {
+        viewSearch.setOnClickListener(v -> presenter.toSearchActivity());
         swipeRefreshLayout.setOnRefreshListener(this);
         imgQuick.setOnClickListener(v -> presenter.showQuickOptWindow());
     }

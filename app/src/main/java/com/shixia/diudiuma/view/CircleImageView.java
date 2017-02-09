@@ -30,6 +30,8 @@ public class CircleImageView extends ImageView {
 
     private Paint paint;
 
+    private boolean isCircleNeeded = true;
+
     public CircleImageView(Context context) {
 //        super(context);
         this(context, null);
@@ -55,11 +57,24 @@ public class CircleImageView extends ImageView {
         invalidate();
     }
 
+    /**
+     * 某些情况下不需要将图片设置为圆形，或者由圆形转变为非圆形
+     * @param isCircleNeeded    是否需要设置为圆形
+     */
+    public void setCircleNeeded(boolean isCircleNeeded){
+        this.isCircleNeeded = isCircleNeeded;
+        setImageBitmap(bitmap);
+        invalidate();
+    }
+
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        getFinalCircleBitmap(bitmap);
-        canvas.drawBitmap(bitmap, 0, 0, paint);
+        if(isCircleNeeded){
+            getFinalCircleBitmap(bitmap);
+            canvas.drawBitmap(bitmap, 0, 0, paint);
+        }
+
     }
 
     @Override

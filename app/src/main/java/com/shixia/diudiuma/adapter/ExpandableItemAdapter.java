@@ -1,6 +1,7 @@
 package com.shixia.diudiuma.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.text.TextUtils;
 import android.util.Log;
@@ -8,11 +9,14 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.jlcf.lib_adapter.base.listener.BaseViewHolder;
+import com.kogitune.activity_transition.ActivityTransitionLauncher;
 import com.shixia.diudiuma.R;
 import com.shixia.diudiuma.bean.Constants;
 import com.shixia.diudiuma.bean.MultiItemEntity;
 import com.shixia.diudiuma.bmob.bean.DDMGoodsLever0Item;
 import com.shixia.diudiuma.bmob.bean.DDMGoodsLever1Item;
+import com.shixia.diudiuma.mvp.activity.PicturePreviewActivity;
+import com.shixia.diudiuma.mvp.activity.base.BaseActivity;
 import com.xys.libzxing.zxing.encoding.EncodingUtils;
 
 import java.util.List;
@@ -75,6 +79,11 @@ public class ExpandableItemAdapter extends BaseMultiItemQuickAdapter<MultiItemEn
                                 } else {
                                     expand(pos);
                                 }
+                            });
+                            holder.getView(R.id.img_goods_icon).setOnClickListener(v -> {
+                                final Intent intent = new Intent(context, PicturePreviewActivity.class);
+                                intent.putExtra("bitmapUrl",bitmap);
+                                ActivityTransitionLauncher.with((BaseActivity)context).from(v).launch(intent);
                             });
                             //设置缩略图
                             Glide.with(context).load(bitmap)

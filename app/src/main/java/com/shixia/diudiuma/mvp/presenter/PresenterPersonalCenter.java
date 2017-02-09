@@ -15,6 +15,7 @@ import com.shixia.diudiuma.mvp.activity.PersonalInfoActivity;
 import com.shixia.diudiuma.mvp.iview.PersonalCenterIView;
 import com.shixia.diudiuma.mvp.iview.base.BaseIView;
 import com.shixia.diudiuma.mvp.presenter.base.BasePresenter;
+import com.shixia.diudiuma.view.BaseDialog;
 import com.shixia.diudiuma.view.CToast;
 
 import cn.bmob.v3.BmobUser;
@@ -72,8 +73,22 @@ public class PresenterPersonalCenter extends BasePresenter {
         //1.从本地读取数据判断是否登录，如果登录，点击退出登录，否则显示登录的Dialog
         BmobUser currentUser = BmobUser.getCurrentUser();
         if (currentUser != null) {    //已登录，点击退出登录
-            BmobUser.logOut();
-            iView.onChangeLoginStatus(false);
+            BaseDialog baseDialog = new BaseDialog(activity,"退出登录","确认退出登录吗？","确认");
+            baseDialog.setOnDialogClickListener(new BaseDialog.OnDialogClickListener() {
+                @Override
+                public void onSureClickListener() {
+                    BmobUser.logOut();
+                    iView.onChangeLoginStatus(false);
+                    baseDialog.dismiss();
+                }
+
+                @Override
+                public void onCancelClickListener() {
+                    baseDialog.dismiss();
+                }
+            });
+            baseDialog.show();
+
         } else {                     //未登录，点击登录
             iView.onShowLoginDialog();
         }

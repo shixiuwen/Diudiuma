@@ -127,6 +127,14 @@
         <activity android:name=".mvp.activity.EditTagsPageActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"/>
+
+        <activity android:name=".mvp.activity.SearchActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".mvp.activity.PicturePreviewActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

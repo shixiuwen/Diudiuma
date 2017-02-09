@@ -13,10 +13,11 @@ import com.shixia.diudiuma.mvp.presenter.base.BasePresenter;
 
 /**
  * Created by AmosShi on 2016/10/11.
+ * <p>
  * Description:activity基类
  */
 
-public abstract class BaseActivity extends AppCompatActivity{
+public abstract class BaseActivity extends AppCompatActivity {
 
     private BasePresenter basePresenter;
 
@@ -56,35 +57,37 @@ public abstract class BaseActivity extends AppCompatActivity{
     /**
      * 可选操作，数据初始化之后的操作在该方法中执行
      */
-    protected void afterActivityOnCreate(){}
+    protected void afterActivityOnCreate() {
+    }
 
-    public void startActivity(Context context,Class c,Bundle bundle,boolean isFinishCurrentActivity){
-        Intent intent = new Intent(context,c);
+    public void startActivity(Context context, Class c, Bundle bundle, boolean isFinishCurrentActivity) {
+        Intent intent = new Intent(context, c);
         if (bundle != null) {
             intent.putExtras(bundle);
         }
         startActivity(intent);
-        if(isFinishCurrentActivity){
+        if (isFinishCurrentActivity) {
             finish();
         }
     }
 
-    public void startActivityForResult(Context context,Class c,Bundle bundle,int resultCode,boolean isFinishCurrentActivity){
-        Intent intent = new Intent(context,c);
+    public void startActivityForResult(Context context, Class c, Bundle bundle, int resultCode, boolean isFinishCurrentActivity) {
+        Intent intent = new Intent(context, c);
         if (bundle != null) {
             intent.putExtras(bundle);
         }
 //        startActivity(intent);
-        startActivityForResult(intent,resultCode);
-        if(isFinishCurrentActivity){
+        startActivityForResult(intent, resultCode);
+        if (isFinishCurrentActivity) {
             finish();
         }
     }
 
     /**
      * 权限申请的回调
-     * @param requestCode 请求码
-     * @param permissions 请求的权限
+     *
+     * @param requestCode  请求码
+     * @param permissions  请求的权限
      * @param grantResults 请求结果
      */
     @Override

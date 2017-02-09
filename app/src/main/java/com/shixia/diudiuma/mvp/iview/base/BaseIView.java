@@ -8,4 +8,5 @@ package com.shixia.diudiuma.mvp.iview.base;
 
 public interface BaseIView {
 
+
 }

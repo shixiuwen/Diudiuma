@@ -5,6 +5,7 @@
     android:orientation="vertical">
 
     <RelativeLayout
+        android:id="@+id/view_search"
         android:layout_width="match_parent"
         android:layout_height="@dimen/y130"
         android:background="@color/color_green_boss"

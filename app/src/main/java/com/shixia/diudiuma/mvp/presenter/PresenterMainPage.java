@@ -7,10 +7,12 @@ import com.shixia.diudiuma.bmob.bean.DDMGoodsLever0Item;
 import com.shixia.diudiuma.bmob.bean.DDMGoodsLever1Item;
 import com.shixia.diudiuma.bmob.bean.LoserGoodsInfo;
 import com.shixia.diudiuma.common_utils.L;
+import com.shixia.diudiuma.mvp.activity.MainActivity_2;
 import com.shixia.diudiuma.mvp.activity.QuickAddGoodsActivity;
 import com.shixia.diudiuma.mvp.activity.QuickFindGoodsActivity;
 import com.shixia.diudiuma.mvp.activity.QuickFindLoserActivity;
 import com.shixia.diudiuma.mvp.activity.QuickScanGoodsActivity;
+import com.shixia.diudiuma.mvp.activity.SearchActivity;
 import com.shixia.diudiuma.mvp.activity.base.BaseActivity;
 import com.shixia.diudiuma.mvp.iview.DefaultFragmentIView;
 import com.shixia.diudiuma.mvp.iview.base.BaseIView;
@@ -124,5 +126,12 @@ public class PresenterMainPage extends BasePresenter {
         } else {                                    //已登录
             initData();
         }
+    }
+
+    /**
+     * 点击搜索跳转到搜索界面
+     */
+    public void toSearchActivity() {
+        ((MainActivity_2)context).startActivity(context, SearchActivity.class,null,false);
     }
 }

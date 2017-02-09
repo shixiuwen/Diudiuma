@@ -1,6 +1,7 @@
 package com.shixia.diudiuma.mvp.fragment;
 
 import android.animation.ObjectAnimator;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,7 +16,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.kogitune.activity_transition.ActivityTransitionLauncher;
 import com.shixia.diudiuma.R;
+import com.shixia.diudiuma.mvp.activity.PicturePreviewActivity;
 import com.shixia.diudiuma.mvp.fragment.base.BaseFragment;
 import com.shixia.diudiuma.mvp.iview.PersonalCenterIView;
 import com.shixia.diudiuma.mvp.presenter.PresenterPersonalCenter;
@@ -37,6 +40,7 @@ public class MainPagePersonalFragment extends BaseFragment implements PersonalCe
     private Button btnLoginOrExit;  //登录或者退出按钮
     private PresenterPersonalCenter presenter;
     private View view;
+    public static Bitmap bitmap;
 
     private EditItemView eivPersonalInfo;
     private EditItemView eivSetting;
@@ -99,6 +103,10 @@ public class MainPagePersonalFragment extends BaseFragment implements PersonalCe
 
     @Override
     public void initListener() {
+        imgCircle.setOnClickListener(v -> {
+            final Intent intent = new Intent(getActivity(), PicturePreviewActivity.class);
+            ActivityTransitionLauncher.with(getActivity()).from(v).launch(intent);
+                });
         //点击登录或者退出
         btnLoginOrExit.setOnClickListener(v -> presenter.loginOrExitBtnClick());
     }
@@ -245,6 +253,7 @@ public class MainPagePersonalFragment extends BaseFragment implements PersonalCe
 
     @Override
     public void onShowUserAvatar(Bitmap bitmap) {
+        MainPagePersonalFragment.bitmap = bitmap;
         imgCircle.setAvatar(bitmap);
     }
 }

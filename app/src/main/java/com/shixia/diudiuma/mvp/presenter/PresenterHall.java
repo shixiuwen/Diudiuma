@@ -15,7 +15,6 @@ import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import rx.Observable;
-import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 
 /**
@@ -28,7 +27,6 @@ public class PresenterHall extends BasePresenter {
     private Context context;
     private HallIView iView;
     private ArrayList<LoserGoodsInfo> dataList = new ArrayList<>();
-    ;
 
     public PresenterHall(Context context, BaseIView iView) {
         super(context, iView);
@@ -53,7 +51,7 @@ public class PresenterHall extends BasePresenter {
                     iView.onNotifyDataSetChange(dataList);
                     iView.onRefreshEnd();
                 } else {
-                    iView.onShowRemind("查询失败^+^" + e.getMessage());
+                    iView.onShowRemind("查询失败T_T" + e.getMessage());
                     iView.onRefreshEnd();
                 }
             }
@@ -96,23 +94,18 @@ public class PresenterHall extends BasePresenter {
      */
     private void queryGoodsByCondition(BmobQuery<LoserGoodsInfo> query) {
         iView.onSearchBegin();
-        Observable.create(new Observable.OnSubscribe<List<LoserGoodsInfo>>() {
+        Observable.create((Observable.OnSubscribe<List<LoserGoodsInfo>>) subscriber -> query.findObjects(new FindListener<LoserGoodsInfo>() {
             @Override
-            public void call(Subscriber<? super List<LoserGoodsInfo>> subscriber) {
-                query.findObjects(new FindListener<LoserGoodsInfo>() {
-                    @Override
-                    public void done(List<LoserGoodsInfo> list, BmobException e) {
-                        if (e == null) {
-                            subscriber.onNext(list);
-                        } else {
-                            L.i("error", e.getMessage());
-                            subscriber.onNext(null);
-                        }
-                        iView.onSearchEnd();
-                    }
-                });
+            public void done(List<LoserGoodsInfo> list, BmobException e) {
+                if (e == null) {
+                    subscriber.onNext(list);
+                } else {
+                    L.i("error", e.getMessage());
+                    subscriber.onNext(null);
+                }
+                iView.onSearchEnd();
             }
-        })
+        }))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(loserGoodsInfos -> {
                     iView.onNotifyDataSetChange(loserGoodsInfos);
