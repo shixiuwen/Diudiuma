@@ -40,4 +40,4 @@
 
 - [ ] 极光推送（TODO）
 
-- [ ] 友盟统计（TODO）
+- [ ] TalkingData统计（TODO）
